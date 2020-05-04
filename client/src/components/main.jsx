@@ -12,46 +12,50 @@ export default function Main() {
           md={5}
           className="d-flex justify-content-around align-items=center flex-column"
         >
-          <Row className="p-1 bg-white">
-            <Col sm={1}>
-              <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
-            </Col>
-            <Col className="d-flex flex-column align-items-start">
-              <div>12345$</div>
-              <div>Total Revenu</div>
-            </Col>
-            <Col></Col>
-          </Row>
-          <Row className="p-1 bg-white">
-            <Col sm={1}>
-              <Icon className="fas fa-cubes rounded-circle" />
-            </Col>
-            <Col className="d-flex flex-column align-items-start">
-              <div>12345$</div>
-              <div>revenu of the day</div>
-            </Col>
-            <Col></Col>
-          </Row>
-          <Row className="p-1 bg-white">
-            <Col sm={1}>
-              <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
-            </Col>
-            <Col className="d-flex flex-column align-items-start">
-              <div>12345$</div>
-              <div>Total Revenu</div>
-            </Col>
-            <Col></Col>
-          </Row>
-          <Row className="p-1 bg-white">
-            <Col sm={1}>
-              <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
-            </Col>
-            <Col className="d-flex flex-column align-items-start">
-              <div>12345$</div>
-              <div>Total Revenu</div>
-            </Col>
-            <Col></Col>
-          </Row>
+          <div>
+            <Row className="p-1 bg-white">
+              <Col sm={1}>
+                <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
+              </Col>
+              <Col className="d-flex flex-column align-items-start">
+                <div>12345$</div>
+                <div>Total Revenu</div>
+              </Col>
+              <Col></Col>
+            </Row>
+            <Row className="p-1 bg-white">
+              <Col sm={1}>
+                <Icon className="fas fa-cubes rounded-circle" />
+              </Col>
+              <Col className="d-flex flex-column align-items-start">
+                <div>12345$</div>
+                <div>revenu of the day</div>
+              </Col>
+              <Col></Col>
+            </Row>
+          </div>
+          <div>
+            <Row className="p-1 bg-white">
+              <Col sm={1}>
+                <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
+              </Col>
+              <Col className="d-flex flex-column align-items-start">
+                <div>12345$</div>
+                <div>Total Revenu</div>
+              </Col>
+              <Col></Col>
+            </Row>
+            <Row className="p-1 bg-white">
+              <Col sm={1}>
+                <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
+              </Col>
+              <Col className="d-flex flex-column align-items-start">
+                <div>12345$</div>
+                <div>Total Revenu</div>
+              </Col>
+              <Col></Col>
+            </Row>
+          </div>
         </Col>
 
         <Col sm={12} md={5} className="bg-white">
