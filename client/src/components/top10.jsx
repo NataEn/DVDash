@@ -15,17 +15,17 @@ function createData(name, availability, sale) {
 }
 
 const columns = [
-  { id: "name", label: "Name", minWidth: 20, align: "left" },
+  { id: "name", label: "Name", minWidth: 50, align: "left" },
   {
     id: "availability",
     label: "Availability",
-    minWidth: 30,
+    minWidth: 20,
     align: "left",
   },
   {
     id: "sale",
     label: "Sale",
-    minWidth: 50,
+    minWidth: 30,
     align: "left",
     format: (value) =>
       Number(value / 100).toLocaleString("en-US", {
@@ -50,7 +50,7 @@ const rows = [
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: "40%",
+    maxWidth: "90%",
   },
   container: {
     maxHeight: 200,
@@ -111,7 +111,7 @@ export default function Top10() {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[5, 10]}
         component="div"
         count={rows.length}
         rowsPerPage={rowsPerPage}
