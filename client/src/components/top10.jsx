@@ -74,7 +74,7 @@ export default function Top10() {
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader small padding={"none"} aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map((column) => (

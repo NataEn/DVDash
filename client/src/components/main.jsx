@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import Top10 from "./top10";
+import PieChart from "./pieChart";
 import Icon from "@material-ui/core/Icon";
+import FilterPie from "./filterPie";
 
 export default function Main() {
   return (
     <div className="bg-light ">
-      <Row className=" justify-content-around">
+      <Row className="justify-content-around p-2">
         <Col
           sm={12}
           md={5}
@@ -58,16 +60,30 @@ export default function Main() {
           </div>
         </Col>
 
-        <Col sm={12} md={5} className="bg-white">
+        <Col
+          sm={12}
+          md={5}
+          className="bg-white d-flex justify-content-around align-items=center flex-column"
+        >
           <Top10 />
         </Col>
       </Row>
-      <Row className=" justify-content-around">
-        <Col sm={12} md={6}>
+      <Row className=" justify-content-around p-2">
+        <Col sm={12} md={5}>
           Rental By country map
         </Col>
-        <Col sm={12} md={6}>
-          Rental Data In selected area Pie chart
+        <Col
+          sm={12}
+          md={5}
+          className="bg-white d-flex flex-column justify-content-around align-items=center"
+        >
+          <Row>
+            <Col>
+              <h3>Rental Data In selected area</h3>
+              <FilterPie />
+              <PieChart />
+            </Col>
+          </Row>
         </Col>
       </Row>
       <Row className=" justify-content-around">
