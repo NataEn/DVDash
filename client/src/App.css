@@ -70,3 +70,8 @@
 .recharts-legend-wrapper {
   height: 50% !important;
 }
+
+.recharts-wrapper {
+  width: 100% !important;
+  align-self: center;
+}

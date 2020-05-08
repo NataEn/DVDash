@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import Top10 from "./top10";
 import PieChart from "./pieChart";
+import SmallBarChart from "./smallBarChart";
 import Icon from "@material-ui/core/Icon";
 import FilterPie from "./filterPie";
 
@@ -37,25 +38,32 @@ export default function Main() {
             </Row>
           </div>
           <div>
-            <Row className="p-1 bg-white">
-              <Col sm={1}>
-                <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
+            <Row className="p-1 bg-white d-flex flex-row">
+              <Col lg={1}>
+                <Col sm={1}>
+                  <h5 className="font-weight-bold">$1234</h5>
+                </Col>
+                <Col className="d-flex">
+                  {" "}
+                  <div>Total Earnings</div>
+                </Col>
               </Col>
-              <Col className="d-flex flex-column align-items-start">
-                <div>12345$</div>
-                <div>Total Revenu</div>
+              <Col>
+                <SmallBarChart />
               </Col>
-              <Col></Col>
             </Row>
-            <Row className="p-1 bg-white">
-              <Col sm={1}>
-                <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
+            <Row className="p-1 bg-white d-flex flex-row">
+              <Col lg={1}>
+                <Col sm={1}>
+                  <h5 className="font-weight-bold">#12345</h5>
+                </Col>
+                <Col className="d-flex">
+                  <div>Customers</div>
+                </Col>
               </Col>
-              <Col className="d-flex flex-column align-items-start">
-                <div>12345$</div>
-                <div>Total Revenu</div>
+              <Col>
+                <SmallBarChart />
               </Col>
-              <Col></Col>
             </Row>
           </div>
         </Col>
