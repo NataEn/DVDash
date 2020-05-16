@@ -5,6 +5,8 @@ import PieChart from "./pieChart";
 import SmallBarChart from "./smallBarChart";
 import Icon from "@material-ui/core/Icon";
 import FilterPie from "./filterPie";
+import Map from "./map";
+import IncomPerMonth from "./incomePerMonth";
 
 export default function Main() {
   return (
@@ -39,12 +41,11 @@ export default function Main() {
           </div>
           <div>
             <Row className="p-1 bg-white d-flex flex-row">
-              <Col lg={1}>
+              <Col lg={2} className="pl-0">
                 <Col sm={1}>
                   <h5 className="font-weight-bold">$1234</h5>
                 </Col>
                 <Col className="d-flex">
-                  {" "}
                   <div>Total Earnings</div>
                 </Col>
               </Col>
@@ -53,7 +54,7 @@ export default function Main() {
               </Col>
             </Row>
             <Row className="p-1 bg-white d-flex flex-row">
-              <Col lg={1}>
+              <Col lg={2} className="pl-0">
                 <Col sm={1}>
                   <h5 className="font-weight-bold">#12345</h5>
                 </Col>
@@ -67,7 +68,6 @@ export default function Main() {
             </Row>
           </div>
         </Col>
-
         <Col
           sm={12}
           md={5}
@@ -76,17 +76,19 @@ export default function Main() {
           <Top10 />
         </Col>
       </Row>
-      <Row className=" justify-content-around p-2">
-        <Col sm={12} md={5}>
-          Rental By country map
+      <Row className="justify-content-around p-2">
+        <Col sm={12} md={5} className="bg-white">
+          <h4>World map</h4>
+          <Map />
+          {/* <Top5Country/> */}
         </Col>
         <Col
           sm={12}
           md={5}
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
-          <Row>
-            <Col>
+          <Row className=" justify-content-around p-2">
+            <Col className="bg-white">
               <h3>Rental Data In selected area</h3>
               <FilterPie />
               <PieChart />
@@ -94,12 +96,22 @@ export default function Main() {
           </Row>
         </Col>
       </Row>
-      <Row className=" justify-content-around">
-        <Col sm={12} md={6}>
-          Net Incom for every month
+      <Row className=" justify-content-around p-2">
+        <Col
+          sm={12}
+          md={5}
+          className="bg-white d-flex flex-column justify-content-around align-items=center"
+        >
+          <h3>Net Incom for every month</h3>
+          <IncomPerMonth data={"some data"} />
         </Col>
-        <Col sm={12} md={6}>
-          Rents in 2005, chart
+        <Col
+          sm={12}
+          md={5}
+          className="bg-white d-flex flex-column justify-content-around align-items=center"
+        >
+          <h3>Rents in per store</h3>
+          <IncomPerMonth data={"some data"} />
         </Col>
       </Row>
     </div>

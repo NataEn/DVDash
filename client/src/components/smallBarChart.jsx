@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BarChart,
   Bar,
@@ -53,14 +53,49 @@ const data = [
     pv: 4300,
     amt: 2100,
   },
+  {
+    name: "Page h",
+    uv: 3400,
+    pv: 1300,
+    amt: 2100,
+  },
+  {
+    name: "Page s",
+    uv: 3420,
+    pv: 4000,
+    amt: 2100,
+  },
+  {
+    name: "Page r",
+    uv: 340,
+    pv: 400,
+    amt: 100,
+  },
 ];
 
-export default class SmallBarChart extends PureComponent {
-  render() {
-    return (
+export default function SmallBarChart() {
+  const [gridData, setGridData] = useState(data);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const handleClick = (event) => {
+    console.log(event.payload);
+    const index = gridData.indexOf(event.payload);
+    setActiveIndex(index);
+  };
+  return (
+    <>
       <BarChart width={150} height={40} data={data}>
-        <Bar dataKey="uv" fill="#8884d8" />
+        <Tooltip />
+        <Bar dataKey="uv" onClick={handleClick}>
+          {gridData.map((entry, index) => (
+            <Cell
+              cursor="pointer"
+              fill={index === activeIndex ? "#82ca9d" : "#8884d8"}
+              key={`cell-${index}`}
+            />
+          ))}
+        </Bar>
       </BarChart>
-    );
-  }
+      <p className="content">{`Uv of "${gridData[activeIndex].name}": ${gridData[activeIndex].uv}`}</p>
+    </>
+  );
 }
