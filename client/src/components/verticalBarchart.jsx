@@ -1,5 +1,13 @@
 import React from "react";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis } from "recharts";
+import {
+  ResponsiveContainer,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  LabelList,
+} from "recharts";
 
 const data = [
   {
@@ -27,10 +35,10 @@ const data = [
     uv: 1400,
   },
 ];
-const maxValue = Math.max(...data.map((item) => item.uv));
+const maxValue = Math.ceil(Math.max(...data.map((item) => item.uv)));
 
 export const VerticalChart = (props) => {
-  const countryName = (payload) => payload;
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   return (
     <ResponsiveContainer width="100%" height={230}>
@@ -50,12 +58,24 @@ export const VerticalChart = (props) => {
         <YAxis
           dataKey="name"
           type="category"
-          tickFormatter={countryName}
+          ticks={[0]}
           tickLine={false}
           axisLine={false}
-          // tickMargin={{ top: 0, bottom: 0 }}
         />
-        <Bar dataKey="uv" barSize={15} fill="#413ea0" />
+        <Bar dataKey="uv" fill="#8884d8" barSize={20}>
+          <LabelList
+            dataKey="uv"
+            position="insideRight"
+            fontSize="0.7rem"
+            fontWeight="600"
+          />
+          <LabelList
+            dataKey="name"
+            position="insideLeft"
+            fontSize="0.7rem"
+            fontWeight="600"
+          />
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   );

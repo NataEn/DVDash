@@ -75,3 +75,7 @@
   width: 100% !important;
   align-self: center;
 }
+.recharts-text.recharts-cartesian-axis-tick-value > tspan {
+  x: 120;
+  dy: -0.9em;
+}
