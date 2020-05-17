@@ -5,6 +5,7 @@ import PieChart from "./pieChart";
 import SmallBarChart from "./smallBarChart";
 import Icon from "@material-ui/core/Icon";
 import FilterPie from "./filterPie";
+import { VerticalChart } from "./verticalBarchart";
 import Map from "./map";
 import IncomPerMonth from "./incomePerMonth";
 
@@ -80,7 +81,7 @@ export default function Main() {
         <Col sm={12} md={5} className="bg-white">
           <h4>World map</h4>
           <Map />
-          {/* <Top5Country/> */}
+          <VerticalChart />
         </Col>
         <Col
           sm={12}

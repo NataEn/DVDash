@@ -85,7 +85,7 @@ export default function SmallBarChart() {
     <>
       <BarChart width={150} height={40} data={data}>
         <Tooltip />
-        <Bar dataKey="uv" onClick={handleClick}>
+        <Bar dataKey="uv" barSize={10} onClick={handleClick}>
           {gridData.map((entry, index) => (
             <Cell
               cursor="pointer"
