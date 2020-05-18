@@ -1,4 +1,9 @@
-const Data = [
+export const WorldData = {
+  id: "US",
+  value: 234567,
+};
+
+export const UsaData = [
   {
     id: "US-AL",
     value: 4447100,
@@ -200,4 +205,3 @@ const Data = [
     value: 493782,
   },
 ];
-export default Data;

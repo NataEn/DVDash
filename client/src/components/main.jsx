@@ -79,9 +79,17 @@ export default function Main() {
       </Row>
       <Row className="justify-content-around p-2">
         <Col sm={12} md={5} className="bg-white">
-          <h4>World map</h4>
-          <Map />
-          <VerticalChart />
+          <Row>
+            <h4>World map</h4>
+          </Row>
+          <Row>
+            <Col>
+              <Map />
+            </Col>
+            <Col>
+              <VerticalChart />
+            </Col>
+          </Row>
         </Col>
         <Col
           sm={12}
