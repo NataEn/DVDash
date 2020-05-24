@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { connect } = require("../connections");
+const { connect } = require("../mysqlServices");
 
-router.get("/", function (req, res, next) {
-  connect();
-  res.send("API is working properly");
+router.get("/", async function (req, res, next) {
+  const data = await connect();
+  const dataValue = data[0][123];
+  res.send(`API is working properly from test api, data: ${dataValue}`);
 });
 
 module.exports = router;

@@ -54,7 +54,7 @@ const data = [
   },
 ];
 
-export default function IncomPerMonth(props) {
+const IncomPerMonth = (props) => {
   return (
     <ComposedChart
       width={500}
@@ -74,4 +74,5 @@ export default function IncomPerMonth(props) {
       <Line type="monotone" dataKey="customers" stroke="#ff7300" />
     </ComposedChart>
   );
-}
+};
+export default IncomPerMonth;

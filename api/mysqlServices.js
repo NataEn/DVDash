@@ -1,33 +1,34 @@
 const mysql = require("mysql2/promise");
+const { TOTAL_REVENUE, TOTAL_WEEK_REVENUE } = require("./mysqlQueryBuilder");
 const dbCredentials = {
   // host: "mysqldb://mysql:3306/mysql-test", //see if this is correct
   host: "localhost",
-  port: 3306,
   user: "root",
-  password: "",
   database: "sakila",
-  connectTimeout: 15000,
-  timezone: "utc",
 };
+//for single connection
 async function connect() {
-  try {
-    const connection = await mysql.createConnection(dbCredentials);
-    const actorsdata = await connection.query(
-      "SELECT * FROM actor",
-      (actors) => {
-        console.table("actors:", actors);
-      }
-    );
-  } catch (err) {
-    console.error(err);
-  }
+  const connection = await mysql.createConnection(dbCredentials);
+  const [row, fields] = await connection.query("select 123");
+  return row;
 }
 
-module.exports = { connect };
+async function totalRevenue() {
+  const connection = await mysql.createConnection(dbCredentials);
+  const [row, fields] = await connection.query(TOTAL_REVENUE);
+  console.log("total revenue", row);
+  return row;
+}
+async function weekRevenue() {
+  const connection = await mysql.createConnection(dbCredentials);
+  const [row, fields] = await connection.query(TOTAL_WEEK_REVENUE);
+  return row;
+}
+
+module.exports = { connect, totalRevenue, weekRevenue };
 
 async function executeNewQuery(params) {
   const pool = await mysql.createPool(dbCredentials);
-  //const db = await mysql.createConnection(dbCredentials);
   const promises = [];
   console.log("params for query", params);
   const { sql, values } = buildQuery.newQuery("onomagic_events", params);
