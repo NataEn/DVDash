@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BarChart, Bar, Cell } from "recharts";
+import { BarChart, Bar, Cell, CartesianGrid } from "recharts";
 
 export default function SmallBarChart(props) {
   debugger;
@@ -17,11 +17,18 @@ export default function SmallBarChart(props) {
       {!!gridData ? (
         <>
           <BarChart width={90} height={50} data={gridData}>
-            <Bar dataKey="value" barSize={10} onClick={handleClick}>
+            {/* <CartesianGrid strokeDasharray="3 3" /> */}
+            <Bar
+              dataKey="value"
+              barSize={10}
+              onClick={handleClick}
+              background={{ fill: "#eee" }}
+            >
               {gridData.map((entry, index) => (
                 <Cell
                   cursor="pointer"
                   fill={index === activeIndex ? "#82ca9d" : "#8884d8"}
+                  // background={{ fill: "#eee" }}
                   key={`cell-${index}`}
                 />
               ))}

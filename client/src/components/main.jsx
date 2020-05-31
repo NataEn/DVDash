@@ -8,20 +8,30 @@ import FilterPie from "./filterPie";
 import { VerticalChart } from "./verticalBarchart";
 import Map from "./map";
 import IncomPerMonth from "./incomePerMonth";
-import { getTotalRevenue, getWeekRevenue } from "../apiCalls/mysalDataQuery";
-import { week_revenue_data } from "../utils";
+import {
+  getTotals,
+  getWeekRevenue,
+  getWeekCustomers,
+} from "../apiCalls/mysqlDataQuery";
+import { week_data } from "../utils";
 
 export default function Main() {
   const [totalRevenue, setTootalRevenue] = useState({});
+  const [totalCustomers, setTotalCustomers] = useState({});
   const [weekRevenue, setWeekRevenue] = useState([]);
+  const [weekCustomers, setWeekCustomers] = useState([]);
 
   useEffect(async () => {
-    const revenue = await getTotalRevenue();
+    const totals = await getTotals();
     const thisWeekRevenue = await getWeekRevenue();
-    const week_data = week_revenue_data(thisWeekRevenue);
-    console.log("week", week_data);
-    setTootalRevenue(revenue[0]);
-    setWeekRevenue(week_data);
+    const thisWeekCustomers = await getWeekCustomers();
+    const week_revenue = week_data(thisWeekRevenue);
+    const week_customers = week_data(thisWeekCustomers);
+    console.log("totals", thisWeekCustomers);
+    setTootalRevenue(totals[0][0]);
+    setTotalCustomers(totals[1][0]);
+    setWeekRevenue(week_revenue);
+    setWeekCustomers(week_customers);
   }, []);
 
   return (
@@ -70,21 +80,27 @@ export default function Main() {
                 {weekRevenue.length ? (
                   <SmallBarChart data={weekRevenue} />
                 ) : (
-                  <div></div>
+                  <div>No data available</div>
                 )}
               </Col>
             </Row>
             <Row className="p-1 bg-white d-flex flex-row">
               <Col lg={2} className="pl-0">
                 <Col sm={1}>
-                  <h5 className="font-weight-bold">#12345</h5>
+                  <h5 className="font-weight-bold">
+                    #{totalCustomers["total_customers_this_week"]}
+                  </h5>
                 </Col>
                 <Col className="d-flex">
-                  <div>Customers</div>
+                  <div>Week Customers</div>
                 </Col>
               </Col>
               <Col>
-                <SmallBarChart />
+                {weekCustomers.length ? (
+                  <SmallBarChart data={weekCustomers} />
+                ) : (
+                  <div>No data available</div>
+                )}
               </Col>
             </Row>
           </div>
