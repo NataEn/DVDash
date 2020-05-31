@@ -12,6 +12,7 @@ import {
   getTotals,
   getWeekRevenue,
   getWeekCustomers,
+  getWeekData,
 } from "../apiCalls/mysqlDataQuery";
 import { week_data } from "../utils";
 
@@ -23,6 +24,7 @@ export default function Main() {
 
   useEffect(async () => {
     const totals = await getTotals();
+    // const thisWeekData = await getWeekData();
     const thisWeekRevenue = await getWeekRevenue();
     const thisWeekCustomers = await getWeekCustomers();
     const week_revenue = week_data(thisWeekRevenue);
@@ -43,21 +45,21 @@ export default function Main() {
           className="d-flex justify-content-around align-items=center flex-column"
         >
           <div>
-            <Row className="p-1 bg-white">
+            <Row className="pl-1 pr-1 bg-white">
               <Col sm={1}>
-                <Icon className="fas fa-dollar-sign text-success border border-success rounded-circle" />
+                <Icon className=" fas fa-dollar-sign text-success border border-success rounded-circle" />
               </Col>
-              <Col className="d-flex flex-column align-items-start">
+              <Col className="d-flex flex-column align-items-start ml-2">
                 <div>{totalRevenue["total"]} $</div>
                 <div>Total Revenue</div>
               </Col>
               <Col></Col>
             </Row>
-            <Row className="p-1 bg-white">
+            <Row className="pl-1 pr-1 bg-white mb-2">
               <Col sm={1}>
                 <Icon className="fas fa-cubes rounded-circle" />
               </Col>
-              <Col className="d-flex flex-column align-items-start">
+              <Col className="d-flex flex-column align-items-start ml-2">
                 <div>{totalRevenue["total_today"]} $</div>
                 <div>Revenue Today</div>
               </Col>
@@ -65,11 +67,11 @@ export default function Main() {
             </Row>
           </div>
           <div>
-            <Row className="p-1 bg-white d-flex flex-row">
-              <Col lg={2} className="pl-0">
-                <Col sm={1}>
+            <Row className="pl-1 pr-1 bg-white d-flex flex-row mt-2">
+              <Col lg={4} className="pl-0">
+                <Col className=" text-left">
                   <h5 className="font-weight-bold">
-                    ${totalRevenue["total_this_week"]}
+                    $ {totalRevenue["total_this_week"]}
                   </h5>
                 </Col>
                 <Col className="d-flex">
@@ -84,11 +86,11 @@ export default function Main() {
                 )}
               </Col>
             </Row>
-            <Row className="p-1 bg-white d-flex flex-row">
-              <Col lg={2} className="pl-0">
-                <Col sm={1}>
+            <Row className="pl-1 pr-1 bg-white d-flex flex-row">
+              <Col lg={4} className="pl-0">
+                <Col className=" text-left">
                   <h5 className="font-weight-bold">
-                    #{totalCustomers["total_customers_this_week"]}
+                    # {totalCustomers["total_customers_this_week"]}
                   </h5>
                 </Col>
                 <Col className="d-flex">
