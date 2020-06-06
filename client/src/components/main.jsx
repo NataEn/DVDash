@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "reactstrap";
+import { Button, ButtonGroup } from "@material-ui/core";
 import Top10 from "./top10";
 import PieChart from "./pieChart";
 import SmallBarChart from "./smallBarChart";
@@ -21,17 +22,24 @@ export default function Main() {
   const [totalCustomers, setTotalCustomers] = useState({});
   const [weekRevenue, setWeekRevenue] = useState([]);
   const [weekCustomers, setWeekCustomers] = useState([]);
+  const [topTen, setTopTen] = useState([]);
 
   useEffect(async () => {
-    const totals = await getTotals();
-    // const thisWeekData = await getWeekData();
-    const thisWeekRevenue = await getWeekRevenue();
-    const thisWeekCustomers = await getWeekCustomers();
-    const week_revenue = week_data(thisWeekRevenue);
-    const week_customers = week_data(thisWeekCustomers);
-    console.log("totals", thisWeekCustomers);
-    setTootalRevenue(totals[0][0]);
-    setTotalCustomers(totals[1][0]);
+    const totals = await getTotals({
+      week: ["TOTAL_WEEK_REVENUE", "TOTAL_WEEK_CUSTOMERS"],
+    });
+    console.log("totals", totals);
+    const week_revenue = week_data(totals[1][0]);
+    const week_customers = week_data(totals[2][0]);
+    console.log(
+      "totals",
+      totals[0][0][0],
+      totals[0][0][1],
+      totals[1][0],
+      totals[2][0]
+    );
+    setTootalRevenue(totals[0][0][0][0]);
+    setTotalCustomers(totals[0][0][1][0]);
     setWeekRevenue(week_revenue);
     setWeekCustomers(week_customers);
   }, []);
@@ -112,6 +120,19 @@ export default function Main() {
           md={5}
           className="bg-white d-flex justify-content-around align-items=center flex-column"
         >
+          <Row className="d-flex justify-content-between">
+            <h4 className="text-left d-inline">Top 10</h4>
+            <ButtonGroup
+              color="primary"
+              aria-label="button group"
+              size="small"
+              className="d-inline"
+            >
+              <Button>Movies</Button>
+              <Button>Actors</Button>
+              <Button>Janres</Button>
+            </ButtonGroup>
+          </Row>
           <Top10 />
         </Col>
       </Row>

@@ -78,3 +78,24 @@
 /* .recharts-surface {
   width: 120% !important;
 } */
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1 {
+  background-color: rgb(139, 144, 153);
+  color: white;
+  border: black solid 1px;
+}
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1:focus {
+  outline: none !important;
+}
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1:hover {
+  text-decoration: none;
+  background-color: inherit;
+  color: white;
+  border: orange solid 1px;
+}
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1::after {
+  border-radius: 0.25rem;
+}
+
+.MuiButton-label > svg.MuiSvgIcon-root {
+  transform: rotate(90deg);
+}

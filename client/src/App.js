@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Main from "./components/main";
 import { callAPI } from "./components/fetchComponent";
+import Header from "./components/header";
 import "./App.css";
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">dvdash</header>
+      <Header />
       <Main className="App-main" />
       <footer className="App-footer">footer</footer>
       <p>{data}</p>
