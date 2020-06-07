@@ -1,0 +1,14 @@
+{
+  "name": "dvdash-2020",
+  "description": "dashboard for dvd rents based on the mysql sample db sakila",
+  "keywords": ["React", "Node", "MySQL", "Express"],
+  "repository": "https://github.com/NataEn/DVDash",
+  "success_url": "/",
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "addons": ["nodejs"]
+}
