@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
+    "postinstall": "cd api && npm install",
     "heroku-postbuild": "cd ../client && npm install && npm run build"
   },
   "dependencies": {
