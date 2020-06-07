@@ -40,6 +40,6 @@
       "last 1 safari version"
     ]
   },
-  "docker_proxy": "http://DVDash_api:3001",
-  "Proxy": "http://localhost:3001"
+  "docker_proxy": "http://DVDash_api:8080",
+  "Proxy": "http://localhost:8080"
 }

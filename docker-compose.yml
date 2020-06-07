@@ -17,6 +17,6 @@ services:
       dockerfile: Dockerfile
     image: natalie/dvdash
     ports:
-      - "3001:3001"
+      - "8080:8080"
     volumes:
       - ./server:/usr/src/app

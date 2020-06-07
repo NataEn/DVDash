@@ -3,9 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./api/bin/www",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "postinstall": "cd ./client && npm install"
+    "start-dev": "nodemon ./api/bin/www",
+    "start": "node ./api/bin/www",
+    "postinstall": "cd ./client && react-scripts build"
+  },
+  "engines": {
+    "node": "12.13.0",
+    "npm": "6.12.0"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -17,6 +21,13 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "mysql2": "^2.1.0"
+    "mysql2": "^2.1.0",
+    "bootstrap": "^4.4.1",
+    "moment": "^2.26.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "reactstrap": "^8.4.1",
+    "recharts": "^1.8.5"
   }
 }
