@@ -67,7 +67,7 @@ export const VerticalChart = (props) => {
             dataKey="uv"
             position="insideRight"
             fontSize="0.7rem"
-            fontWeight="600"
+            fontWeight={600}
           />
           <LabelList
             dataKey="name"
