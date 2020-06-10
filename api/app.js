@@ -21,7 +21,11 @@ app.use(cookieParser());
 // if (process.env.NODE_ENV === "production") {
 //   app.use("/", express.static(path.join(__dirname, "../client/build")));
 // }
-app.use("/", express.static(path.join(__dirname, "../client/build")));
+
+const static =
+  process.env.STATIC_PATH || path.join(__dirname, "../client/build");
+
+app.use("/", express.static(static));
 app.use("/msqlapi", mysqlRouter);
 app.use("/users", usersRouter);
 
@@ -38,7 +42,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.json({ error: err, message: err.message });
 });
 
 module.exports = app;

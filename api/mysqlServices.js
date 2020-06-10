@@ -2,13 +2,17 @@ const mysql = require("mysql2/promise");
 const queryBuilder = require("./mysqlQueryBuilder");
 const dbCredentials = {
   // host: "mysqldb://mysql:3306/mysql-test", //see if this is correct
-  host: "localhost",
-  user: "root",
+  host: process.env.MYSQL_HOST || "localhost",
+  user: process.env.MYSQL_USER || "root",
+  password: process.env.MYSQL_PASSWORD || "",
   database: "sakila",
   multipleStatements: true,
-  connectionLimit: 50,
-  connectTimeout: 20000,
+  connectionLimit: 10,
+  connectTimeout: 1000,
 };
+
+const pool = mysql.createPool(dbCredentials);
+
 //get specific sql string from queryBuilder
 const getSql = (dataType) => {
   const type = dataType.toUpperCase();
@@ -31,7 +35,6 @@ async function connect() {
 }
 
 async function totals(params) {
-  const pool = await mysql.createPool(dbCredentials);
   const promises = [];
   const totalsPromis = pool.query(
     queryBuilder.TOTAL_REVENUE + queryBuilder.TOTAL_CUSTOMERS
@@ -58,34 +61,3 @@ module.exports = {
   connect,
   totals,
 };
-
-async function executeNewQuery(params) {
-  const pool = await mysql.createPool(dbCredentials);
-  const promises = [];
-  console.log("params for query", params);
-  const { sql, values } = buildQuery.newQuery("onomagic_events", params);
-  const resultPromise = pool.query(sql, values);
-  promises.push(resultPromise);
-
-  if (params.compareInterval !== "null") {
-    compareParams = calculateCompareParams(params);
-    console.log("params for compare query", compareParams);
-    const { sql, values } = buildQuery.newQuery(
-      "onomagic_events",
-      compareParams
-    );
-    const compareResultPromise = pool.query(sql, values);
-    promises.push(compareResultPromise);
-  }
-  try {
-    const comparedResults = await Promise.all(promises);
-    console.log(
-      "sql results timezone start",
-      comparedResults[0][0],
-      comparedResults[0][0][0].rangeStart
-    );
-    return comparedResults;
-  } catch (err) {
-    console.log(`executeNewQuery error:${err}`);
-  }
-}
