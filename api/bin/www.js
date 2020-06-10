@@ -10,7 +10,7 @@ const http = require("http");
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || "8081");
+const port = normalizePort(process.env.PORT || "8082");
 app.set("port", port);
 
 /**
@@ -24,7 +24,7 @@ const server = http.createServer(app);
  */
 
 server.listen(port, "0.0.0.0", () => {
-  console.log("api listening on port 8081...");
+  console.log("api listening on port 8082...");
 });
 server.on("error", onError);
 server.on("listening", onListening);

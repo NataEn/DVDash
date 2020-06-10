@@ -81,7 +81,8 @@ img.logo {
 /* .recharts-surface {
   width: 120% !important;
 } */
-button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1 {
+
+button.MuiButtonBase-root.MuiButton-root.MuiButton-text {
   background-color: rgb(139, 144, 153);
   color: white;
   border: black solid 1px;
@@ -92,13 +93,14 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1:focu
 button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1:hover {
   text-decoration: none;
   background-color: inherit;
-  color: white;
+  color: white !important;
   border: orange solid 1px;
 }
 button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1::after {
-  border-radius: 0.25rem;
+  border-radius: 0.25rem !important;
 }
 
 .MuiButton-label > svg.MuiSvgIcon-root {
-  transform: rotate(90deg);
+  transform: rotate(90deg) !important;
+  color: white !important;
 }

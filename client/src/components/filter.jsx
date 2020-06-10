@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -15,12 +15,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FilterPie() {
+export default function Filter(props) {
   const classes = useStyles();
   const [state, setState] = useState({
     question: "",
-    name: "hai",
+    name: "hi",
   });
+  const [options, setOptions] = useState([]);
+  useEffect(() => {
+    setOptions([...props.options]);
+  });
+  const createOption = (optionObj) => {
+    return (
+      <option key={optionObj.name} value={optionObj.value}>
+        {optionObj.name}
+      </option>
+    );
+  };
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -42,14 +53,7 @@ export default function FilterPie() {
         }}
       >
         <option aria-label="None" value="" />
-        <option value={10}>Residental proximity</option>
-        <option value={20}>Gender</option>
-        <option value={30}>Janre</option>
-        <option value={30}>Rental rate</option>
-        <option value={30}>
-          Rental rate vs Proximity to Branch (make pie chart with inner and
-          outer radius)
-        </option>
+        {options.map((option) => createOption(option))}
       </NativeSelect>
       <FormHelperText>Some important helper text</FormHelperText>
     </FormControl>

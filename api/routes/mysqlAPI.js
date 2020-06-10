@@ -1,11 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { totals, weekRevenue, weekCustomers } = require("../mysqlServices");
+const {
+  totals,
+  weekRevenue,
+  weekCustomers,
+  top10,
+} = require("../mysqlServices");
 
 router.get("/totals", async function (req, res, next) {
   console.log("request", req.query);
   const dataTotals = await totals(req.query);
-  console.log(dataTotals);
   res.json(dataTotals);
 });
 
@@ -16,6 +20,10 @@ router.get("/revenue_this_week", async function (req, res, next) {
 router.get("/customers_this_week", async function (req, res, next) {
   const week_customers = await weekCustomers();
   res.json(week_customers);
+});
+router.get(`/top10`, async function (req, res, next) {
+  const top10Items = await top10(req.query);
+  res.json(top10Items[0]);
 });
 
 module.exports = router;

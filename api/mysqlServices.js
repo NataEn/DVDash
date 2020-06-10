@@ -56,8 +56,20 @@ async function totals(params) {
     console.log(`totals error:${err}`);
   }
 }
+async function top10(param) {
+  const top10Promis = pool.query(queryBuilder.TOP_10);
+
+  try {
+    const top10Result = await top10Promis;
+    console.log("sql results: top10", top10Result);
+    return top10Result;
+  } catch (err) {
+    console.log(`totals error:${err}`);
+  }
+}
 
 module.exports = {
   connect,
   totals,
+  top10,
 };

@@ -95,6 +95,7 @@ export default function Map() {
 
   return (
     <div>
+      123456
       <div id="chartdiv" style={{ width: "100%", height: "100%" }}></div>
     </div>
   );

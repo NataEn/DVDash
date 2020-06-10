@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "reactstrap";
-import { Button, ButtonGroup } from "@material-ui/core";
+
 import Top10 from "./top10";
 import PieChart from "./pieChart";
 import SmallBarChart from "./smallBarChart";
 import Icon from "@material-ui/core/Icon";
-import FilterPie from "./filterPie";
+import Filter from "./filter";
 import { VerticalChart } from "./verticalBarchart";
 import Map from "./map";
 import IncomPerMonth from "./incomePerMonth";
-import {
-  getTotals,
-  getWeekRevenue,
-  getWeekCustomers,
-  getWeekData,
-} from "../apiCalls/mysqlDataQuery";
+import { getTotals, getTop10 } from "../apiCalls/mysqlDataQuery";
 import { week_data } from "../utils";
+import store from "../store/filterOptions";
 
 export default function Main() {
   const [totalRevenue, setTootalRevenue] = useState({});
@@ -28,20 +24,16 @@ export default function Main() {
     const totals = await getTotals({
       week: ["TOTAL_WEEK_REVENUE", "TOTAL_WEEK_CUSTOMERS"],
     });
-    console.log("totals", totals);
     const week_revenue = week_data(totals[1][0]);
     const week_customers = week_data(totals[2][0]);
-    console.log(
-      "totals",
-      totals[0][0][0],
-      totals[0][0][1],
-      totals[1][0],
-      totals[2][0]
-    );
     setTootalRevenue(totals[0][0][0][0]);
     setTotalCustomers(totals[0][0][1][0]);
     setWeekRevenue(week_revenue);
     setWeekCustomers(week_customers);
+
+    const top10 = await getTop10();
+    console.log(top10);
+    setTopTen(top10);
   }, []);
 
   return (
@@ -120,27 +112,14 @@ export default function Main() {
           md={5}
           className="bg-white d-flex justify-content-around align-items=center flex-column"
         >
-          <Row className="d-flex justify-content-between">
-            <h4 className="text-left d-inline">Top 10</h4>
-            <ButtonGroup
-              color="primary"
-              aria-label="button group"
-              size="small"
-              className="d-inline"
-            >
-              <Button>Movies</Button>
-              <Button>Actors</Button>
-              <Button>Janres</Button>
-            </ButtonGroup>
-          </Row>
-          <Top10 />
+          <Top10 data={topTen} />
         </Col>
       </Row>
       <Row className="justify-content-around p-0">
         <Col sm={12} md={5} className="bg-white">
           <Row>
             <h4>World map</h4>
-            <FilterPie />
+            <Filter options={store.COUNTRIES} />
           </Row>
           <Row>
             <Col ms={12} lg={6}>
@@ -159,7 +138,7 @@ export default function Main() {
           <Row className=" justify-content-around p-2">
             <Col className="bg-white">
               <h3>Rental Data In selected area</h3>
-              <FilterPie />
+              <Filter options={store.AREA_FILTERS} />
               <PieChart />
             </Col>
           </Row>
