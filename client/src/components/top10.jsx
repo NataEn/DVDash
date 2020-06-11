@@ -11,43 +11,25 @@ import TableRow from "@material-ui/core/TableRow";
 import { Button, ButtonGroup } from "@material-ui/core";
 import { Row, Col } from "reactstrap";
 
-import { PromiseProvider } from "mongoose";
-
 //this function returns an object
 function createData(name, availability, sale) {
   return { name, availability, sale };
 }
 
-const columns = (filter) => [
+const columns = (filter, title) => [
   {
     id: filter,
-    label: filter[0].toUpperCase() + filter.slice(1),
+    label: title,
     minWidth: 20,
     align: "left",
+    format: (value) => value + 123,
   },
   {
-    id: "total-sales",
-    label: "Sale",
+    id: "total_sales",
+    label: "Sale $",
     minWidth: 30,
     align: "left",
-    format: (value) =>
-      `${Number(value / 100).toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-      })} $`,
   },
-];
-
-const rows = [
-  { name: "The Seven Samurai", availability: "In-stock", sale: 36750 },
-  { name: "Bonnie and Clyde", availability: "In-stock", sale: 54320 },
-  { name: "Reservoir Dogs", availability: "In-stock", sale: 246948 },
-  { name: "Airplane!", availability: "In-stock", sale: 435424 },
-  { name: "Pan's Labyrinth", availability: "In-stock", sale: 988118 },
-  { name: "Doctor Zhivago", availability: "In-stock", sale: 166613 },
-  { name: "The Deer Hunter", availability: "In-stock", sale: 395943 },
-  { name: "Up", availability: "In-stock", sale: 312619 },
-  { name: "Rocky", availability: "In-stock", sale: 438118 },
-  { name: "Memento", availability: "In-stock", sale: 35925 },
 ];
 
 const useStyles = makeStyles({
@@ -64,7 +46,8 @@ export default function Top10(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [rows, setRows] = useState([...props.data]);
-  const [filter, setFilter] = useState("title");
+  const [filter, setFilter] = useState("");
+  const [title, setTitle] = useState("");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -76,8 +59,9 @@ export default function Top10(props) {
   };
   const handelFilterButton = (optionArr) => {
     console.log("on click", props.data, optionArr);
-    // setFilter([...props.data[optionArr[0]]]);
-    // setRows([...props.data[optionArr[1]]]);
+    setFilter(optionArr[1]);
+    setTitle(optionArr[0]);
+    setRows(props.data[optionArr[2]]);
   };
 
   return (
@@ -90,13 +74,15 @@ export default function Top10(props) {
           size="small"
           className="d-inline"
         >
-          <Button onClick={() => handelFilterButton(["movies", 2])}>
+          <Button onClick={() => handelFilterButton(["Movies", "title", 2])}>
             Movies
           </Button>
-          <Button onClick={() => handelFilterButton(["actors", 1])}>
+          <Button
+            onClick={() => handelFilterButton(["Actors", "actor_name", 1])}
+          >
             Actors
           </Button>
-          <Button onClick={() => handelFilterButton(["janres", 0])}>
+          <Button onClick={() => handelFilterButton(["Janres", "category", 0])}>
             Janres
           </Button>
         </ButtonGroup>
@@ -106,33 +92,22 @@ export default function Top10(props) {
           <Table stickyHeader small padding={"none"} aria-label="sticky table">
             <TableHead>
               <TableRow>
-                {columns(filter).map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
+                <TableCell>{title}</TableCell>
+                <TableCell>Sales</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+                .map((row, index) => {
                   return (
-                    <TableRow hover key={row.name}>
-                      {columns(filter).map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
+                    <TableRow hover key={index}>
+                      <TableCell key={`${index}_${filter}`} align={"left"}>
+                        {row[filter]}
+                      </TableCell>
+                      <TableCell key={`${index}_${row[filter]}`} align={"left"}>
+                        {row["total_sales"]} $
+                      </TableCell>
                     </TableRow>
                   );
                 })}
