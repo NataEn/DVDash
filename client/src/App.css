@@ -85,7 +85,7 @@ img.logo {
 button.MuiButtonBase-root.MuiButton-root.MuiButton-text {
   background-color: rgb(139, 144, 153);
   color: white;
-  border: black solid 1px;
+  border: #282c34 solid 2px;
 }
 button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1:focus {
   outline: none !important;
@@ -94,7 +94,7 @@ button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1:hove
   text-decoration: none;
   background-color: inherit;
   color: white !important;
-  border: orange solid 1px;
+  border: #28a745 solid 2px;
 }
 button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1::after {
   border-radius: 0.25rem !important;
