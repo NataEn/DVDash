@@ -24,7 +24,7 @@ export default function Filter(props) {
   const [options, setOptions] = useState([]);
   useEffect(() => {
     setOptions([...props.options]);
-  });
+  }, []);
   const createOption = (optionObj) => {
     return (
       <option key={optionObj.name} value={optionObj.value}>

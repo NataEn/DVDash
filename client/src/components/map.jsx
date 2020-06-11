@@ -91,7 +91,7 @@ export default function Map() {
         chart.dispose();
       }
     };
-  });
+  }, []);
 
   return (
     <div>

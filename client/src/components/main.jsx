@@ -9,34 +9,10 @@ import Filter from "./filter";
 import { VerticalChart } from "./verticalBarchart";
 import Map from "./map";
 import IncomPerMonth from "./incomePerMonth";
-import { getTotals, getTop10 } from "../apiCalls/mysqlDataQuery";
-import { week_data } from "../utils";
 import store from "../store/filterOptions";
 
-export default function Main() {
-  const [totalRevenue, setTootalRevenue] = useState({});
-  const [totalCustomers, setTotalCustomers] = useState({});
-  const [weekRevenue, setWeekRevenue] = useState([]);
-  const [weekCustomers, setWeekCustomers] = useState([]);
-  const [topTen, setTopTen] = useState([]);
-
-  useEffect(() => {
-    (async function () {
-      const totals = await getTotals({
-        week: ["TOTAL_WEEK_REVENUE", "TOTAL_WEEK_CUSTOMERS"],
-      });
-      const week_revenue = week_data(totals[1][0]);
-      const week_customers = week_data(totals[2][0]);
-      setTootalRevenue(totals[0][0][0][0]);
-      setTotalCustomers(totals[0][0][1][0]);
-      setWeekRevenue(week_revenue);
-      setWeekCustomers(week_customers);
-
-      const top10 = await getTop10();
-      setTopTen(top10);
-    })();
-  }, []);
-
+export default function Main(props) {
+  const data = props.data;
   return (
     <div className="bg-light ">
       <Row className="justify-content-around p-2">
@@ -51,7 +27,7 @@ export default function Main() {
                 <Icon className=" fas fa-dollar-sign text-success border border-success rounded-circle" />
               </Col>
               <Col className="d-flex flex-column align-items-start ml-2">
-                <div>{totalRevenue["total"]} $</div>
+                <div>{data.totalRevenue["total"]} $</div>
                 <div>Total Revenue</div>
               </Col>
               <Col></Col>
@@ -61,7 +37,7 @@ export default function Main() {
                 <Icon className="fas fa-cubes rounded-circle" />
               </Col>
               <Col className="d-flex flex-column align-items-start ml-2">
-                <div>{totalRevenue["total_today"]} $</div>
+                <div>{data.totalRevenue["total_today"]} $</div>
                 <div>Revenue Today</div>
               </Col>
               <Col></Col>
@@ -72,7 +48,7 @@ export default function Main() {
               <Col lg={4} className="pl-0">
                 <Col className=" text-left">
                   <h5 className="font-weight-bold">
-                    $ {totalRevenue["total_this_week"]}
+                    $ {data.totalRevenue["total_this_week"]}
                   </h5>
                 </Col>
                 <Col className="d-flex">
@@ -80,8 +56,8 @@ export default function Main() {
                 </Col>
               </Col>
               <Col>
-                {weekRevenue.length ? (
-                  <SmallBarChart data={weekRevenue} />
+                {data.weekRevenue.length ? (
+                  <SmallBarChart data={data.weekRevenue} />
                 ) : (
                   <div>No data available</div>
                 )}
@@ -91,7 +67,7 @@ export default function Main() {
               <Col lg={4} className="pl-0">
                 <Col className=" text-left">
                   <h5 className="font-weight-bold">
-                    # {totalCustomers["total_customers_this_week"]}
+                    # {data.totalCustomers["total_customers_this_week"]}
                   </h5>
                 </Col>
                 <Col className="d-flex">
@@ -99,8 +75,8 @@ export default function Main() {
                 </Col>
               </Col>
               <Col>
-                {weekCustomers.length ? (
-                  <SmallBarChart data={weekCustomers} />
+                {data.weekCustomers.length ? (
+                  <SmallBarChart data={data.weekCustomers} />
                 ) : (
                   <div>No data available</div>
                 )}
@@ -113,7 +89,7 @@ export default function Main() {
           md={5}
           className="bg-white d-flex justify-content-around align-items=center flex-column"
         >
-          <Top10 data={topTen} />
+          <Top10 data={data.topTen} />
         </Col>
       </Row>
       <Row className="justify-content-around p-0">
