@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -29,7 +29,6 @@ export default function Top10(props) {
   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState("");
   const [title, setTitle] = useState("");
-  const moviesBtn = useRef(null);
   useEffect(() => {
     setFilter("actor_name");
     setTitle("Actors");
@@ -62,10 +61,7 @@ export default function Top10(props) {
           size="small"
           className="d-inline"
         >
-          <Button
-            onClick={() => handelFilterButton(["Movies", "title", 2])}
-            ref={moviesBtn}
-          >
+          <Button onClick={() => handelFilterButton(["Movies", "title", 2])}>
             Movies
           </Button>
           <Button
