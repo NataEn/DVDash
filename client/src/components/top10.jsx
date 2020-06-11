@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -9,32 +9,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { Button, ButtonGroup } from "@material-ui/core";
+import { titleCase } from "../utils";
 import { Row, Col } from "reactstrap";
-
-//this function returns an object
-function createData(name, availability, sale) {
-  return { name, availability, sale };
-}
-
-const columns = (filter, title) => [
-  {
-    id: filter,
-    label: title,
-    minWidth: 20,
-    align: "left",
-    format: (value) => value + 123,
-  },
-  {
-    id: "total_sales",
-    label: "Sale $",
-    minWidth: 30,
-    align: "left",
-  },
-];
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: "90%",
+    maxWidth: "80%",
+    maxHeight: "90%",
   },
   container: {
     maxHeight: 200,
@@ -44,10 +25,17 @@ const useStyles = makeStyles({
 export default function Top10(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [rows, setRows] = useState([...props.data]);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState("");
   const [title, setTitle] = useState("");
+  const moviesBtn = useRef(null);
+  useEffect(() => {
+    setFilter("actor_name");
+    setTitle("Actors");
+    setRows([...props.data[1]]);
+    console.log("actors", props.data[1]);
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -74,7 +62,10 @@ export default function Top10(props) {
           size="small"
           className="d-inline"
         >
-          <Button onClick={() => handelFilterButton(["Movies", "title", 2])}>
+          <Button
+            onClick={() => handelFilterButton(["Movies", "title", 2])}
+            ref={moviesBtn}
+          >
             Movies
           </Button>
           <Button
@@ -103,7 +94,7 @@ export default function Top10(props) {
                   return (
                     <TableRow hover key={index}>
                       <TableCell key={`${index}_${filter}`} align={"left"}>
-                        {row[filter]}
+                        {titleCase(row[filter])}
                       </TableCell>
                       <TableCell key={`${index}_${row[filter]}`} align={"left"}>
                         {row["total_sales"]} $

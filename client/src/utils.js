@@ -19,6 +19,16 @@ const week_data = (data) => {
   console.log(list);
   return list;
 };
+
+const titleCase = (string) => {
+  const severalWords = string.split(" ");
+  let titleString = "";
+  for (let word of severalWords) {
+    titleString += `${word[0].toUpperCase()}${word.slice(1).toLowerCase()} `;
+  }
+  return titleString;
+};
 module.exports = {
   week_data,
+  titleCase,
 };

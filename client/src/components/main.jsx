@@ -89,7 +89,7 @@ export default function Main(props) {
           md={5}
           className="bg-white d-flex justify-content-around align-items=center flex-column"
         >
-          <Top10 data={data.topTen} />
+          {data.topTen.length ? <Top10 data={data.topTen} /> : ""}
         </Col>
       </Row>
       <Row className="justify-content-around p-0">
