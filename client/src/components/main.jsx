@@ -20,20 +20,21 @@ export default function Main() {
   const [weekCustomers, setWeekCustomers] = useState([]);
   const [topTen, setTopTen] = useState([]);
 
-  useEffect(async () => {
-    const totals = await getTotals({
-      week: ["TOTAL_WEEK_REVENUE", "TOTAL_WEEK_CUSTOMERS"],
-    });
-    const week_revenue = week_data(totals[1][0]);
-    const week_customers = week_data(totals[2][0]);
-    setTootalRevenue(totals[0][0][0][0]);
-    setTotalCustomers(totals[0][0][1][0]);
-    setWeekRevenue(week_revenue);
-    setWeekCustomers(week_customers);
+  useEffect(() => {
+    (async function () {
+      const totals = await getTotals({
+        week: ["TOTAL_WEEK_REVENUE", "TOTAL_WEEK_CUSTOMERS"],
+      });
+      const week_revenue = week_data(totals[1][0]);
+      const week_customers = week_data(totals[2][0]);
+      setTootalRevenue(totals[0][0][0][0]);
+      setTotalCustomers(totals[0][0][1][0]);
+      setWeekRevenue(week_revenue);
+      setWeekCustomers(week_customers);
 
-    const top10 = await getTop10();
-    console.log(top10);
-    setTopTen(top10);
+      const top10 = await getTop10();
+      setTopTen(top10);
+    })();
   }, []);
 
   return (

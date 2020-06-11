@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { BarChart, Bar, Cell, CartesianGrid } from "recharts";
 
 export default function SmallBarChart(props) {
-  debugger;
   console.log("data ", props.data);
   const [gridData, setGridData] = useState(props.data);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleClick = (event) => {
-    console.log(event.payload);
+    // console.log(event.payload);
     const index = gridData.indexOf(event.payload);
     setActiveIndex(index);
   };

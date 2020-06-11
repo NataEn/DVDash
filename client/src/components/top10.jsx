@@ -21,7 +21,7 @@ function createData(name, availability, sale) {
 const columns = (filter) => [
   {
     id: filter,
-    label: "Availability",
+    label: filter[0].toUpperCase() + filter.slice(1),
     minWidth: 20,
     align: "left",
   },
@@ -63,12 +63,8 @@ export default function Top10(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState([...props.data]);
   const [filter, setFilter] = useState("title");
-
-  useEffect(() => {
-    setRows([...props.data]);
-  });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -78,8 +74,10 @@ export default function Top10(props) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const handelFilterButton = (e) => {
-    console.log(e.target);
+  const handelFilterButton = (optionArr) => {
+    console.log("on click", props.data, optionArr);
+    // setFilter([...props.data[optionArr[0]]]);
+    // setRows([...props.data[optionArr[1]]]);
   };
 
   return (
@@ -92,9 +90,15 @@ export default function Top10(props) {
           size="small"
           className="d-inline"
         >
-          <Button onClick={handelFilterButton}>Movies</Button>
-          <Button>Actors</Button>
-          <Button>Janres</Button>
+          <Button onClick={() => handelFilterButton(["movies", 2])}>
+            Movies
+          </Button>
+          <Button onClick={() => handelFilterButton(["actors", 1])}>
+            Actors
+          </Button>
+          <Button onClick={() => handelFilterButton(["janres", 0])}>
+            Janres
+          </Button>
         </ButtonGroup>
       </Row>
       <Paper className={classes.root}>
@@ -119,7 +123,7 @@ export default function Top10(props) {
                 .map((row) => {
                   return (
                     <TableRow hover key={row.name}>
-                      {columns.map((column) => {
+                      {columns(filter).map((column) => {
                         const value = row[column.id];
                         return (
                           <TableCell key={column.id} align={column.align}>
