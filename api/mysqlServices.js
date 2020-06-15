@@ -44,7 +44,7 @@ const arrangeResults = (resultsArr) => {
   }
   console.log(noBuffersResults);
   const objectOfTotalResults = {};
-  const keys = ["total", "month", "week"];
+  const keys = ["total", "year", "month", "week"];
   //construct an object of results
   for (let i = 0; i < noBuffersResults.length; i++) {
     if (i === 0) {
@@ -64,10 +64,23 @@ const arrangeResults = (resultsArr) => {
 
 async function totals(params) {
   const promises = [];
-  const totalsPromis = pool.query(
-    queryBuilder.TOTAL_REVENUE + queryBuilder.TOTAL_CUSTOMERS
-  );
   promises.push(totalsPromis);
+  if (params.total) {
+    const totalDataTypes = params.total.split(",");
+    for (let totalDataType of totalDataTypes) {
+      const sql = getSql(totalDataType, "");
+      const dataTypePromis = pool.query(sql);
+      promises.push(dataTypePromis);
+    }
+  }
+  if (params.year) {
+    const yearDataTypes = params.year.split(",");
+    for (let yearDataType of yearDataTypes) {
+      const sql = getSql(yearDataType, "YEAR");
+      const dataTypePromis = pool.query(sql);
+      promises.push(dataTypePromis);
+    }
+  }
   if (params.month) {
     const monthDataTypes = params.month.split(",");
     for (let monthDataType of monthDataTypes) {
@@ -75,22 +88,22 @@ async function totals(params) {
       const dataTypePromis = pool.query(sql);
       promises.push(dataTypePromis);
     }
-    if (params.week) {
-      const weekDataTypes = params.week.split(",");
-      for (let weekDataType of weekDataTypes) {
-        const sql = getSql(weekDataType, "WEEK");
-        const dataTypePromis = pool.query(sql);
-        promises.push(dataTypePromis);
-      }
+  }
+  if (params.week) {
+    const weekDataTypes = params.week.split(",");
+    for (let weekDataType of weekDataTypes) {
+      const sql = getSql(weekDataType, "WEEK");
+      const dataTypePromis = pool.query(sql);
+      promises.push(dataTypePromis);
     }
-    try {
-      const totalsResults = await Promise.all(promises);
-      const arrangedResults = arrangeResults(totalsResults);
-      console.log("sql results ", arrangedResults);
-      return arrangedResults;
-    } catch (err) {
-      console.log(`totals error:${err}`);
-    }
+  }
+  try {
+    const totalsResults = await Promise.all(promises);
+    const arrangedResults = arrangeResults(totalsResults);
+    console.log("sql results ", arrangedResults);
+    return arrangedResults;
+  } catch (err) {
+    console.log(`totals error:${err}`);
   }
 }
 async function top10(param) {

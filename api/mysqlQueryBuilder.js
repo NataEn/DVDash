@@ -12,32 +12,97 @@ SUM(
     when YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
     then amount
     ELSE 0
-  END) AS total_this_year,
+  END) AS total_revenue_this_year,
 SUM(
   case MONTH(date(payment_date))
     when MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
     then amount
     ELSE 0
-  END) AS total_this_month,
+  END) AS total_revenue_this_month,
 SUM(
   case YEARWEEK(date(payment_date))
     when YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
     then amount
     ELSE 0
-  END) AS total_this_week,
+  END) AS total_revenue_this_week,
 SUM(
   case date(payment_date)
     when DATE_SUB(CURDATE(),INTERVAL 15 YEAR)
     then amount
   ELSE 0
- end) AS total_today
+ end) AS total_revenue_today
  FROM payment;`;
-const TOTAL_ORDERS = ``;
+const TOTAL_ORDERS = `
+SELECT  
+SUM(amount)AS total,
+SUM(
+  case YEAR(date(payment_date))
+    when YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    then 1
+    ELSE 0
+  END) AS total_orders_this_year,
+SUM(
+  case MONTH(date(payment_date))
+    when MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    then 1
+    ELSE 0
+  END) AS total_orders_this_month,
+SUM(
+  case YEARWEEK(date(payment_date))
+    when YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    then 1
+    ELSE 0
+  END) AS total_orders_this_week,
+SUM(
+  case date(payment_date)
+    when DATE_SUB(CURDATE(),INTERVAL 15 YEAR)
+    then 1
+  ELSE 0
+ end) AS total_orders_today
+ FROM payment;
+`;
 const TOTAL_CUSTOMERS = `
- SELECT  
+SELECT  
 COUNT(*) AS total_customers,
 COUNT(case when (gender='F') then 1 end) AS total_female_customers,
 COUNT(case when (gender='M') then 1 end)AS total_male_customers,
+COUNT(case when YEAR(date(create_date))=YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    then 1
+  END) AS total_customers_this_year,
+  
+  COUNT(
+  case 
+  when YEAR(date(create_date))= YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  AND (gender='F')
+    then 1
+  END) AS total_female_customers_this_year,
+  
+  COUNT(
+  case 
+  when YEAR(date(create_date))=YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  AND (gender='M')
+    then 1
+  END) AS total_male_customers_this_year,
+  
+  
+  COUNT(case when MONTH(date(create_date))=MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    then 1
+  END) AS total_customers_this_month,
+  
+  COUNT(
+  case 
+  when MONTH(date(create_date))= MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  AND (gender='F')
+    then 1
+  END) AS total_female_customers_this_month,
+  
+  COUNT(
+  case 
+  when MONTH(date(create_date))=MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  AND (gender='M')
+    then 1
+  END) AS total_male_customers_this_month,
+
 COUNT(case when YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
     then 1
   END) AS total_customers_this_week,
@@ -73,7 +138,6 @@ end) AS total_customers_today,
   AND (gender='M')
     then 1
  end) AS total_male_customers_today
- 
  FROM customer;
  `;
 const TOTAL_WEEK_REVENUE = `
