@@ -54,7 +54,7 @@ export default function Top10(props) {
   return (
     <>
       <Row className="d-flex justify-content-between p-0">
-        <h4 className="text-left d-inline">Top 10</h4>
+        <h4 className="text-center d-inline">Top 10 {title}</h4>
         <ButtonGroup
           color="primary"
           aria-label="button group"

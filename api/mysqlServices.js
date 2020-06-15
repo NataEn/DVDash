@@ -14,13 +14,18 @@ const dbCredentials = {
 const pool = mysql.createPool(dbCredentials);
 
 //get specific sql string from queryBuilder
-const getSql = (dataType) => {
+const getSql = (dataType,timeExtent=null) => {
   const type = dataType.toUpperCase();
-
-  if (dataType.includes("TOTAL_WEEK_")) {
+switch(timeExtent){
+  case "WEEK":
     let weekType = dataType.split("_")[2]; //will return the week type: customers or revenue
     return queryBuilder[`TOTAL_WEEK_${weekType}`];
-  }
+  
+  case "MONTH":
+    let monthType = dataType.split("_")[2]; //will return the week type: customers or revenue
+    return queryBuilder[`TOTAL_MONTH_${monthType}`];
+}
+  
   if (dataType.includes("TOTAL_")) {
     let totalType = dataType.split("_")[1]; //will return the 'total' type: customers or revenue
     return queryBuilder[`TOTAL_${totalType}`];
@@ -43,7 +48,14 @@ async function totals(params) {
   if (params.week) {
     const weekDataTypes = params.week.split(",");
     for (let weekDataType of weekDataTypes) {
-      const sql = getSql(weekDataType);
+      const sql = getSql(weekDataType,"WEEK");
+      const dataTypePromis = pool.query(sql);
+      promises.push(dataTypePromis);
+    }
+    if(params.month){
+      const weekDataTypes = params.month.split(",");
+    for (let monthDataType of monthDataTypes) {
+      const sql = getSql(monthDataType);
       const dataTypePromis = pool.query(sql);
       promises.push(dataTypePromis);
     }

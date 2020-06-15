@@ -54,7 +54,7 @@ const data = [
   },
 ];
 
-const IncomPerMonth = (props) => {
+const ColumnGrid = (props) => {
   return (
     <ComposedChart
       width={500}
@@ -75,4 +75,4 @@ const IncomPerMonth = (props) => {
     </ComposedChart>
   );
 };
-export default IncomPerMonth;
+export default ColumnGrid;

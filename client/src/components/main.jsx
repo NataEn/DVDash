@@ -8,7 +8,7 @@ import Icon from "@material-ui/core/Icon";
 import Filter from "./filter";
 import { VerticalChart } from "./verticalBarchart";
 import Map from "./map";
-import IncomPerMonth from "./incomePerMonth";
+import ColumnGrid from "./columnGrid";
 import store from "../store/filterOptions";
 
 export default function Main(props) {
@@ -132,7 +132,7 @@ export default function Main(props) {
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
           <h3>Net Incom for every month</h3>
-          <IncomPerMonth data={"some data"} />
+          <ColumnGrid data={"some data"} />
         </Col>
         <Col
           sm={12}
@@ -140,7 +140,7 @@ export default function Main(props) {
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
           <h3>Rents per store</h3>
-          <IncomPerMonth data={"some data"} />
+          <ColumnGrid data={"some data"} />
         </Col>
       </Row>
     </div>

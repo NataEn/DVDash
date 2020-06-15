@@ -21,7 +21,6 @@ SUM(
  end) AS total_today
  FROM payment;`;
 const TOTAL_CUSTOMERS = `
-
  SELECT  
 COUNT(*) AS total_customers,
 COUNT(case when (gender='F') then 1 end) AS total_female_customers,
@@ -79,6 +78,34 @@ FROM customer
 WHERE YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
 GROUP BY date(create_date), day_name;`;
 
+const TOTAL_WEEK_ORDERS = `
+SELECT DAYNAME(payment_date) AS day_name, DATE(payment_date) as date,
+COUNT(*) AS total_count
+FROM payment
+WHERE YEARWEEK(date(payment_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+GROUP BY date(payment_date), day_name;`;
+
+const TOTAL_MONTH_REVENUE = `
+SELECT MONTH(payment_date) AS month_num,
+SUM(amount) as revenue
+FROM payment
+GROUP BY MONTH(payment_date);
+`;
+const TOTAL_MONTH_CUSTOMERS = `
+SELECT MONTH(create_date) AS month_num,
+count(case when gender='F' then 1 end) as female_cnt,
+count(case when gender='M' then 1 end) as male_cnt,
+COUNT(*) AS total_customers
+FROM customer
+GROUP BY MONTH(create_date);
+`;
+const TOTAL_MONTH_ORDERS = `
+SELECT MONTH(payment_date) AS month_num,
+COUNT(*) AS total_orders
+FROM payment
+GROUP BY MONTH(payment_date);
+`;
+
 const TOP_10 = `
 SELECT
 c.name AS category, SUM(p.amount) AS total_sales
@@ -120,6 +147,10 @@ module.exports = {
   TOP_10,
   TOTAL_REVENUE,
   TOTAL_CUSTOMERS,
+  TOTAL_MONTH_ORDERS,
+  TOTAL_MONTH_REVENUE,
+  TOTAL_MONTH_CUSTOMERS,
+  TOTAL_WEEK_ORDERS,
   TOTAL_WEEK_REVENUE,
   TOTAL_WEEK_CUSTOMERS,
 };
