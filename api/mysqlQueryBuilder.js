@@ -140,13 +140,13 @@ end) AS total_customers_today,
  end) AS total_male_customers_today
  FROM customer;
  `;
-const TOTAL_WEEK_REVENUE = `
+const WEEK_REVENUE = `
 SELECT DAYNAME(payment_date) AS day_name,date(payment_date) as date,
 SUM(amount) as revenue
 FROM payment
 WHERE YEARWEEK(date(payment_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
 GROUP BY date(payment_date),day_name;`;
-const TOTAL_WEEK_CUSTOMERS = `
+const WEEK_CUSTOMERS = `
 SELECT DAYNAME(create_date) AS day_name, DATE(create_date) as date,
 count(case when gender='F' then 1 end) as female_cnt,
 count(case when gender='M' then 1 end) as male_cnt,
@@ -155,20 +155,20 @@ FROM customer
 WHERE YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
 GROUP BY date(create_date), day_name;`;
 
-const TOTAL_WEEK_ORDERS = `
+const WEEK_ORDERS = `
 SELECT DAYNAME(payment_date) AS day_name, DATE(payment_date) as date,
 COUNT(*) AS total_count
 FROM payment
 WHERE YEARWEEK(date(payment_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
 GROUP BY date(payment_date), day_name;`;
 
-const TOTAL_MONTH_REVENUE = `
+const MONTH_REVENUE = `
 SELECT MONTH(payment_date) AS month_num,
 SUM(amount) as revenue
 FROM payment
 GROUP BY MONTH(payment_date);
 `;
-const TOTAL_MONTH_CUSTOMERS = `
+const MONTH_CUSTOMERS = `
 SELECT MONTH(create_date) AS month_num,
 count(case when gender='F' then 1 end) as female_cnt,
 count(case when gender='M' then 1 end) as male_cnt,
@@ -176,19 +176,19 @@ COUNT(*) AS total_customers
 FROM customer
 GROUP BY MONTH(create_date);
 `;
-const TOTAL_MONTH_ORDERS = `
+const MONTH_ORDERS = `
 SELECT MONTH(payment_date) AS month_num,
 COUNT(*) AS total_orders
 FROM payment
 GROUP BY MONTH(payment_date);
 `;
-const TOTAL_YEAR_REVENUE = `
+const YEAR_REVENUE = `
 SELECT YEAR(payment_date) AS year_num,
 SUM(amount) as revenue
 FROM payment
 GROUP BY YEAR(payment_date);
 `;
-const TOTAL_YEAR_CUSTOMERS = `
+const YEAR_CUSTOMERS = `
 SELECT YEAR(create_date) AS year_num,
 count(case when gender='F' then 1 end) as female_cnt,
 count(case when gender='M' then 1 end) as male_cnt,
@@ -196,7 +196,7 @@ COUNT(*) AS total_customers
 FROM customer
 GROUP BY YEAR(create_date);
 `;
-const TOTAL_YEAR_ORDERS = `
+const YEAR_ORDERS = `
 SELECT YEAR(payment_date) AS year_num,
 COUNT(*) AS total_orders
 FROM payment
@@ -245,13 +245,13 @@ module.exports = {
   TOTAL_REVENUE,
   TOTAL_CUSTOMERS,
   TOTAL_ORDERS,
-  TOTAL_YEAR_ORDERS,
-  TOTAL_YEAR_REVENUE,
-  TOTAL_YEAR_CUSTOMERS,
-  TOTAL_MONTH_ORDERS,
-  TOTAL_MONTH_REVENUE,
-  TOTAL_MONTH_CUSTOMERS,
-  TOTAL_WEEK_ORDERS,
-  TOTAL_WEEK_REVENUE,
-  TOTAL_WEEK_CUSTOMERS,
+  YEAR_ORDERS,
+  YEAR_REVENUE,
+  YEAR_CUSTOMERS,
+  MONTH_ORDERS,
+  MONTH_REVENUE,
+  MONTH_CUSTOMERS,
+  WEEK_ORDERS,
+  WEEK_REVENUE,
+  WEEK_CUSTOMERS,
 };

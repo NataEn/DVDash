@@ -16,13 +16,8 @@ const pool = mysql.createPool(dbCredentials);
 //get specific sql string from queryBuilder
 const getSql = (dataType, timeExtent = null) => {
   const type = dataType.toUpperCase();
-  if (timeExtent === "WEEK") {
-    let weekType = type.split("_")[2]; //will return the week type: customers or revenue
-    return queryBuilder[`TOTAL_WEEK_${weekType}`];
-  } else if ((timeExtent = "MONTH")) {
-    let monthType = type.split("_")[2]; //will return the week type: customers or revenue
-    return queryBuilder[`TOTAL_MONTH_${monthType}`];
-  }
+  let timeType = type.split("_")[2]; //will return the week type: customers or revenue
+  return queryBuilder[`TOTAL_${timeExtent}_${timeType}`];
 
   // if (dataType.includes("TOTAL_")) {
   //   let totalType = dataType.split("_")[1]; //will return the 'total' type: customers or revenue
