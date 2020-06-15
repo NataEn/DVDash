@@ -16,13 +16,20 @@ function App() {
 
   const fetchData = async () => {
     const totals = await getTotals({
-      week: ["TOTAL_WEEK_REVENUE", "TOTAL_WEEK_CUSTOMERS"],
-      month: ["TOTAL_MONTH_REVENUE", "TOTAL_MONTH_CUSTOMERS_RENTS"],
+      week: ["TOTAL_WEEK_REVENUE", "TOTAL_WEEK_CUSTOMERS", "TOTAL_WEEK_ORDERS"],
+      month: [
+        "TOTAL_MONTH_REVENUE",
+        "TOTAL_MONTH_CUSTOMERS",
+        "TOTAL_MONTH_ORDERS",
+      ],
+      year: ["TOTAL_YEAR_REVENUE", "TOTAL_YEAR_CUSTOMERS", "TOTAL_YEAR_ORDERS"],
+      total: ["TOTAL_REVENUE", "TOTAL_CUSTOMERS", "TOTAL_ORDERS"],
     });
-    const week_revenue = week_data(totals[3][0]);
-    const week_customers = week_data(totals[4][0]);
-    const month_revenue = month_data(totals[1][0]);
-    const month_customers_rents = month_data(totals[2][0]);
+    console.log("totals", totals);
+    const week_revenue = week_data(totals[3]);
+    const week_customers = week_data(totals[4]);
+    const month_revenue = totals[1];
+    const month_customers_rents = totals[2];
 
     setTootalRevenue(totals[0][0][0][0]);
     setTotalCustomers(totals[0][0][1][0]);

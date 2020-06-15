@@ -8,6 +8,18 @@ const TOTAL_REVENUE = `
 SELECT  
 SUM(amount)AS total,
 SUM(
+  case YEAR(date(payment_date))
+    when YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    then amount
+    ELSE 0
+  END) AS total_this_year,
+SUM(
+  case MONTH(date(payment_date))
+    when MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    then amount
+    ELSE 0
+  END) AS total_this_month,
+SUM(
   case YEARWEEK(date(payment_date))
     when YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
     then amount
@@ -20,6 +32,7 @@ SUM(
   ELSE 0
  end) AS total_today
  FROM payment;`;
+const TOTAL_ORDERS = ``;
 const TOTAL_CUSTOMERS = `
  SELECT  
 COUNT(*) AS total_customers,
@@ -105,6 +118,26 @@ COUNT(*) AS total_orders
 FROM payment
 GROUP BY MONTH(payment_date);
 `;
+const TOTAL_YEAR_REVENUE = `
+SELECT YEAR(payment_date) AS year_num,
+SUM(amount) as revenue
+FROM payment
+GROUP BY YEAR(payment_date);
+`;
+const TOTAL_YEAR_CUSTOMERS = `
+SELECT YEAR(create_date) AS year_num,
+count(case when gender='F' then 1 end) as female_cnt,
+count(case when gender='M' then 1 end) as male_cnt,
+COUNT(*) AS total_customers
+FROM customer
+GROUP BY YEAR(create_date);
+`;
+const TOTAL_YEAR_ORDERS = `
+SELECT YEAR(payment_date) AS year_num,
+COUNT(*) AS total_orders
+FROM payment
+GROUP BY YEAR(payment_date);
+`;
 
 const TOP_10 = `
 SELECT
@@ -147,6 +180,10 @@ module.exports = {
   TOP_10,
   TOTAL_REVENUE,
   TOTAL_CUSTOMERS,
+  TOTAL_ORDERS,
+  TOTAL_YEAR_ORDERS,
+  TOTAL_YEAR_REVENUE,
+  TOTAL_YEAR_CUSTOMERS,
   TOTAL_MONTH_ORDERS,
   TOTAL_MONTH_REVENUE,
   TOTAL_MONTH_CUSTOMERS,

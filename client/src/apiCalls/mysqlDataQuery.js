@@ -1,6 +1,6 @@
 const localUrl = window.location.href;
 const getTotals = (options) => {
-  let fetchUrl = `/msqlapi/totals?month=${options.month}&week=${options.week}&day=${options.day}`;
+  let fetchUrl = `/msqlapi/totals?total=${options.total}&year=${options.year}%month=${options.month}&week=${options.week}&day=${options.day}`;
   if (localUrl === "http://localhost:3000/") {
     fetchUrl = `http://localhost:8082${fetchUrl}`;
   }
