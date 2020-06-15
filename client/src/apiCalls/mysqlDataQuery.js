@@ -1,6 +1,6 @@
 const localUrl = window.location.href;
-const getTotals = (options) => {
-  let fetchUrl = `/msqlapi/totals?total=${options.total}&year=${options.year}%month=${options.month}&week=${options.week}&day=${options.day}`;
+const getPeriodData = (options) => {
+  let fetchUrl = `/mysqlapi/periodData?year=${options.year}%month=${options.month}&week=${options.week}&day=${options.day}`;
   if (localUrl === "http://localhost:3000/") {
     fetchUrl = `http://localhost:8082${fetchUrl}`;
   }
@@ -11,6 +11,9 @@ const getTotals = (options) => {
       return data;
     });
   return data;
+};
+const getGrandTotals = (options) => {
+  let fetchUrl = `/mysqlapi/grandtotals?totals=${options.total}`;
 };
 const getTop10 = (filterChoice) => {
   let fetchUrl = `/msqlapi/top10?filter=${filterChoice}`;
@@ -27,6 +30,6 @@ const getTop10 = (filterChoice) => {
 };
 
 module.exports = {
-  getTotals,
+  getPeriodData,
   getTop10,
 };

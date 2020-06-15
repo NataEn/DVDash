@@ -2,15 +2,21 @@ const express = require("express");
 const router = express.Router();
 const {
   totals,
+  periodData,
   weekRevenue,
   weekCustomers,
   top10,
 } = require("../mysqlServices");
 
+router.get("/periodData", async function (req, res, next) {
+  console.log("request", req.query);
+  const dataTotals = await periodData(req.query);
+  res.json(dataTotals);
+});
 router.get("/totals", async function (req, res, next) {
   console.log("request", req.query);
-  const dataTotals = await totals(req.query);
-  res.json(dataTotals);
+  const dataGrandTotals = await totals(req.query);
+  res.json(dataGrandTotals);
 });
 
 router.get("/revenue_this_week", async function (req, res, next) {

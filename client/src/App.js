@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Main from "./components/main";
 import Header from "./components/header";
-import { getTotals, getTop10 } from "./apiCalls/mysqlDataQuery";
+import {
+  getPeriodData,
+  getTop10,
+  getGrandTotals,
+} from "./apiCalls/mysqlDataQuery";
 import { week_data, month_data } from "./utils";
 import "./App.css";
 
@@ -15,14 +19,10 @@ function App() {
   const [monthCustomersRents, setMonthCustomersRents] = useState([]);
 
   const fetchData = async () => {
-    const totals = await getTotals({
-      week: ["TOTAL_WEEK_REVENUE", "TOTAL_WEEK_CUSTOMERS", "TOTAL_WEEK_ORDERS"],
-      month: [
-        "TOTAL_MONTH_REVENUE",
-        "TOTAL_MONTH_CUSTOMERS",
-        "TOTAL_MONTH_ORDERS",
-      ],
-      year: ["TOTAL_YEAR_REVENUE", "TOTAL_YEAR_CUSTOMERS", "TOTAL_YEAR_ORDERS"],
+    const totals = await getPeriodData({
+      week: ["WEEK_REVENUE", "WEEK_CUSTOMERS", "WEEK_ORDERS"],
+      month: ["MONTH_REVENUE", "MONTH_CUSTOMERS", "MONTH_ORDERS"],
+      year: ["YEAR_REVENUE", "YEAR_CUSTOMERS", "YEAR_ORDERS"],
       total: ["TOTAL_REVENUE", "TOTAL_CUSTOMERS", "TOTAL_ORDERS"],
     });
     console.log("totals", totals);

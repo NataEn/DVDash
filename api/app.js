@@ -26,7 +26,7 @@ const static =
   process.env.STATIC_PATH || path.join(__dirname, "../client/build");
 
 app.use("/", express.static(static));
-app.use("/msqlapi", mysqlRouter);
+app.use("/mysqlapi", mysqlRouter);
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler

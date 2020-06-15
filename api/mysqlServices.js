@@ -16,13 +16,8 @@ const pool = mysql.createPool(dbCredentials);
 //get specific sql string from queryBuilder
 const getSql = (dataType, timeExtent = null) => {
   const type = dataType.toUpperCase();
-  let timeType = type.split("_")[2]; //will return the week type: customers or revenue
-  return queryBuilder[`TOTAL_${timeExtent}_${timeType}`];
-
-  // if (dataType.includes("TOTAL_")) {
-  //   let totalType = dataType.split("_")[1]; //will return the 'total' type: customers or revenue
-  //   return queryBuilder[`TOTAL_${totalType}`];
-  // }
+  let queryType = type.split("_")[1];
+  return queryBuilder[`${timeExtent}_${queryType}`];
 };
 
 //for single connection
@@ -59,14 +54,25 @@ const arrangeResults = (resultsArr) => {
 
 async function totals(params) {
   const promises = [];
-  promises.push(totalsPromis);
+  const totalDataTypes = params.total.split(",");
+  for (let totalDataType of totalDataTypes) {
+    const sql = getSql(totalDataType, "");
+    const dataTypePromis = pool.query(sql);
+    promises.push(dataTypePromis);
+  }
+  try {
+    const totalsResults = await Promise.all(promises);
+    const arrangedResults = arrangeResults(totalsResults);
+    console.log("sql results ", arrangedResults);
+    return arrangedResults;
+  } catch (err) {
+    console.log(`totals error:${err}`);
+  }
+}
+
+async function periodData(params) {
+  const promises = [];
   if (params.total) {
-    const totalDataTypes = params.total.split(",");
-    for (let totalDataType of totalDataTypes) {
-      const sql = getSql(totalDataType, "");
-      const dataTypePromis = pool.query(sql);
-      promises.push(dataTypePromis);
-    }
   }
   if (params.year) {
     const yearDataTypes = params.year.split(",");
@@ -93,12 +99,12 @@ async function totals(params) {
     }
   }
   try {
-    const totalsResults = await Promise.all(promises);
-    const arrangedResults = arrangeResults(totalsResults);
-    console.log("sql results ", arrangedResults);
+    const periodDataResults = await Promise.all(promises);
+    const arrangedResults = arrangeResults(periodDataResults);
+    console.log("sql results periodData", arrangedResults);
     return arrangedResults;
   } catch (err) {
-    console.log(`totals error:${err}`);
+    console.log(`periodData error:${err}`);
   }
 }
 async function top10(param) {
@@ -115,6 +121,7 @@ async function top10(param) {
 
 module.exports = {
   connect,
+  periodData,
   totals,
   top10,
 };
