@@ -10,10 +10,22 @@ const getPeriodData = (options) => {
       console.log(data);
       return data;
     });
+  console.log("periodData", data);
   return data;
 };
-const getGrandTotals = (options) => {
-  let fetchUrl = `/mysqlapi/grandtotals?totals=${options.total}`;
+const getTotals = (options) => {
+  let fetchUrl = `/mysqlapi/totals?totals=${options.total}`;
+  if (localUrl === "http://localhost:3000/") {
+    fetchUrl = `http://localhost:8082${fetchUrl}`;
+  }
+  const data = fetch(fetchUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      return data;
+    });
+  console.log("totals", data);
+  return data;
 };
 const getTop10 = (filterChoice) => {
   let fetchUrl = `/msqlapi/top10?filter=${filterChoice}`;
@@ -32,4 +44,5 @@ const getTop10 = (filterChoice) => {
 module.exports = {
   getPeriodData,
   getTop10,
+  getTotals,
 };

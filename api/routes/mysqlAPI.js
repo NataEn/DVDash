@@ -15,8 +15,8 @@ router.get("/periodData", async function (req, res, next) {
 });
 router.get("/totals", async function (req, res, next) {
   console.log("request", req.query);
-  const dataGrandTotals = await totals(req.query);
-  res.json(dataGrandTotals);
+  const dataTotals = await totals(req.query);
+  res.json(dataTotals);
 });
 
 router.get("/revenue_this_week", async function (req, res, next) {
