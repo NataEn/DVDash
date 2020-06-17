@@ -14,10 +14,15 @@ const dbCredentials = {
 const pool = mysql.createPool(dbCredentials);
 
 //get specific sql string from queryBuilder
-const getSql = (dataType, timeExtent = null) => {
+const getSql = (dataType) => {
+  let sql = "";
   const type = dataType.toUpperCase();
+  let timeExtent = type.split("_")[0];
   let queryType = type.split("_")[1];
-  return queryBuilder[`${timeExtent}_${queryType}`];
+  const queryfunction = queryBuilder[`${timeExtent}_${queryType}`];
+  console.log("query function", queryfunction);
+  sql = timeExtent === "TOTAL" ? queryfunction : queryfunction();
+  return sql;
 };
 
 //for single connection
@@ -83,9 +88,9 @@ const arrangeResults = (resultsName, resultsArr) => {
 
 async function totals(params) {
   const promises = [];
-  const totalDataTypes = params.total.split(",");
+  const totalDataTypes = params.totals.split(",");
   for (let totalDataType of totalDataTypes) {
-    const sql = getSql(totalDataType, "");
+    const sql = queryBuilder[totalDataType];
     const dataTypePromis = pool.query(sql);
     promises.push(dataTypePromis);
   }
@@ -105,40 +110,14 @@ async function periodData(params) {
     if (params[key] !== "undefined") {
       const periodTypes = params[key].split(",");
       for (let type of periodTypes) {
-        console.log(`${type}`);
         const period = type.split("_")[0];
-        const sql = getSql(type, period);
-        console.log("from periodData function", type, sql);
+        const sql = queryBuilder[type]();
+        console.log("periodData sql", sql);
         const dataTypePromis = pool.query(sql);
         promises.push(dataTypePromis);
       }
     }
   }
-
-  // if (params.year) {
-  //   const yearDataTypes = params.year.split(",");
-  //   for (let yearDataType of yearDataTypes) {
-  //     const sql = getSql(yearDataType, "YEAR");
-  //     const dataTypePromis = pool.query(sql);
-  //     promises.push(dataTypePromis);
-  //   }
-  // }
-  // if (params.month) {
-  //   const monthDataTypes = params.month.split(",");
-  //   for (let monthDataType of monthDataTypes) {
-  //     const sql = getSql(monthDataType, "MONTH");
-  //     const dataTypePromis = pool.query(sql);
-  //     promises.push(dataTypePromis);
-  //   }
-  // }
-  // if (params.week) {
-  //   const weekDataTypes = params.week.split(",");
-  //   for (let weekDataType of weekDataTypes) {
-  //     const sql = getSql(weekDataType, "WEEK");
-  //     const dataTypePromis = pool.query(sql);
-  //     promises.push(dataTypePromis);
-  //   }
-  // }
   try {
     const periodDataResults = await Promise.all(promises);
     const arrangedResults = arrangeResults("periodData", periodDataResults);
@@ -148,8 +127,9 @@ async function periodData(params) {
     console.log(`periodData error:${err}`);
   }
 }
-async function top10(param) {
+async function top10(filterParams) {
   const top10Promis = pool.query(queryBuilder.TOP_10);
+  console.log("in top10 router", filterParams);
 
   try {
     const top10Result = await top10Promis;

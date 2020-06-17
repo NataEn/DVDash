@@ -1,3 +1,4 @@
+import utils from "../utils";
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -9,7 +10,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { Button, ButtonGroup } from "@material-ui/core";
-import { titleCase } from "../utils";
+
 import { Row, Col } from "reactstrap";
 
 const useStyles = makeStyles({
@@ -90,7 +91,7 @@ export default function Top10(props) {
                   return (
                     <TableRow hover key={index}>
                       <TableCell key={`${index}_${filter}`} align={"left"}>
-                        {titleCase(row[filter])}
+                        {utils.titleCase(row[filter])}
                       </TableCell>
                       <TableCell key={`${index}_${row[filter]}`} align={"left"}>
                         {row["total_sales"]} $

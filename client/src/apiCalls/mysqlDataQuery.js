@@ -22,8 +22,8 @@ const getTotals = (totals) => {
   return data;
 };
 const getTop10 = (filterChoice) => {
-  let filters = filterChoice ? filterChoice : [];
-  let fetchUrl = `${process.env.REACT_APP_APISERVER}/msqlapi/top10?filter=${filters}`;
+  // let filters = filterChoice ? filterChoice : "defined";
+  let fetchUrl = `${process.env.REACT_APP_APISERVER}/mysqlapi/top10`;
   const data = fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {

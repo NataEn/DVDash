@@ -27,7 +27,8 @@ router.get("/customers_this_week", async function (req, res, next) {
   const week_customers = await weekCustomers();
   res.json(week_customers);
 });
-router.get(`/top10`, async function (req, res, next) {
+router.get("/top10", async function (req, res, next) {
+  console.log("request", req.query);
   const top10Items = await top10(req.query);
   res.json(top10Items[0]);
 });

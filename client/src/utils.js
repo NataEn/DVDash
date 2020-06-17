@@ -28,7 +28,8 @@ const titleCase = (string) => {
   }
   return titleString;
 };
-module.exports = {
+const utils = {
   week_data,
   titleCase,
 };
+export default utils;
