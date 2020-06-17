@@ -108,6 +108,7 @@ async function periodData(params) {
         console.log(`${type}`);
         const period = type.split("_")[0];
         const sql = getSql(type, period);
+        console.log("from periodData function", type, sql);
         const dataTypePromis = pool.query(sql);
         promises.push(dataTypePromis);
       }

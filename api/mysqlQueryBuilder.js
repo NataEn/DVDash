@@ -9,25 +9,25 @@ SELECT
 SUM(amount)AS total,
 SUM(
   case YEAR(date(payment_date))
-    when YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    when YEAR( CURDATE()) 
     then amount
     ELSE 0
   END) AS total_revenue_this_year,
 SUM(
   case MONTH(date(payment_date))
-    when MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    when MONTH( CURDATE()) 
     then amount
     ELSE 0
   END) AS total_revenue_this_month,
 SUM(
   case YEARWEEK(date(payment_date))
-    when YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    when YEARWEEK( CURDATE()) 
     then amount
     ELSE 0
   END) AS total_revenue_this_week,
 SUM(
   case date(payment_date)
-    when DATE_SUB(CURDATE(),INTERVAL 15 YEAR)
+    when CURDATE()
     then amount
   ELSE 0
  end) AS total_revenue_today
@@ -37,25 +37,25 @@ SELECT
 SUM(amount)AS total,
 SUM(
   case YEAR(date(payment_date))
-    when YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    when YEAR( CURDATE()) 
     then 1
     ELSE 0
   END) AS total_orders_this_year,
 SUM(
   case MONTH(date(payment_date))
-    when MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    when MONTH( CURDATE()) 
     then 1
     ELSE 0
   END) AS total_orders_this_month,
 SUM(
   case YEARWEEK(date(payment_date))
-    when YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+    when YEARWEEK( CURDATE()) 
     then 1
     ELSE 0
   END) AS total_orders_this_week,
 SUM(
   case date(payment_date)
-    when DATE_SUB(CURDATE(),INTERVAL 15 YEAR)
+    when CURDATE()
     then 1
   ELSE 0
  end) AS total_orders_today
@@ -66,75 +66,75 @@ SELECT
 COUNT(*) AS total_customers,
 COUNT(case when (gender='F') then 1 end) AS total_female_customers,
 COUNT(case when (gender='M') then 1 end)AS total_male_customers,
-COUNT(case when YEAR(date(create_date))=YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+COUNT(case when YEAR(date(create_date))=YEAR(CURDATE()) 
     then 1
   END) AS total_customers_this_year,
   
   COUNT(
   case 
-  when YEAR(date(create_date))= YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  when YEAR(date(create_date))= YEAR( CURDATE()) 
   AND (gender='F')
     then 1
   END) AS total_female_customers_this_year,
   
   COUNT(
   case 
-  when YEAR(date(create_date))=YEAR( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  when YEAR(date(create_date))=YEAR( CURDATE()) 
   AND (gender='M')
     then 1
   END) AS total_male_customers_this_year,
   
   
-  COUNT(case when MONTH(date(create_date))=MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  COUNT(case when MONTH(date(create_date))=MONTH(CURDATE()) 
     then 1
   END) AS total_customers_this_month,
   
   COUNT(
   case 
-  when MONTH(date(create_date))= MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  when MONTH(date(create_date))= MONTH(CURDATE()) 
   AND (gender='F')
     then 1
   END) AS total_female_customers_this_month,
   
   COUNT(
   case 
-  when MONTH(date(create_date))=MONTH( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  when MONTH(date(create_date))=MONTH( CURDATE()) 
   AND (gender='M')
     then 1
   END) AS total_male_customers_this_month,
 
-COUNT(case when YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+COUNT(case when YEARWEEK(date(create_date))=YEARWEEK( CURDATE()) 
     then 1
   END) AS total_customers_this_week,
   
   COUNT(
   case 
-  when YEARWEEK(date(create_date))= YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  when YEARWEEK(date(create_date))= YEARWEEK( CURDATE()) 
   AND (gender='F')
     then 1
   END) AS total_female_customers_this_week,
   
   COUNT(
   case 
-  when YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+  when YEARWEEK(date(create_date))=YEARWEEK( CURDATE() )
   AND (gender='M')
     then 1
   END) AS total_male_customers_this_week,
   
 COUNT(
-  case when date(create_date)=DATE_SUB(CURDATE(),INTERVAL 15 YEAR)
+  case when date(create_date)=CURDATE()
     then 1
 end) AS total_customers_today,
  
  COUNT(
   case 
-  when date(create_date)=DATE_SUB(CURDATE(),INTERVAL 15 YEAR) 
+  when date(create_date)=CURDATE() 
   AND (gender='F')
     then 1
  end) AS total_female_customers_today,
  
  COUNT(case 
-  when date(create_date)=DATE_SUB(CURDATE(),INTERVAL 15 YEAR) 
+  when date(create_date)=CURDATE()
   AND (gender='M')
     then 1
  end) AS total_male_customers_today
@@ -144,7 +144,7 @@ const WEEK_REVENUE = `
 SELECT DAYNAME(payment_date) AS day_name,date(payment_date) as date,
 SUM(amount) as revenue
 FROM payment
-WHERE YEARWEEK(date(payment_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+WHERE YEARWEEK(date(payment_date))=YEARWEEK( CURDATE()) 
 GROUP BY date(payment_date),day_name;`;
 const WEEK_CUSTOMERS = `
 SELECT DAYNAME(create_date) AS day_name, DATE(create_date) as date,
@@ -152,14 +152,14 @@ count(case when gender='F' then 1 end) as female_cnt,
 count(case when gender='M' then 1 end) as male_cnt,
 COUNT(*) AS total_count
 FROM customer
-WHERE YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+WHERE YEARWEEK(date(create_date))=YEARWEEK( CURDATE()) 
 GROUP BY date(create_date), day_name;`;
 
 const WEEK_ORDERS = `
 SELECT DAYNAME(payment_date) AS day_name, DATE(payment_date) as date,
 COUNT(*) AS total_count
 FROM payment
-WHERE YEARWEEK(date(payment_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL 15 YEAR)) 
+WHERE YEARWEEK(date(payment_date))=YEARWEEK( CURDATE()) 
 GROUP BY date(payment_date), day_name;`;
 
 const MONTH_REVENUE = `
