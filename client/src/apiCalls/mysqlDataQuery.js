@@ -1,9 +1,8 @@
 const localUrl = window.location.href;
 const getPeriodData = (options) => {
-  let fetchUrl = `/mysqlapi/periodData?year=${options.year}%month=${options.month}&week=${options.week}&day=${options.day}`;
-  if (localUrl === "http://localhost:3000/") {
-    fetchUrl = `http://localhost:8082${fetchUrl}`;
-  }
+  let fetchUrl =
+    process.env.REACT_APP_APISERVER +
+    `/mysqlapi/periodData?year=${options.year}&month=${options.month}&week=${options.week}&day=${options.day}`;
   const data = fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {
@@ -13,11 +12,8 @@ const getPeriodData = (options) => {
   console.log("periodData", data);
   return data;
 };
-const getTotals = (options) => {
-  let fetchUrl = `/mysqlapi/totals?totals=${options.total}`;
-  if (localUrl === "http://localhost:3000/") {
-    fetchUrl = `http://localhost:8082${fetchUrl}`;
-  }
+const getTotals = (totals) => {
+  let fetchUrl = `${process.env.REACT_APP_APISERVER}/mysqlapi/totals?totals=${totals}`;
   const data = fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {
@@ -28,10 +24,8 @@ const getTotals = (options) => {
   return data;
 };
 const getTop10 = (filterChoice) => {
-  let fetchUrl = `/msqlapi/top10?filter=${filterChoice}`;
-  if (localUrl === "http://localhost:3000/") {
-    fetchUrl = `http://localhost:8082${fetchUrl}`;
-  }
+  let filters = filterChoice ? filterChoice : [];
+  let fetchUrl = `${process.env.REACT_APP_APISERVER}/msqlapi/top10?filter=${filters}`;
   const data = fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {
