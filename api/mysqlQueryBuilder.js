@@ -141,7 +141,50 @@ end) AS total_customers_today,
  FROM customer;
  `;
 
-const WEEK_REVENUE = (givenYear) => {
+ const DAY_ORDERS=(givenYear) => {
+  let diff = 1;
+  if (givenYear) {
+    const now = new Date();
+    let this_year = now.getFullYear();
+    diff = this_year - year;
+  }
+   return `SELECT DAYNAME(payment_date) AS day_name, DATE(payment_date) as date,
+   COUNT(*) AS total_count
+   FROM payment
+   WHERE DAYNAME(date(payment_date))=DAYNAME( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
+   GROUP BY date(payment_date), day_name;`
+ },
+ const DAY_REVENUE=(givenYear) => {
+  let diff = 1;
+  if (givenYear) {
+    const now = new Date();
+    let this_year = now.getFullYear();
+    diff = this_year - year;
+  }
+   return `SELECT DAYNAME(payment_date) AS day_name,date(payment_date) as date,
+   SUM(amount) as revenue
+   FROM payment
+   WHERE DAYNAME(date(payment_date))=DAYNAME( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
+   GROUP BY date(payment_date),day_name;`
+ },
+ const DAY_CUSTOMERS=(givenYear) => {
+  let diff = 1;
+  if (givenYear) {
+    const now = new Date();
+    let this_year = now.getFullYear();
+    diff = this_year - year;
+  }
+   return `SELECT DAYNAME(create_date) AS day_name, DATE(create_date) as date,
+   count(case when gender='F' then 1 end) as female_cnt,
+   count(case when gender='M' then 1 end) as male_cnt,
+   COUNT(*) AS total_count
+   FROM customer
+   WHERE DAYNAME(date(create_date))=DAYNAME( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
+   GROUP BY date(create_date), day_name;`
+ },
+
+
+ const WEEK_REVENUE = (givenYear) => {
   let diff = 1;
   if (givenYear) {
     const now = new Date();
@@ -340,4 +383,7 @@ module.exports = {
   WEEK_ORDERS,
   WEEK_REVENUE,
   WEEK_CUSTOMERS,
+  DAY_ORDERS,
+  DAY_REVENUE,
+  DAY_CUSTOMERS,
 };

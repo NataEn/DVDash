@@ -128,11 +128,12 @@ async function periodData(params) {
   }
 }
 async function top10(filterParams) {
-  const top10Promis = pool.query(queryBuilder.TOP_10);
-  console.log("in top10 router", filterParams);
+  const sql = queryBuilder.TOP_10;
+  const top10Promis = pool.query(sql);
+  console.log("in top10 router", filterParams, sql);
 
   try {
-    const top10Result = await top10Promis;
+    const top10Result = await Promise.all([top10Promis]);
     console.log("sql results: top10", top10Result);
     return top10Result;
   } catch (err) {
