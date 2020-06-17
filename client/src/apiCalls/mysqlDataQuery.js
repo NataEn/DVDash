@@ -6,10 +6,9 @@ const getPeriodData = (options) => {
   const data = fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       return data;
     });
-  console.log("periodData", data);
+  console.log("periodData: ", data);
   return data;
 };
 const getTotals = (totals) => {
@@ -17,10 +16,9 @@ const getTotals = (totals) => {
   const data = fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       return data;
     });
-  console.log("totals", data);
+  console.log("totals: ", data);
   return data;
 };
 const getTop10 = (filterChoice) => {
@@ -29,9 +27,9 @@ const getTop10 = (filterChoice) => {
   const data = fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       return data;
     });
+  console.log("top10: ", data);
   return data;
 };
 

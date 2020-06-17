@@ -26,30 +26,59 @@ async function connect() {
   const [row, fields] = await connection.query("select 123");
   return row;
 }
-const arrangeResults = (resultsArr) => {
+
+const getOptionFromResultKeys = (options, keys) => {
+  console.log("options: ", options, "keys: ", keys);
+  for (let option of options) {
+    const optionRgEx = new RegExp(option, "i");
+    optionExists = keys.some((key) => {
+      return optionRgEx.test(key);
+    });
+    if (optionExists) {
+      console.log("existing option", option);
+      return option;
+    }
+  }
+};
+
+const arrangeResults = (resultsName, resultsArr) => {
   //removing buffer array
   const noBuffersResults = [];
   for (let result of resultsArr) {
     noBuffersResults.push(result[0]);
   }
-  console.log(noBuffersResults);
   const objectOfTotalResults = {};
-  const keys = ["total", "year", "month", "week"];
-  //construct an object of results
-  for (let i = 0; i < noBuffersResults.length; i++) {
-    if (i === 0) {
-      const revenue = noBuffersResults[i][0];
-      const customers = noBuffersResults[i][1];
-      const orders = noBuffersResults[i][2];
-      objectOfTotalResults[keys[i]] = {
-        revenue: revenue,
-        customers: customers,
-        orders: orders,
-      };
+  const timePeriods = ["year", "month", "week", "day"];
+  const resultSubjects = ["customers", "orders", "revenue"];
+  const resultObj = {};
+  const sampleObj = {
+    year: {
+      revenue: ["results"],
+      customers: ["results"],
+      orders: ["results"],
+    },
+  };
+  if (resultsName === "periodData") {
+    //construct an object of results
+    for (let i = 0; i < noBuffersResults.length; i++) {
+      let timePeriod, resultSubject;
+      let keys = Object.keys(noBuffersResults[i][0]);
+      console.log("keys", keys);
+      //get the time period result
+      timePeriod = getOptionFromResultKeys(timePeriods, keys);
+      console.log("period data time", timePeriod);
+      //create key if not exists
+      if (!resultObj[timePeriod]) {
+        resultObj[timePeriod] = {};
+      }
+      console.log(resultObj);
+      //save results according to period
+      resultSubject = getOptionFromResultKeys(resultSubjects, keys);
+      resultObj[timePeriod][resultSubject] = noBuffersResults[i];
     }
   }
 
-  return objectOfTotalResults;
+  return resultObj;
 };
 
 async function totals(params) {
@@ -62,8 +91,8 @@ async function totals(params) {
   }
   try {
     const totalsResults = await Promise.all(promises);
-    const arrangedResults = arrangeResults(totalsResults);
-    console.log("sql results ", arrangedResults);
+    const arrangedResults = arrangeResults("totals", totalsResults);
+    console.log("totals", arrangedResults);
     return arrangedResults;
   } catch (err) {
     console.log(`totals error:${err}`);
@@ -72,36 +101,47 @@ async function totals(params) {
 
 async function periodData(params) {
   const promises = [];
-  if (params.total) {
-  }
-  if (params.year) {
-    const yearDataTypes = params.year.split(",");
-    for (let yearDataType of yearDataTypes) {
-      const sql = getSql(yearDataType, "YEAR");
-      const dataTypePromis = pool.query(sql);
-      promises.push(dataTypePromis);
+  for (let key in params) {
+    if (params[key] !== "undefined") {
+      const periodTypes = params[key].split(",");
+      for (let type of periodTypes) {
+        console.log(`${type}`);
+        const period = type.split("_")[0];
+        const sql = getSql(type, period);
+        const dataTypePromis = pool.query(sql);
+        promises.push(dataTypePromis);
+      }
     }
   }
-  if (params.month) {
-    const monthDataTypes = params.month.split(",");
-    for (let monthDataType of monthDataTypes) {
-      const sql = getSql(monthDataType, "MONTH");
-      const dataTypePromis = pool.query(sql);
-      promises.push(dataTypePromis);
-    }
-  }
-  if (params.week) {
-    const weekDataTypes = params.week.split(",");
-    for (let weekDataType of weekDataTypes) {
-      const sql = getSql(weekDataType, "WEEK");
-      const dataTypePromis = pool.query(sql);
-      promises.push(dataTypePromis);
-    }
-  }
+
+  // if (params.year) {
+  //   const yearDataTypes = params.year.split(",");
+  //   for (let yearDataType of yearDataTypes) {
+  //     const sql = getSql(yearDataType, "YEAR");
+  //     const dataTypePromis = pool.query(sql);
+  //     promises.push(dataTypePromis);
+  //   }
+  // }
+  // if (params.month) {
+  //   const monthDataTypes = params.month.split(",");
+  //   for (let monthDataType of monthDataTypes) {
+  //     const sql = getSql(monthDataType, "MONTH");
+  //     const dataTypePromis = pool.query(sql);
+  //     promises.push(dataTypePromis);
+  //   }
+  // }
+  // if (params.week) {
+  //   const weekDataTypes = params.week.split(",");
+  //   for (let weekDataType of weekDataTypes) {
+  //     const sql = getSql(weekDataType, "WEEK");
+  //     const dataTypePromis = pool.query(sql);
+  //     promises.push(dataTypePromis);
+  //   }
+  // }
   try {
     const periodDataResults = await Promise.all(promises);
-    const arrangedResults = arrangeResults(periodDataResults);
-    console.log("sql results periodData", arrangedResults);
+    const arrangedResults = arrangeResults("periodData", periodDataResults);
+    console.log("periodData", arrangedResults);
     return arrangedResults;
   } catch (err) {
     console.log(`periodData error:${err}`);
