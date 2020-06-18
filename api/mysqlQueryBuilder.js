@@ -4,145 +4,175 @@ SET create_date=DATE_FORMAT(create_date,'2005-%m-%d %T');
 UPDATE actor_copy
 SET last_update =  CONCAT('2020-',floor(1+RAND()*12),'-',FLOOR(1+RAND()*27));`;
 
-const TOTAL_REVENUE = `
+const TOTAL_REVENUE = (givenYear) => {
+  let diff = 2;
+  if (givenYear) {
+    const now = new Date();
+    let current_year = now.getFullYear();
+    diff = current_year - year;
+  }
+
+  let sql = `
 SELECT  
-SUM(amount)AS total,
+SUM(amount)AS total_revenue,
 SUM(
   case YEAR(date(payment_date))
-    when YEAR( CURDATE()) 
+    when YEAR( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then amount
     ELSE 0
-  END) AS total_revenue_current_year,
+  END) AS year_revenue,
 SUM(
   case MONTH(date(payment_date))
-    when MONTH( CURDATE()) 
+    when MONTH( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then amount
     ELSE 0
-  END) AS total_revenue_this_month,
+  END) AS month_revenue,
 SUM(
   case YEARWEEK(date(payment_date))
-    when YEARWEEK( CURDATE()) 
+    when YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then amount
     ELSE 0
-  END) AS total_revenue_this_week,
+  END) AS week_revenue,
 SUM(
   case date(payment_date)
-    when CURDATE()
+    when DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)
     then amount
   ELSE 0
- end) AS total_revenue_today
+ end) AS day_revenue
  FROM payment;`;
-const TOTAL_ORDERS = `
+  return sql;
+};
+const TOTAL_ORDERS = (givenYear) => {
+  let diff = 2;
+  if (givenYear) {
+    const now = new Date();
+    let current_year = now.getFullYear();
+    diff = current_year - year;
+  }
+
+  let sql = `
 SELECT  
-SUM(amount)AS total,
+SUM(amount)AS total_orders,
 SUM(
   case YEAR(date(payment_date))
-    when YEAR( CURDATE()) 
+    when YEAR( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then 1
     ELSE 0
-  END) AS total_orders_current_year,
+  END) AS year_orders,
 SUM(
   case MONTH(date(payment_date))
-    when MONTH( CURDATE()) 
+    when MONTH( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then 1
     ELSE 0
-  END) AS total_orders_this_month,
+  END) AS month_orders,
 SUM(
   case YEARWEEK(date(payment_date))
-    when YEARWEEK( CURDATE()) 
+    when YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then 1
     ELSE 0
-  END) AS total_orders_this_week,
+  END) AS week_orders,
 SUM(
   case date(payment_date)
-    when CURDATE()
+    when DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)
     then 1
   ELSE 0
- end) AS total_orders_today
+ end) AS day_orders
  FROM payment;
 `;
-const TOTAL_CUSTOMERS = `
+  return sql;
+};
+const TOTAL_CUSTOMERS = (givenYear) => {
+  let diff = 2;
+  if (givenYear) {
+    const now = new Date();
+    let current_year = now.getFullYear();
+    diff = current_year - year;
+  }
+
+  let sql = `
 SELECT  
 COUNT(*) AS total_customers,
 COUNT(case when (gender='F') then 1 end) AS total_female_customers,
 COUNT(case when (gender='M') then 1 end)AS total_male_customers,
-COUNT(case when YEAR(date(create_date))=YEAR(CURDATE()) 
+COUNT(case when YEAR(date(create_date))=YEAR(DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then 1
-  END) AS total_customers_current_year,
+  END) AS year_customers,
   
   COUNT(
   case 
-  when YEAR(date(create_date))= YEAR( CURDATE()) 
+  when YEAR(date(create_date))= YEAR( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
   AND (gender='F')
     then 1
-  END) AS total_female_customers_current_year,
+  END) AS year_female_customers,
   
   COUNT(
   case 
-  when YEAR(date(create_date))=YEAR( CURDATE()) 
+  when YEAR(date(create_date))=YEAR( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
   AND (gender='M')
     then 1
-  END) AS total_male_customers_current_year,
+  END) AS year_male_customers,
   
   
-  COUNT(case when MONTH(date(create_date))=MONTH(CURDATE()) 
+  COUNT(case when MONTH(date(create_date))=MONTH(DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then 1
-  END) AS total_customers_this_month,
+  END) AS month_customers,
   
   COUNT(
   case 
-  when MONTH(date(create_date))= MONTH(CURDATE()) 
+  when MONTH(date(create_date))= MONTH(DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
   AND (gender='F')
     then 1
-  END) AS total_female_customers_this_month,
+  END) AS month_female_customers,
   
   COUNT(
   case 
-  when MONTH(date(create_date))=MONTH( CURDATE()) 
+  when MONTH(date(create_date))=MONTH( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
   AND (gender='M')
     then 1
-  END) AS total_male_customers_this_month,
+  END) AS month_male_customers,
 
-COUNT(case when YEARWEEK(date(create_date))=YEARWEEK( CURDATE()) 
+COUNT(case when YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then 1
-  END) AS total_customers_this_week,
+  END) AS week_week_customers,
   
   COUNT(
   case 
-  when YEARWEEK(date(create_date))= YEARWEEK( CURDATE()) 
+  when YEARWEEK(date(create_date))= YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
   AND (gender='F')
     then 1
-  END) AS total_female_customers_this_week,
+  END) AS week_female_customers,
   
   COUNT(
   case 
-  when YEARWEEK(date(create_date))=YEARWEEK( CURDATE() )
+  when YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR) )
   AND (gender='M')
     then 1
-  END) AS total_male_customers_this_week,
+  END) AS week_male_customers,
   
 COUNT(
-  case when date(create_date)=CURDATE()
+  case when date(create_date)=DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)
     then 1
-end) AS total_customers_today,
+end) AS day_customers,
  
  COUNT(
   case 
-  when date(create_date)=CURDATE() 
+  when date(create_date)=DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)
   AND (gender='F')
     then 1
- end) AS total_female_customers_today,
+ end) AS day_female_customers,
  
  COUNT(case 
-  when date(create_date)=CURDATE()
+  when date(create_date)=DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)
   AND (gender='M')
     then 1
- end) AS total_male_customers_today
+ end) AS day_male_customers
  FROM customer;
  `;
+  return sql;
+};
 
 // const DAY_ORDERS = (givenYear) => {
-//   let diff = 1;
+//   let diff = 2;
 //   if (givenYear) {
 //     const now = new Date();
 //     let current_year = now.getFullYear();
@@ -155,7 +185,7 @@ end) AS total_customers_today,
 //    GROUP BY date(payment_date), day_name;`;
 // };
 // const DAY_REVENUE = (givenYear) => {
-//   let diff = 1;
+//   let diff = 2;
 //   if (givenYear) {
 //     const now = new Date();
 //     let current_year = now.getFullYear();
@@ -168,7 +198,7 @@ end) AS total_customers_today,
 //    GROUP BY date(payment_date),day_name;`;
 // };
 // const DAY_CUSTOMERS = (givenYear) => {
-// let diff = 1;
+// let diff = 2;
 // if (givenYear) {
 //   const now = new Date();
 //   let current_year = now.getFullYear();
@@ -183,7 +213,7 @@ end) AS total_customers_today,
 //  GROUP BY date(create_date), day_name;`;
 // };
 const WEEK_REVENUE = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
   if (givenYear) {
     const now = new Date();
     let current_year = now.getFullYear();
@@ -192,14 +222,14 @@ const WEEK_REVENUE = (givenYear) => {
 
   let sql = `
 SELECT DAYNAME(payment_date) AS day_name,date(payment_date) as date,
-SUM(amount) as revenue
+SUM(amount) as week_revenue
 FROM payment
 WHERE YEARWEEK(date(payment_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
 GROUP BY date(payment_date),day_name;`;
   return sql;
 };
 const WEEK_CUSTOMERS = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
 
   if (givenYear) {
     const now = new Date();
@@ -209,9 +239,9 @@ const WEEK_CUSTOMERS = (givenYear) => {
 
   let sql = `
 SELECT DAYNAME(create_date) AS day_name, DATE(create_date) as date,
-count(case when gender='F' then 1 end) as female_cnt,
-count(case when gender='M' then 1 end) as male_cnt,
-COUNT(*) AS total_count
+count(case when gender='F' then 1 end) as female_customers,
+count(case when gender='M' then 1 end) as male_customers,
+COUNT(*) AS week_customers
 FROM customer
 WHERE YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
 GROUP BY date(create_date), day_name;`;
@@ -219,7 +249,7 @@ GROUP BY date(create_date), day_name;`;
 };
 
 const WEEK_ORDERS = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
   if (givenYear) {
     const now = new Date();
     let current_year = now.getFullYear();
@@ -227,14 +257,14 @@ const WEEK_ORDERS = (givenYear) => {
   }
   return `
 SELECT DAYNAME(payment_date) AS day_name, DATE(payment_date) as date,
-COUNT(*) AS total_count
+COUNT(*) AS week_orders
 FROM payment
 WHERE YEARWEEK(date(payment_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
 GROUP BY date(payment_date), day_name;`;
 };
 
 const MONTH_REVENUE = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
   if (givenYear) {
     const now = new Date();
     let current_year = now.getFullYear();
@@ -242,14 +272,14 @@ const MONTH_REVENUE = (givenYear) => {
   }
   return `
 SELECT MONTH(payment_date) AS month_num,
-SUM(amount) as revenue
+SUM(amount) as month_revenue
 FROM payment
 WHERE year(date(payment_date))=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
 GROUP BY MONTH(payment_date);
 `;
 };
 const MONTH_CUSTOMERS = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
   if (givenYear) {
     const now = new Date();
     let current_year = now.getFullYear();
@@ -257,9 +287,9 @@ const MONTH_CUSTOMERS = (givenYear) => {
   }
   let sql = `
 SELECT MONTH(create_date) AS month_num,
-count(case when gender='F' then 1 end) as female_cnt,
-count(case when gender='M' then 1 end) as male_cnt,
-COUNT(*) AS total_customers
+count(case when gender='F' then 1 end) as female_customers,
+count(case when gender='M' then 1 end) as male_customers,
+COUNT(*) AS month_customers
 FROM customer
 WHERE year(date(create_date))=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
 GROUP BY MONTH(create_date);
@@ -267,7 +297,7 @@ GROUP BY MONTH(create_date);
   return sql;
 };
 const MONTH_ORDERS = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
   if (givenYear) {
     const now = new Date();
     let current_year = now.getFullYear();
@@ -275,14 +305,14 @@ const MONTH_ORDERS = (givenYear) => {
   }
   return `
 SELECT MONTH(payment_date) AS month_num,
-COUNT(*) AS total_orders
+COUNT(*) AS month_orders
 FROM payment
 WHERE year(date(payment_date))=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
 GROUP BY MONTH(payment_date);
 `;
 };
 const YEAR_REVENUE = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
   if (givenYear) {
     const now = new Date();
     let current_year = now.getFullYear();
@@ -290,14 +320,14 @@ const YEAR_REVENUE = (givenYear) => {
   }
   return `
 SELECT YEAR(payment_date) AS year_num,
-SUM(amount) as revenue
+SUM(amount) as year_revenue
 FROM payment
 where YEAR(payment_date)=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))
 GROUP BY YEAR(payment_date);
 `;
 };
 const YEAR_CUSTOMERS = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
   if (givenYear) {
     const now = new Date();
     let current_year = now.getFullYear();
@@ -305,16 +335,16 @@ const YEAR_CUSTOMERS = (givenYear) => {
   }
   return `
 SELECT YEAR(create_date) AS year_num,
-count(case when gender='F' then 1 end) as female_cnt,
-count(case when gender='M' then 1 end) as male_cnt,
-COUNT(*) AS total_customers
+count(case when gender='F' then 1 end) as female_customers,
+count(case when gender='M' then 1 end) as male_customers,
+COUNT(*) AS year_customers
 FROM customer
 where YEAR(create_date)=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))
 GROUP BY YEAR(create_date);
 `;
 };
 const YEAR_ORDERS = (givenYear) => {
-  let diff = 1;
+  let diff = 2;
   if (givenYear) {
     const now = new Date();
     let current_year = now.getFullYear();
@@ -322,14 +352,23 @@ const YEAR_ORDERS = (givenYear) => {
   }
   return `
 SELECT YEAR(payment_date) AS year_num,
-COUNT(*) AS total_orders
+COUNT(*) AS year_orders
 FROM payment
 where YEAR(payment_date)=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))
 GROUP BY YEAR(payment_date);
 `;
 };
 
-const TOP_10 = `
+const TOP_10 = (givenYear) => {
+  //apply search for year
+  let diff = 2;
+  if (givenYear) {
+    const now = new Date();
+    let current_year = now.getFullYear();
+    diff = current_year - year;
+  }
+
+  let sql = `
 SELECT
 c.name AS category, SUM(p.amount) AS total_sales
 FROM payment AS p
@@ -365,6 +404,8 @@ GROUP BY title
 ORDER BY total_sales DESC
 LIMIT 10;
 `;
+  return sql;
+};
 
 module.exports = {
   TOP_10,
