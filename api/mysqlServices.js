@@ -7,8 +7,8 @@ const dbCredentials = {
   password: process.env.MYSQL_PASSWORD || "",
   database: "sakila",
   multipleStatements: true,
-  connectionLimit: 10,
-  connectTimeout: 1000,
+  connectionLimit: 50,
+  queueLimit: 100,
 };
 
 const pool = mysql.createPool(dbCredentials);
@@ -98,7 +98,7 @@ async function totals(params) {
     const totalsResults = await Promise.all(promises);
     const arrangedResults = arrangeResults("totals", totalsResults);
     console.log("totals", arrangedResults);
-    return arrangedResults;
+    return totalsResults;
   } catch (err) {
     console.log(`totals error:${err}`);
   }
@@ -109,35 +109,35 @@ async function periodData(params) {
   for (let key in params) {
     if (params[key] !== "undefined") {
       const periodTypes = params[key].split(",");
+      let sql = "";
       for (let type of periodTypes) {
         const period = type.split("_")[0];
-        const sql = queryBuilder[type]();
+        sql += queryBuilder[type]();
         console.log("periodData sql", sql);
-        const dataTypePromis = pool.query(sql);
-        promises.push(dataTypePromis);
       }
+      const dataTypePromis = pool.query(sql);
+      promises.push(dataTypePromis);
     }
   }
   try {
     const periodDataResults = await Promise.all(promises);
     const arrangedResults = arrangeResults("periodData", periodDataResults);
     console.log("periodData", arrangedResults);
-    return arrangedResults;
+    return periodDataResults;
   } catch (err) {
     console.log(`periodData error:${err}`);
   }
 }
 async function top10(filterParams) {
   const sql = queryBuilder.TOP_10;
-  const top10Promis = pool.query(sql);
   console.log("in top10 router", filterParams, sql);
 
   try {
-    const top10Result = await Promise.all([top10Promis]);
+    const top10Result = await pool.query(sql);
     console.log("sql results: top10", top10Result);
     return top10Result;
   } catch (err) {
-    console.log(`totals error:${err}`);
+    console.log(`top10 error:${err}`);
   }
 }
 

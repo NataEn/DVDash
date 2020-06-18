@@ -2,7 +2,7 @@ const localUrl = window.location.href;
 const getPeriodData = (options) => {
   let fetchUrl =
     process.env.REACT_APP_APISERVER +
-    `/mysqlapi/periodData?year=${options.year}&month=${options.month}&week=${options.week}&day=${options.day}`;
+    `/mysqlapi/periodData?year=${options.year}&month=${options.month}&week=${options.week}`;
   const data = fetch(fetchUrl)
     .then((response) => response.json())
     .then((data) => {
