@@ -49,25 +49,25 @@ const getOptionFromResultKeys = (options, keys) => {
 const arrangeResults = (resultsName, resultsArr) => {
   //removing buffer array
   const noBuffersResults = [];
-  for (let result of resultsArr) {
-    noBuffersResults.push(result[0]);
+  for (let resultSet of resultsArr) {
+    noBuffersResults.push(resultSet[0]);
   }
   const objectOfTotalResults = {};
-  const timePeriods = ["year", "month", "week", "day"];
+  const timePeriods = ["year", "month", "week"];
   const resultSubjects = ["customers", "orders", "revenue"];
   const resultObj = {};
-  const sampleObj = {
-    year: {
-      revenue: ["results"],
-      customers: ["results"],
-      orders: ["results"],
-    },
-  };
+  // const sampleObj = {
+  //   year: {
+  //     revenue: ["results"],
+  //     customers: ["results"],
+  //     orders: ["results"],
+  //   },
+  // };
   if (resultsName === "periodData") {
     //construct an object of results
     for (let i = 0; i < noBuffersResults.length; i++) {
       let timePeriod, resultSubject;
-      let keys = Object.keys(noBuffersResults[i][0]);
+      let keys = Object.keys(noBuffersResults[i][0][0]);
       console.log("keys", keys);
       //get the time period result
       timePeriod = getOptionFromResultKeys(timePeriods, keys);
@@ -77,10 +77,14 @@ const arrangeResults = (resultsName, resultsArr) => {
         resultObj[timePeriod] = {};
       }
       console.log(resultObj);
-      //save results according to period
-      resultSubject = getOptionFromResultKeys(resultSubjects, keys);
-      resultObj[timePeriod][resultSubject] = noBuffersResults[i];
+      //save results according to subject
+      for (let j = 0; j < resultSubjects.length; j++) {
+        let keys = Object.keys(noBuffersResults[i][j][0]);
+        resultSubject = getOptionFromResultKeys(resultSubjects, keys);
+        resultObj[timePeriod][resultSubject] = noBuffersResults[i][j];
+      }
     }
+    console.log("resultObj:", resultObj);
   }
 
   return resultObj;
@@ -90,7 +94,7 @@ async function totals(params) {
   const promises = [];
   const totalDataTypes = params.totals.split(",");
   for (let totalDataType of totalDataTypes) {
-    const sql = queryBuilder[totalDataType];
+    const sql = queryBuilder[totalDataType]();
     const dataTypePromis = pool.query(sql);
     promises.push(dataTypePromis);
   }
@@ -98,7 +102,7 @@ async function totals(params) {
     const totalsResults = await Promise.all(promises);
     const arrangedResults = arrangeResults("totals", totalsResults);
     console.log("totals", arrangedResults);
-    return totalsResults;
+    return arrangedResults;
   } catch (err) {
     console.log(`totals error:${err}`);
   }
@@ -123,13 +127,13 @@ async function periodData(params) {
     const periodDataResults = await Promise.all(promises);
     const arrangedResults = arrangeResults("periodData", periodDataResults);
     console.log("periodData", arrangedResults);
-    return periodDataResults;
+    return arrangedResults;
   } catch (err) {
     console.log(`periodData error:${err}`);
   }
 }
 async function top10(filterParams) {
-  const sql = queryBuilder.TOP_10;
+  const sql = queryBuilder.TOP_10();
   console.log("in top10 router", filterParams, sql);
 
   try {
