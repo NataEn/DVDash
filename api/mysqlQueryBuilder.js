@@ -370,7 +370,7 @@ const TOP_10 = (givenYear) => {
 
   let sql = `
 SELECT
-c.name AS category, SUM(p.amount) AS total_sales
+c.name AS top_category, SUM(p.amount) AS total_sales
 FROM payment AS p
 INNER JOIN rental AS r ON p.rental_id = r.rental_id
 INNER JOIN inventory AS i ON r.inventory_id = i.inventory_id
@@ -382,7 +382,7 @@ ORDER BY total_sales DESC
 LIMIT 10;
 
 SELECT
-concat(a.first_name,' ', a.last_name) AS actor_name
+concat(a.first_name,' ', a.last_name) AS top_actor
 , SUM(p.amount) AS total_sales
 FROM payment AS p
 INNER JOIN rental AS r ON p.rental_id = r.rental_id
@@ -395,7 +395,7 @@ ORDER BY total_sales DESC
 LIMIT 10;
 
 SELECT
-f.title AS title, SUM(p.amount) AS total_sales
+f.title AS top_title, SUM(p.amount) AS total_sales
 FROM payment AS p
 INNER JOIN rental AS r ON p.rental_id = r.rental_id
 INNER JOIN inventory AS i ON r.inventory_id = i.inventory_id 

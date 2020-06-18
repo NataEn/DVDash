@@ -46,44 +46,66 @@ const getOptionFromResultKeys = (options, keys) => {
   }
 };
 
+const removeNonDataArrays = (resultsArr, dataName) => {
+  const cleanedArr = [];
+  for (let resultSet of resultsArr) {
+    if (dataName === "totals" || dataName === "periodData") {
+      cleanedArr.push(resultSet[0]);
+    } else if (dataName === "top10") {
+      cleanedArr.push(resultsArr[0]);
+      break;
+    }
+  }
+  return cleanedArr;
+};
+
+const getKeysObj = (resultsName) => {
+  const keysObj = {
+    subjects: ["customers", "orders", "revenue"],
+  };
+
+  if (resultsName === "periodData") {
+    keysObj.periods = ["year", "month", "week"];
+  } else if (resultsName === "totals") {
+    keysObj.periods = ["total"];
+  } else if (resultsName === "top10") {
+    keysObj.periods = ["top"];
+    keysObj.subjects = ["category", "actor", "title"];
+  }
+  return keysObj;
+};
+
 const arrangeResults = (resultsName, resultsArr) => {
   //removing buffer array
-  const noBuffersResults = [];
-  for (let resultSet of resultsArr) {
-    noBuffersResults.push(resultSet[0]);
-  }
-  const objectOfTotalResults = {};
-  const timePeriods = ["year", "month", "week"];
-  const resultSubjects = ["customers", "orders", "revenue"];
+  const noBuffersResults = removeNonDataArrays(resultsArr, resultsName);
+  const { periods, subjects } = getKeysObj(resultsName);
   const resultObj = {};
-  // const sampleObj = {
-  //   year: {
-  //     revenue: ["results"],
-  //     customers: ["results"],
-  //     orders: ["results"],
-  //   },
-  // };
-  if (resultsName === "periodData") {
-    //construct an object of results
-    for (let i = 0; i < noBuffersResults.length; i++) {
-      let timePeriod, resultSubject;
-      let keys = Object.keys(noBuffersResults[i][0][0]);
-      console.log("keys", keys);
-      //get the time period result
-      timePeriod = getOptionFromResultKeys(timePeriods, keys);
-      console.log("period data time", timePeriod);
-      //create key if not exists
-      if (!resultObj[timePeriod]) {
-        resultObj[timePeriod] = {};
-      }
-      console.log(resultObj);
-      //save results according to subject
-      for (let j = 0; j < resultSubjects.length; j++) {
-        let keys = Object.keys(noBuffersResults[i][j][0]);
-        resultSubject = getOptionFromResultKeys(resultSubjects, keys);
-        resultObj[timePeriod][resultSubject] = noBuffersResults[i][j];
-      }
+  //construct an object of results
+  for (let i = 0; i < noBuffersResults.length; i++) {
+    let timePeriod, resultSubject;
+    let item =
+      noBuffersResults[i][0].constructor.name === "TextRow"
+        ? noBuffersResults[i][0]
+        : noBuffersResults[i][0][0];
+    let keys = Object.keys(item);
+    //get the time period result
+    timePeriod = getOptionFromResultKeys(periods, keys);
+    //create key if not exists
+    if (!resultObj[timePeriod]) {
+      resultObj[timePeriod] = {};
     }
+    //save results according to subject
+    for (let j = 0; j < subjects.length; j++) {
+      let item =
+        noBuffersResults[i][0].constructor.name === "TextRow"
+          ? noBuffersResults[i][0]
+          : noBuffersResults[i][j][0];
+      let keys = Object.keys(item);
+      resultSubject = getOptionFromResultKeys(subjects, keys);
+      resultObj[timePeriod][resultSubject] =
+        noBuffersResults[i][j] || noBuffersResults[i];
+    }
+
     console.log("resultObj:", resultObj);
   }
 
@@ -101,7 +123,6 @@ async function totals(params) {
   try {
     const totalsResults = await Promise.all(promises);
     const arrangedResults = arrangeResults("totals", totalsResults);
-    console.log("totals", arrangedResults);
     return arrangedResults;
   } catch (err) {
     console.log(`totals error:${err}`);
@@ -117,7 +138,6 @@ async function periodData(params) {
       for (let type of periodTypes) {
         const period = type.split("_")[0];
         sql += queryBuilder[type]();
-        console.log("periodData sql", sql);
       }
       const dataTypePromis = pool.query(sql);
       promises.push(dataTypePromis);
@@ -126,7 +146,6 @@ async function periodData(params) {
   try {
     const periodDataResults = await Promise.all(promises);
     const arrangedResults = arrangeResults("periodData", periodDataResults);
-    console.log("periodData", arrangedResults);
     return arrangedResults;
   } catch (err) {
     console.log(`periodData error:${err}`);
@@ -134,12 +153,10 @@ async function periodData(params) {
 }
 async function top10(filterParams) {
   const sql = queryBuilder.TOP_10();
-  console.log("in top10 router", filterParams, sql);
-
   try {
     const top10Result = await pool.query(sql);
-    console.log("sql results: top10", top10Result);
-    return top10Result;
+    const arrangedResults = arrangeResults("top10", top10Result);
+    return arrangedResults;
   } catch (err) {
     console.log(`top10 error:${err}`);
   }
