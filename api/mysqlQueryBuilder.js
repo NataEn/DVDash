@@ -133,7 +133,7 @@ COUNT(case when YEAR(date(create_date))=YEAR(DATE_SUB(CURDATE(),INTERVAL ${diff}
 
 COUNT(case when YEARWEEK(date(create_date))=YEARWEEK( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR)) 
     then 1
-  END) AS week_week_customers,
+  END) AS week_customers,
   
   COUNT(
   case 

@@ -22,6 +22,14 @@ const useStyles = makeStyles({
     maxHeight: 200,
   },
 });
+const rows = [
+  { top_actor: "SUSAN DAVIS", total_sales: "3538.74" },
+  { top_actor: "GINA DEGENERES", total_sales: "3442.49" },
+  { top_actor: "MATTHEW CARREY", total_sales: "2742.19" },
+  { top_actor: "MARY KEITEL", total_sales: "2689.25" },
+  { top_actor: "SCARLETT DAMON", total_sales: "2655.28" },
+  { top_actor: "WALTER TORN", total_sales: "2620.62" },
+];
 
 export default function Top10(props) {
   const classes = useStyles();
@@ -30,11 +38,11 @@ export default function Top10(props) {
   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState("");
   const [title, setTitle] = useState("");
+  console.log("actors", props.data.actor);
   useEffect(() => {
-    setFilter("actor_name");
+    setFilter("top_actor");
     setTitle("Actors");
-    setRows([...props.data[1]]);
-    console.log("actors", props.data[1]);
+    setRows([...props.data.actor]);
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -42,16 +50,16 @@ export default function Top10(props) {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    setRowsPerPage(event.target.value);
     setPage(0);
   };
   const handelFilterButton = (optionArr) => {
     console.log("on click", props.data, optionArr);
-    setFilter(optionArr[1]);
+    setFilter(`top_${optionArr[1]}`);
     setTitle(optionArr[0]);
-    setRows(props.data[optionArr[2]]);
+    setRows(props.data[optionArr[1]]);
   };
-
+  debugger;
   return (
     <>
       <Row className="d-flex justify-content-between p-0">
@@ -62,15 +70,13 @@ export default function Top10(props) {
           size="small"
           className="d-inline"
         >
-          <Button onClick={() => handelFilterButton(["Movies", "title", 2])}>
+          <Button onClick={() => handelFilterButton(["Movies", "title"])}>
             Movies
           </Button>
-          <Button
-            onClick={() => handelFilterButton(["Actors", "actor_name", 1])}
-          >
+          <Button onClick={() => handelFilterButton(["Actors", "actor"])}>
             Actors
           </Button>
-          <Button onClick={() => handelFilterButton(["Janres", "category", 0])}>
+          <Button onClick={() => handelFilterButton(["Janres", "category"])}>
             Janres
           </Button>
         </ButtonGroup>
@@ -88,6 +94,7 @@ export default function Top10(props) {
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
+                  console.log("table top actor", row);
                   return (
                     <TableRow hover key={index}>
                       <TableCell key={`${index}_${filter}`} align={"left"}>

@@ -27,7 +27,7 @@ export default function Main(props) {
                 <Icon className=" fas fa-dollar-sign text-success border border-success rounded-circle" />
               </Col>
               <Col className="d-flex flex-column align-items-start ml-2">
-                <div>{data.totalRevenue["total"]} $</div>
+                <div>{data.totalRevenue["total_revenue"]} $</div>
                 <div>Total Revenue</div>
               </Col>
               <Col></Col>
@@ -37,7 +37,7 @@ export default function Main(props) {
                 <Icon className="fas fa-cubes rounded-circle" />
               </Col>
               <Col className="d-flex flex-column align-items-start ml-2">
-                <div>{data.totalRevenue["total_today"]} $</div>
+                <div>{data.totalRevenue["day_revenue"]} $</div>
                 <div>Revenue Today</div>
               </Col>
               <Col></Col>
@@ -48,7 +48,7 @@ export default function Main(props) {
               <Col lg={4} className="pl-0">
                 <Col className=" text-left">
                   <h5 className="font-weight-bold">
-                    $ {data.totalRevenue["total_this_week"]}
+                    $ {data.totalRevenue["week_revenue"]}
                   </h5>
                 </Col>
                 <Col className="d-flex">
@@ -57,7 +57,11 @@ export default function Main(props) {
               </Col>
               <Col>
                 {data.weekRevenue.length ? (
-                  <SmallBarChart data={data.weekRevenue} />
+                  <SmallBarChart
+                    data={data.weekRevenue}
+                    valueKey={"week_revenue"}
+                    nameKey={"day_name"}
+                  />
                 ) : (
                   <div>No data available</div>
                 )}
@@ -67,7 +71,7 @@ export default function Main(props) {
               <Col lg={4} className="pl-0">
                 <Col className=" text-left">
                   <h5 className="font-weight-bold">
-                    # {data.totalCustomers["total_customers_this_week"]}
+                    # {data.totalCustomers["week_customers"]}
                   </h5>
                 </Col>
                 <Col className="d-flex">
@@ -76,7 +80,11 @@ export default function Main(props) {
               </Col>
               <Col>
                 {data.weekCustomers.length ? (
-                  <SmallBarChart data={data.weekCustomers} />
+                  <SmallBarChart
+                    data={data.weekCustomers}
+                    valueKey={"week_customers"}
+                    nameKey={"day_name"}
+                  />
                 ) : (
                   <div>No data available</div>
                 )}
@@ -89,7 +97,7 @@ export default function Main(props) {
           md={5}
           className="bg-white d-flex justify-content-around align-items=center flex-column"
         >
-          {data.topTen.length ? (
+          {data.topTen && data.topTen.actor ? (
             <Top10 data={data.topTen} />
           ) : (
             <div className="loader"></div>

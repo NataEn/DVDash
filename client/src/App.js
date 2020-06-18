@@ -12,7 +12,7 @@ function App() {
   const [weekCustomers, setWeekCustomers] = useState([]);
   const [topTen, setTopTen] = useState([]);
   const [monthRevenue, setMonthRevenue] = useState([]);
-  const [monthCustomersRents, setMonthCustomersRents] = useState([]);
+  const [monthCustomers, setMonthCustomers] = useState([]);
 
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
@@ -21,21 +21,15 @@ function App() {
       year: ["YEAR_REVENUE", "YEAR_CUSTOMERS", "YEAR_ORDERS"],
     });
     console.log("periodData", periodData);
-    // const week_revenue = week_data(periodData[3]);
-    // const week_customers = week_data(periodData[4]);
-    // const month_revenue = periodData[1];
-    // const month_customers_rents = periodData[2];
-
-    // setTootalRevenue(periodData[0][0][0][0]);
-    // setTotalCustomers(periodData[0][0][1][0]);
-    // setWeekRevenue(week_revenue);
-    // setWeekCustomers(week_customers);
-    // setMonthRevenue(month_revenue);
-    // setMonthCustomersRents(month_customers_rents);
+    setWeekRevenue(periodData.week.revenue);
+    setWeekCustomers(periodData.week.customers);
+    setMonthRevenue(periodData.month.revenue);
+    setMonthCustomers(periodData.month.customers);
   };
   const fetchTop10 = async () => {
     const top10 = await getTop10();
-    setTopTen(top10);
+    console.log("top10", top10.top);
+    setTopTen(top10.top);
   };
   const fetchTotals = async () => {
     const totals = await getTotals([
@@ -43,6 +37,8 @@ function App() {
       "TOTAL_CUSTOMERS",
       "TOTAL_ORDERS",
     ]);
+    setTootalRevenue(totals.total.revenue[0]);
+    setTotalCustomers(totals.total.customers[0]);
     console.log("totals", totals);
   };
 
@@ -60,7 +56,7 @@ function App() {
         data={{
           totalRevenue,
           totalCustomers,
-          monthCustomersRents,
+          monthCustomers,
           monthRevenue,
           weekCustomers,
           weekRevenue,

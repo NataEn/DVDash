@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { BarChart, Bar, Cell, CartesianGrid } from "recharts";
 
 export default function SmallBarChart(props) {
-  console.log("data ", props.data);
   const [gridData, setGridData] = useState(props.data);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleClick = (event) => {
-    // console.log(event.payload);
     const index = gridData.indexOf(event.payload);
     setActiveIndex(index);
   };
@@ -18,7 +16,7 @@ export default function SmallBarChart(props) {
           <BarChart width={90} height={50} data={gridData}>
             {/* <CartesianGrid strokeDasharray="3 3" /> */}
             <Bar
-              dataKey="value"
+              dataKey={props.valueKey}
               barSize={10}
               onClick={handleClick}
               background={{ fill: "#eee" }}
@@ -33,7 +31,9 @@ export default function SmallBarChart(props) {
               ))}
             </Bar>
           </BarChart>
-          <p className="content">{`${gridData[activeIndex].name}: ${gridData[activeIndex].value}`}</p>
+          <p className="content">{`${gridData[activeIndex][props.nameKey]}: ${
+            gridData[activeIndex][props.valueKey]
+          }`}</p>
         </>
       ) : (
         <div>no data available</div>
