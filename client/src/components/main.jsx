@@ -139,8 +139,16 @@ export default function Main(props) {
           md={5}
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
-          <h3>Net Incom for every month</h3>
-          <ColumnGrid data={"some data"} />
+          <h3>Monthly Revenue</h3>
+          {data.monthRevenue.length ? (
+            <ColumnGrid
+              data={data.monthRevenue}
+              dataXName={"month_num"}
+              dataValue={"month_revenue"}
+            />
+          ) : (
+            <div className="loader"></div>
+          )}
         </Col>
         <Col
           sm={12}
@@ -148,7 +156,15 @@ export default function Main(props) {
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
           <h3>Rents per store</h3>
-          <ColumnGrid data={"some data"} />
+          {data.monthCustomers.length ? (
+            <ColumnGrid
+              data={data.monthCustomers}
+              dataXName={"month_num"}
+              dataValue={"month_customers"}
+            />
+          ) : (
+            <div className="loader"></div>
+          )}
         </Col>
       </Row>
     </div>

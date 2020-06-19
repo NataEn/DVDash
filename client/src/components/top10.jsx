@@ -22,14 +22,14 @@ const useStyles = makeStyles({
     maxHeight: 200,
   },
 });
-const rows = [
-  { top_actor: "SUSAN DAVIS", total_sales: "3538.74" },
-  { top_actor: "GINA DEGENERES", total_sales: "3442.49" },
-  { top_actor: "MATTHEW CARREY", total_sales: "2742.19" },
-  { top_actor: "MARY KEITEL", total_sales: "2689.25" },
-  { top_actor: "SCARLETT DAMON", total_sales: "2655.28" },
-  { top_actor: "WALTER TORN", total_sales: "2620.62" },
-];
+// const rows = [
+//   { top_actor: "SUSAN DAVIS", total_sales: "3538.74" },
+//   { top_actor: "GINA DEGENERES", total_sales: "3442.49" },
+//   { top_actor: "MATTHEW CARREY", total_sales: "2742.19" },
+//   { top_actor: "MARY KEITEL", total_sales: "2689.25" },
+//   { top_actor: "SCARLETT DAMON", total_sales: "2655.28" },
+//   { top_actor: "WALTER TORN", total_sales: "2620.62" },
+// ];
 
 export default function Top10(props) {
   const classes = useStyles();
@@ -59,7 +59,7 @@ export default function Top10(props) {
     setTitle(optionArr[0]);
     setRows(props.data[optionArr[1]]);
   };
-  debugger;
+
   return (
     <>
       <Row className="d-flex justify-content-between p-0">
@@ -94,7 +94,6 @@ export default function Top10(props) {
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  console.log("table top actor", row);
                   return (
                     <TableRow hover key={index}>
                       <TableCell key={`${index}_${filter}`} align={"left"}>
