@@ -8,8 +8,12 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const mongoService = require("./databases/mongodb/mongoServices");
-
+const mongoService = require("./databases/mongodb/mongoServices").mongoConnect(
+  (client) => {
+    const url = client.s.url;
+    console.log("connected on", url);
+  }
+);
 const usersRouter = require("./routes/usersAPI");
 // const testAPIRouter = require("./routes/testAPI");
 const mysqlRouter = require("./routes/mysqlAPI");
@@ -32,6 +36,7 @@ const static =
 
 app.use("/", express.static(static));
 app.use("/mysqlapi", mysqlRouter);
+
 app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
@@ -49,7 +54,5 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({ error: err, message: err.message });
 });
-mongoService.mongoConnect((client) => {
-  console.log(client);
-});
+
 module.exports = app;

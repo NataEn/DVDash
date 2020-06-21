@@ -5,7 +5,7 @@
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 const DVDash_DB = {
-  dbName: "dvdash",
+  dbName: "DVDash",
   _db: "",
   users_collection: "DVDash_users",
 };
@@ -18,7 +18,7 @@ const DVDash_DB = {
 // );
 
 //connect to local mongoDB
-const mongoConnect = (callbackFunc) => {
+const mongoConnect = (cbFunc) => {
   MongoClient.connect(
     `mongodb://127.0.0.1:27017/${DVDash_DB.dbName}`,
     // `${process.env.MONGODB_URL}${dbName}`,
@@ -28,9 +28,11 @@ const mongoConnect = (callbackFunc) => {
         console.log(`MongoDB Error: ${err}${process.env.MONGODB_URL}`);
       } else {
         // console.log(process.env.TEST_VAR);
-        console.log(`connected to mongodb ${client}`);
-        callbackFunc(client);
-        DVDash_DB._db = client;
+        if (cbFunc) {
+          cbFunc(client);
+        }
+
+        DVDash_DB._db = client.db(DVDash_DB.dbName);
 
         // client.close();
       }
@@ -38,7 +40,7 @@ const mongoConnect = (callbackFunc) => {
   );
 };
 const getDb = () => {
-  if (DVDash_DB._db) {
+  if (DVDash_DB._db === "") {
     throw "No Mongo Database found";
   }
   return DVDash_DB._db;

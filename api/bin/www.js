@@ -12,7 +12,6 @@ const http = require("http");
 
 const port = normalizePort(process.env.PORT || "8082");
 app.set("port", port);
-app.set("view engine", "ejs");
 
 /**
  * Create HTTP server.

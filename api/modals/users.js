@@ -1,4 +1,4 @@
-const getDb = require("../databases/mongodb/mongoServices");
+const mongoServices = require("../databases/mongodb/mongoServices");
 
 class User {
   constructor(firstName, lastName, email, phone, picture) {
@@ -9,8 +9,9 @@ class User {
     this.picture = picture;
   }
   save() {
-    const db = getDb();
-    db.collection("DVDash_users")
+    const db = mongoServices.getDb();
+    return db
+      .collection("DVDash_users")
       .insertOne(this)
       .then((result) => {
         console.log(result);
@@ -18,4 +19,4 @@ class User {
       .catch((err) => console.error("mongo save user: ", err));
   }
 }
-module.export = User;
+module.exports = User;
