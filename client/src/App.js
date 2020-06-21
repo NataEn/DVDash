@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Main from "./components/main";
+import Register from "./components/Register";
 import Header from "./components/header";
 import { getPeriodData, getTop10, getTotals } from "./apiCalls/mysqlDataQuery";
-import { week_data, month_data } from "./utils";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
       week: ["WEEK_REVENUE", "WEEK_CUSTOMERS", "WEEK_ORDERS"],
-      month: ["MONTH_REVENUE", "MONTH_CUSTOMERS", "MONTH_ORDERS"],
+      month: ["MONTH_REVENUE", "MONTH_CUSTOMERS_STORE", "MONTH_ORDERS"],
       year: ["YEAR_REVENUE", "YEAR_CUSTOMERS", "YEAR_ORDERS"],
     });
     console.log("periodData", periodData);
@@ -50,20 +51,30 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Main
-        className="App-main"
-        data={{
-          totalRevenue,
-          totalCustomers,
-          monthCustomers,
-          monthRevenue,
-          weekCustomers,
-          weekRevenue,
-          topTen,
-        }}
-      />
-      <footer className="App-footer">footer</footer>
+      <Router>
+        <Header />
+
+        <Switch>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/">
+            <Main
+              className="App-main"
+              data={{
+                totalRevenue,
+                totalCustomers,
+                monthCustomers,
+                monthRevenue,
+                weekCustomers,
+                weekRevenue,
+                topTen,
+              }}
+            />
+          </Route>
+        </Switch>
+        <footer className="App-footer">footer</footer>
+      </Router>
     </div>
   );
 }

@@ -161,6 +161,10 @@ export default function Main(props) {
               data={data.monthCustomers}
               dataXName={"month_num"}
               dataValue={"month_customers"}
+              secondaryData={{
+                dataXName: "month_num",
+                dataValue: "month_customers",
+              }}
             />
           ) : (
             <div className="loader"></div>

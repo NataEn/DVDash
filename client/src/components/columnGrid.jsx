@@ -74,8 +74,17 @@ const ColumnGrid = (props) => {
     >
       <CartesianGrid stroke="#f5f5f5" />
       <XAxis dataKey={props.dataXName} />
-      <Legend />
-      <Bar dataKey={props.dataValue} barSize={20} fill="#413ea0" />
+      <Legend layout="vetical" verticalAlign="middle" align="right" />
+      <Bar dataKey={props.dataValue} barSize={20} fill="#8884d8" />
+      {props.secondaryData ? (
+        <Bar
+          dataKey={props.secondaryData.dataValue}
+          barSize={20}
+          fill="#82ca9d"
+        />
+      ) : (
+        ""
+      )}
       {/* <Line type="monotone" dataKey="customers" stroke="#ff7300" /> */}
     </ComposedChart>
   );
