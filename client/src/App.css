@@ -83,25 +83,27 @@ img.logo {
   width: 120% !important;
 } */
 
-button.MuiButtonBase-root.MuiButton-root.MuiButton-text {
+.MuiTypography-root.MuiLink-root.MuiTypography-colorSecondary {
   background-color: rgb(139, 144, 153);
   color: white;
   border: #282c34 solid 2px;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
 }
-button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1:focus {
+.MuiTypography-root.MuiLink-root.MuiTypography-colorSecondary:focus {
   outline: none !important;
 }
-button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1:hover {
+.MuiTypography-root.MuiLink-root.MuiTypography-colorSecondary:hover {
   text-decoration: none;
   background-color: inherit;
   color: white !important;
   border: #28a745 solid 2px;
 }
-button.MuiButtonBase-root.MuiButton-root.MuiButton-text.makeStyles-margin-1::after {
+.MuiTypography-root.MuiLink-root.MuiTypography-colorSecondary.makeStyles-margin-1::after {
   border-radius: 0.25rem !important;
 }
 
-.MuiButton-label > svg.MuiSvgIcon-root {
+.MuiSvgIcon-root {
   transform: rotate(90deg) !important;
   color: white !important;
 }
