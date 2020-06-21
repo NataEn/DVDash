@@ -53,7 +53,6 @@ function App() {
     <div className="App">
       <Router>
         <Header />
-
         <Switch>
           <Route path="/register">
             <Register />

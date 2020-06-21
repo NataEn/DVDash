@@ -6,7 +6,7 @@ const {
   weekRevenue,
   weekCustomers,
   top10,
-} = require("../mysqlServices");
+} = require("../databases/mysql/mysqlServices");
 
 router.get("/periodData", async function (req, res, next) {
   const dataTotals = await periodData(req.query);
