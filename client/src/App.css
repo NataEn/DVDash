@@ -103,10 +103,10 @@ img.logo {
   border-radius: 0.25rem !important;
 }
 
-.MuiSvgIcon-root {
+/* .MuiSvgIcon-root {
   transform: rotate(90deg) !important;
   color: white !important;
-}
+} */
 .loader,
 .loader:before,
 .loader:after {

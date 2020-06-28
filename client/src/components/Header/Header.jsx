@@ -1,8 +1,8 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import "./Header.css";
 import { makeStyles } from "@material-ui/core/styles";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
-import logo from "../components/logo_blue.png";
+import logo from "../../components/logo_blue.png";
 import { Link as RouterLink, BrowserRouter as Router } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
@@ -30,7 +30,7 @@ const Header = () => {
           size="medium"
           className={`${classes.margin} text-right`}
         >
-          <OpenInBrowserIcon className={"sign-in-icon"} /> Sign-in
+          <OpenInBrowserIcon className="sign-in-icon" /> Sign-in
         </Link>
       </Typography>
     </header>

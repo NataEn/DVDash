@@ -1,19 +1,10 @@
-// const dotenv = require("dotenv").config({ path: "../.env" });
-// if (dotenv.error) {
-//   console.error(dotenv.error);
-// }
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
-const mongoService = require("./databases/mongodb/mongoServices").mongoConnect(
-  (client) => {
-    const url = client.s.url;
-    console.log("connected on", url);
-  }
-);
+const mongoService = require("./databases/mongodb/mongoServices").mongoConnect();
 const usersRouter = require("./routes/usersAPI");
 // const testAPIRouter = require("./routes/testAPI");
 const mysqlRouter = require("./routes/mysqlAPI");

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Main from "./components/main";
 import Register from "./components/Register";
-import Header from "./components/header";
+import Header from "./components/Header/Header";
 import { getPeriodData, getTop10, getTotals } from "./apiCalls/mysqlDataQuery";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";

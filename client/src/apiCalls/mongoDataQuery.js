@@ -1,11 +1,41 @@
-const registerUser = ({ firstName, lastName, email, phone, picture }) => {
-  let fetchUrl = `${process.env.REACT_APP_APISERVER}/users/register?firstName=${firstName}&lastName=${lastName}&email=${email}&phone=${phone}&picture=${picture}`;
-  fetch(fetchUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      return data;
+const axios = require("axios");
+
+const registerUser = async ({
+  firstName,
+  lastName,
+  email,
+  phone,
+  picture,
+  password,
+}) => {
+  debugger;
+  console.log(
+    "posting data",
+    firstName,
+    lastName,
+    email,
+    phone,
+    picture,
+    password,
+    process.env.REACT_APP_APISERVER
+  );
+
+  let fetchUrl = `http://localhost:8080/users/register`;
+  axios
+    .post(fetchUrl, {
+      firstName,
+      lastName,
+      email,
+      phone,
+      picture,
+      password,
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
     });
-  return data;
 };
 module.exports = {
   registerUser,

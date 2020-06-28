@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,7 +12,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Register from "../apiCalls/mongoDataQuery";
 
 const postUrl = `${process.env.REACT_APP_APISERVER}/users/register`;
 function Copyright() {
@@ -20,7 +19,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        DVDash
+        Your Website
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -49,12 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const classes = useStyles();
-  //const sampleData = { firstName, lastName, email, phone, picture,password };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -64,35 +58,9 @@ const SignIn = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Register
+          Sign in
         </Typography>
         <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="firstname"
-            label="First Name"
-            type="text"
-            id="firstName"
-            onChange={(event) => {
-              setFirstName(event.target.value);
-            }}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="lastname"
-            label="Last Name"
-            type="text"
-            id="lastName"
-            onChange={(event) => {
-              setLastName(event.target.value);
-            }}
-          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -103,9 +71,6 @@ const SignIn = () => {
             name="email"
             autoComplete="email"
             autoFocus
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
           />
           <TextField
             variant="outlined"
@@ -117,11 +82,7 @@ const SignIn = () => {
             type="password"
             id="password"
             autoComplete="current-password"
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
           />
-
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -132,23 +93,18 @@ const SignIn = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(event) => {
-              event.preventDefault();
-              console.log("form", event);
-              Register.registerUser({
-                firstName: firstName,
-                lastName: lastName,
-                password: password,
-                email: email,
-              });
-            }}
           >
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                I have an account
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="#" variant="body2">
+                {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>
