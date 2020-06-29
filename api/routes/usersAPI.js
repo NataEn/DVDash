@@ -1,5 +1,7 @@
+require("dotenv");
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("../modals/users");
 
@@ -8,17 +10,25 @@ router.get("/", function (req, res, next) {
 });
 router.post("/login", async (req, res, next) => {
   const enteredPassword = req.query.password || req.body.password;
-  const foundUser = await User.findOne(
+  const user = await User.findOne(
     { email: req.query.email || req.body.email },
     (err, foundUser) => {
       if (err) console.log(err);
     }
   );
-
-  const msg = await bcrypt.compare(enteredPassword, foundUser.password);
-
+  console.log(user);
+  const msg = await bcrypt.compare(enteredPassword, user.password);
   console.log("compared passwords", msg);
-  res.json({ message: msg });
+  const accessToken = jwt.sign(
+    {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      password: user.password,
+    },
+    process.env.ACCESS_TOKEN_SECRET
+  );
+  res.json({ message: msg, token: accessToken });
 });
 router.post("/register", async (req, res, next) => {
   console.log("in registaration");
