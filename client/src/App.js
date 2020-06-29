@@ -3,7 +3,12 @@ import Main from "./components/main";
 import Register from "./components/Register";
 import Header from "./components/Header/Header";
 import { getPeriodData, getTop10, getTotals } from "./apiCalls/mysqlDataQuery";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import "./App.css";
 
 function App() {
@@ -14,6 +19,7 @@ function App() {
   const [topTen, setTopTen] = useState([]);
   const [monthRevenue, setMonthRevenue] = useState([]);
   const [monthCustomers, setMonthCustomers] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
@@ -58,18 +64,22 @@ function App() {
             <Register />
           </Route>
           <Route path="/">
-            <Main
-              className="App-main"
-              data={{
-                totalRevenue,
-                totalCustomers,
-                monthCustomers,
-                monthRevenue,
-                weekCustomers,
-                weekRevenue,
-                topTen,
-              }}
-            />
+            {!loggedIn ? (
+              <Redirect to="/register" />
+            ) : (
+              <Main
+                className="App-main"
+                data={{
+                  totalRevenue,
+                  totalCustomers,
+                  monthCustomers,
+                  monthRevenue,
+                  weekCustomers,
+                  weekRevenue,
+                  topTen,
+                }}
+              />
+            )}
           </Route>
         </Switch>
         <footer className="App-footer">footer</footer>
