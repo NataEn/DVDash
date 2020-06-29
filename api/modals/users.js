@@ -1,10 +1,15 @@
 const mongoServices = require("../databases/mongodb/mongoServices");
 const mongoose = require("mongoose");
 const userSchema = mongoose.Schema({
-  name: {
+  pkey: { type: String, unique: true },
+  firstName: {
     type: String,
     required: true,
     unique: true,
+  },
+  lastName: {
+    type: String,
+    required: false,
   },
   password: {
     type: String,
@@ -15,6 +20,10 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
+    unique: true,
+  },
+  picture: {
+    type: Buffer,
   },
   created_at: {
     type: Date,
@@ -23,24 +32,3 @@ const userSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model("User", userSchema);
-// class User {
-//   constructor(firstName, lastName, email, phone, picture) {
-//     this.firstName = firstName;
-//     this.lastName = lastName;
-//     this.email = email;
-//     this.phone = phone;
-//     this.picture = picture;
-//   }
-//   save() {
-//     console.log("got data from client to save");
-//     const db = mongoServices.getDb();
-//     return db
-//       .collection("DVDash_users")
-//       .insertOne(this)
-//       .then((result) => {
-//         console.log(result);
-//       })
-//       .catch((err) => console.error("mongo save user: ", err));
-//   }
-// }
-// module.exports = User;

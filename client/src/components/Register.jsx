@@ -53,6 +53,7 @@ const SignIn = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [picture, setPicture] = useState("");
   const classes = useStyles();
   //const sampleData = { firstName, lastName, email, phone, picture,password };
 
@@ -85,7 +86,7 @@ const SignIn = () => {
             margin="normal"
             required
             fullWidth
-            name="lastname"
+            name="lastName"
             label="Last Name"
             type="text"
             id="lastName"
@@ -121,6 +122,19 @@ const SignIn = () => {
               setPassword(event.target.value);
             }}
           />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="picture"
+            label="Profile Picture"
+            type="file"
+            id="picture"
+            onChange={(event) => {
+              setPicture(event.target.value);
+            }}
+          />
 
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -140,6 +154,7 @@ const SignIn = () => {
                 lastName: lastName,
                 password: password,
                 email: email,
+                picture: picture,
               });
             }}
           >

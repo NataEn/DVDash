@@ -7,30 +7,31 @@ router.get("/", function (req, res, next) {
 });
 router.post("/register", (req, res, next) => {
   console.log("in registaration");
-  console.log(req.body);
-  let form_details = {
-    FirstName: req.body.firstname,
-    Email: req.body.email,
-    LastName: req.body.lastname,
-    Phone: req.body.phone,
-  };
-  console.log(User);
-  const user = new User(
-    req.body.FN,
-    req.body.LN,
-    req.body.mail,
-    req.body.Phone
-  );
-  user
-    .save()
-    .then((result) => {
-      console.log("created new user");
-      res.render("successful", { form_details: form_details });
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  res.send("something");
+  User.findOne({ firstName: req.body.firstName }, function (err, result) {
+    if (err) console.log(err);
+    if (result) {
+      console.log("This has already been saved", result);
+    } else {
+      const user = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        password: req.body.password,
+        email: req.body.email,
+        picture: req.body.picture,
+        age: req.body.age,
+      });
+      user
+        .save()
+        .then((result) => {
+          console.log("created new user");
+        })
+        .catch((err) => {
+          console.error("got error from saving new user: ", err);
+        });
+    }
+
+    res.send("something");
+  });
 });
 
 module.exports = router;
