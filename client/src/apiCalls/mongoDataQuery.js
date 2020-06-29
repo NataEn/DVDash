@@ -1,5 +1,16 @@
 const axios = require("axios");
-
+const signinUser = async ({ email, password }) => {
+  let fetchUrl = `http://localhost:8080/users/login`;
+  console.log("logged in user", { email, password });
+  axios
+    .post(fetchUrl, { email, password })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 const registerUser = async ({
   firstName,
   lastName,
@@ -8,7 +19,6 @@ const registerUser = async ({
   picture,
   password,
 }) => {
-  debugger;
   console.log(
     "posting data",
     firstName,
@@ -16,8 +26,7 @@ const registerUser = async ({
     email,
     phone,
     picture,
-    password,
-    process.env.REACT_APP_APISERVER
+    password
   );
 
   let fetchUrl = `http://localhost:8080/users/register`;
@@ -39,4 +48,5 @@ const registerUser = async ({
 };
 module.exports = {
   registerUser,
+  signinUser,
 };

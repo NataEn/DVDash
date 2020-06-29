@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Main from "./components/main";
-import Register from "./components/Register";
+import Register from "./components/Register/Register";
+import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
 import { getPeriodData, getTop10, getTotals } from "./apiCalls/mysqlDataQuery";
 import {
@@ -60,12 +61,15 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
           <Route path="/register">
             <Register />
           </Route>
           <Route path="/">
             {!loggedIn ? (
-              <Redirect to="/register" />
+              <Redirect to="/login" />
             ) : (
               <Main
                 className="App-main"

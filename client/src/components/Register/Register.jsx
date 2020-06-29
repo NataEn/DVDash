@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Register from "../apiCalls/mongoDataQuery";
+import Users from "../../apiCalls/mongoDataQuery";
 import { useHistory } from "react-router-dom";
 
 const postUrl = `${process.env.REACT_APP_APISERVER}/users/register`;
@@ -151,7 +151,7 @@ const SignIn = () => {
             onClick={(event) => {
               event.preventDefault();
               console.log("form", event);
-              Register.registerUser({
+              Users.registerUser({
                 firstName: firstName,
                 lastName: lastName,
                 password: password,
@@ -165,7 +165,7 @@ const SignIn = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="/login" variant="body2">
                 I have an account
               </Link>
             </Grid>

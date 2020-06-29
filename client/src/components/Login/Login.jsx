@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,13 +12,14 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Users from "../../apiCalls/mongoDataQuery";
+import { useHistory } from "react-router-dom";
 
-const postUrl = `${process.env.REACT_APP_APISERVER}/users/register`;
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="/" href="https://material-ui.com/">
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -48,7 +49,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const classes = useStyles();
+  let history = useHistory();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -71,6 +75,9 @@ const SignIn = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
           />
           <TextField
             variant="outlined"
@@ -82,6 +89,9 @@ const SignIn = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -93,6 +103,15 @@ const SignIn = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={(event) => {
+              event.preventDefault();
+              console.log("form", event);
+              Users.signinUser({
+                password: password,
+                email: email,
+              });
+              history.push("/");
+            }}
           >
             Sign In
           </Button>
@@ -103,7 +122,7 @@ const SignIn = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

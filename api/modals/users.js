@@ -1,5 +1,7 @@
 const mongoServices = require("../databases/mongodb/mongoServices");
 const mongoose = require("mongoose");
+const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 const userSchema = mongoose.Schema({
   pkey: { type: String, unique: true },
   firstName: {

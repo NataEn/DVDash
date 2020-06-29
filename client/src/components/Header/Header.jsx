@@ -24,7 +24,7 @@ const Header = () => {
           Dashboard
         </Link>
         <Link
-          to="/register"
+          to="/login"
           component={RouterLink}
           color="secondary"
           size="medium"
