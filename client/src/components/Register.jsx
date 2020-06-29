@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Register from "../apiCalls/mongoDataQuery";
+import { useHistory } from "react-router-dom";
 
 const postUrl = `${process.env.REACT_APP_APISERVER}/users/register`;
 function Copyright() {
@@ -55,7 +56,8 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [picture, setPicture] = useState("");
   const classes = useStyles();
-  //const sampleData = { firstName, lastName, email, phone, picture,password };
+  const history = useHistory();
+  // const sampleData = { firstName, lastName, email, phone, picture, password };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -156,6 +158,7 @@ const SignIn = () => {
                 email: email,
                 picture: picture,
               });
+              history.push("/");
             }}
           >
             Sign In
