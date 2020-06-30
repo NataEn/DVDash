@@ -3,6 +3,7 @@ import Main from "./components/main";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import { getPeriodData, getTop10, getTotals } from "./apiCalls/mysqlDataQuery";
 import {
   BrowserRouter as Router,
@@ -86,7 +87,7 @@ function App() {
             )}
           </Route>
         </Switch>
-        <footer className="App-footer">footer</footer>
+        <Footer />
       </Router>
     </div>
   );

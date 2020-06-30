@@ -6,6 +6,8 @@ const logger = require("morgan");
 const cors = require("cors");
 const mongoService = require("./databases/mongodb/mongoServices").mongoConnect();
 const usersRouter = require("./routes/usersAPI");
+const users = require("./controllers/users");
+
 // const testAPIRouter = require("./routes/testAPI");
 const mysqlRouter = require("./routes/mysqlAPI");
 const app = express();
@@ -26,7 +28,7 @@ const static =
   process.env.STATIC_PATH || path.join(__dirname, "../client/build");
 
 app.use("/", express.static(static));
-app.use("/mysqlapi", mysqlRouter);
+app.use("/mysqlapi", users.authenticationToken, mysqlRouter);
 
 app.use("/users", usersRouter);
 

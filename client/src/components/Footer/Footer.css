@@ -1,0 +1,13 @@
+/* .footer_box {
+    background-color: #282c34;
+    min-height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+} */
+
+.MuiBox-root.MuiBox-root-135 {
+    margin-top: 0;
+}

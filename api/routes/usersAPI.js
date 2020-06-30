@@ -3,6 +3,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const users = require("../controllers/users");
 const User = require("../modals/users");
 
 router.get("/", function (req, res, next) {
