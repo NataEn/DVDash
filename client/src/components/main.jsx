@@ -128,7 +128,7 @@ export default function Main(props) {
           md={5}
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
-          <Row className=" justify-content-around p-2">
+          <Row className="justify-content-around p-2">
             <Col className="bg-white">
               <h3>Rental Data In selected area</h3>
               <Filter
@@ -156,7 +156,7 @@ export default function Main(props) {
           {data.monthRevenue.length ? (
             <ColumnGrid
               data={data.monthRevenue}
-              dataXName={"month_num"}
+              dataXName={"month_name"}
               dataValue={"month_revenue"}
             />
           ) : (
@@ -172,10 +172,10 @@ export default function Main(props) {
           {data.monthCustomers.length ? (
             <ColumnGrid
               data={data.monthCustomers}
-              dataXName={"month_num"}
+              dataXName={"month_name"}
               dataValue={"month_customers"}
               secondaryData={{
-                dataXName: "month_num",
+                dataXName: "month_name",
                 dataValue: "month_customers",
               }}
             />

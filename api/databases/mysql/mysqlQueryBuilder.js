@@ -271,11 +271,11 @@ const MONTH_REVENUE = (givenYear) => {
     diff = current_year - year;
   }
   return `
-SELECT MONTH(payment_date) AS month_num,
+SELECT MONTHNAME(payment_date) AS month_name,
 SUM(amount) as month_revenue
 FROM payment
 WHERE year(date(payment_date))=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
-GROUP BY MONTH(payment_date);
+GROUP BY MONTHNAME(payment_date);
 `;
 };
 const MONTH_CUSTOMERS = (givenYear) => {
@@ -286,13 +286,13 @@ const MONTH_CUSTOMERS = (givenYear) => {
     diff = current_year - givenYear;
   }
   let sql = `
-SELECT MONTH(create_date) AS month_num,
+SELECT MONTHNAME(create_date) AS month_name,
 count(case when gender='F' then 1 end) as female_customers,
 count(case when gender='M' then 1 end) as male_customers,
 COUNT(*) AS month_customers
 FROM customer
 WHERE year(date(create_date))=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
-GROUP BY MONTH(create_date);
+GROUP BY MONTHNAME(create_date);
 `;
   return sql;
 };
@@ -303,13 +303,13 @@ const MONTH_CUSTOMERS_STORE = (givenYear) => {
     let current_year = now.getFullYear();
     diff = current_year - givenYear;
   }
-  return `SELECT MONTH(create_date) AS month_num, store_id,
+  return `SELECT MONTHNAME(create_date) AS month_name, store_id,
   count(case when gender='F' then 1 end) as tot_female_customers,
   count(case when gender='M' then 1 end) as tot_male_customers,
   COUNT(*) AS tot_month_customers
   FROM customer
   WHERE year(date(create_date))=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
-  GROUP BY MONTH(create_date),store_id;`;
+  GROUP BY MONTHNAME(create_date),store_id;`;
 };
 const MONTH_ORDERS = (givenYear) => {
   let diff = 2;
@@ -319,11 +319,11 @@ const MONTH_ORDERS = (givenYear) => {
     diff = current_year - givenYear;
   }
   return `
-SELECT MONTH(payment_date) AS month_num,
+SELECT MONTHNAME(payment_date) AS month_name,
 COUNT(*) AS month_orders
 FROM payment
 WHERE year(date(payment_date))=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))  
-GROUP BY MONTH(payment_date);
+GROUP BY MONTHNAME(payment_date);
 `;
 };
 const YEAR_REVENUE = (givenYear) => {
