@@ -31,7 +31,10 @@ const ColumnGrid = (props) => {
       }}
     >
       <CartesianGrid stroke="#f5f5f5" />
-      <XAxis dataKey={props.dataXName} tick={{ fontSize: 10 }} />
+      <XAxis
+        dataKey={props.dataXName}
+        // tick={{ fontSize: 10 }}
+      />
       <Legend layout="vetical" verticalAlign="middle" align="right" />
       <Bar
         dataKey={props.dataValue}
