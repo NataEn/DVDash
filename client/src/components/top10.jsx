@@ -38,7 +38,6 @@ export default function Top10(props) {
   const [rows, setRows] = useState([]);
   const [filter, setFilter] = useState("");
   const [title, setTitle] = useState("");
-  console.log("actors", props.data.actor);
   useEffect(() => {
     setFilter("top_actor");
     setTitle("Actors");
@@ -54,7 +53,6 @@ export default function Top10(props) {
     setPage(0);
   };
   const handelFilterButton = (optionArr) => {
-    console.log("on click", props.data, optionArr);
     setFilter(`top_${optionArr[1]}`);
     setTitle(optionArr[0]);
     setRows(props.data[optionArr[1]]);

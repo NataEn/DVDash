@@ -20,7 +20,7 @@ const getSql = (dataType) => {
   let timeExtent = type.split("_")[0];
   let queryType = type.split("_")[1];
   const queryfunction = queryBuilder[`${timeExtent}_${queryType}`];
-  console.log("query function", queryfunction);
+  // console.log("query function", queryfunction);
   sql = timeExtent === "TOTAL" ? queryfunction : queryfunction();
   return sql;
 };
@@ -33,14 +33,14 @@ async function connect() {
 }
 
 const getOptionFromResultKeys = (options, keys) => {
-  console.log("options: ", options, "keys: ", keys);
+  // console.log("options: ", options, "keys: ", keys);
   for (let option of options) {
     const optionRgEx = new RegExp(option, "i");
     optionExists = keys.some((key) => {
       return optionRgEx.test(key);
     });
     if (optionExists) {
-      console.log("existing option", option);
+      // console.log("existing option", option);
       return option;
     }
   }
@@ -166,7 +166,12 @@ async function top10(filterParams) {
   }
 }
 async function areaData(filter) {
-  const sql = queryBuilder.AREA_DATA();
+  let sql;
+  if (filter) {
+    console.log("filter", filter);
+    sql = queryBuilder.AREA_DATA();
+  }
+
   try {
     const data = await pool.query(sql);
     const cleanedData = removeNonDataArrays(data)[0];

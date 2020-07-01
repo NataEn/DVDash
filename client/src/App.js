@@ -29,9 +29,10 @@ function App() {
   const [monthCustomers, setMonthCustomers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(true);
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState("usa");
+  const [country, setCountry] = useState("United States");
   const [areaData, setAreaData] = useState([]);
-  const [areaDataReq, setAreaDataReq] = useState([]);
+  const [areaDataReq, setAreaDataReq] = useState("gender");
+  const [filteredAreaData, setFilteredAreaData] = useState({});
 
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
@@ -39,7 +40,6 @@ function App() {
       month: ["MONTH_REVENUE", "MONTH_CUSTOMERS_STORE", "MONTH_ORDERS"],
       year: ["YEAR_REVENUE", "YEAR_CUSTOMERS", "YEAR_ORDERS"],
     });
-    console.log("periodData", periodData);
     setWeekRevenue(periodData.week.revenue);
     setWeekCustomers(periodData.week.customers);
     setMonthRevenue(periodData.month.revenue);
@@ -47,7 +47,6 @@ function App() {
   };
   const fetchTop10 = async () => {
     const top10 = await getTop10();
-    console.log("top10", top10.top);
     setTopTen(top10.top);
   };
   const fetchTotals = async () => {
@@ -58,7 +57,6 @@ function App() {
     ]);
     setTootalRevenue(totals.total.revenue[0]);
     setTotalCustomers(totals.total.customers[0]);
-    console.log("totals", totals);
   };
   const fetchCountries = async () => {
     const countries = await getCountries();
@@ -66,22 +64,32 @@ function App() {
   };
   const fetchAreaData = async () => {
     const data = await getAreaData(areaDataReq);
-    setAreaData([...data]);
+    setAreaData(data);
   };
-
+  const filtereAreaData = () => {
+    console.log("in filter data", areaData);
+    const filteredData = areaData.find((item) => item.country === country);
+    return filteredData;
+  };
   useEffect(() => {
     fetchPeriodData();
     fetchTotals();
     fetchTop10();
     fetchCountries();
+    fetchAreaData();
   }, []);
-  useEffect(() => {
-    console.log("selected country", country);
-  }, [country]);
+
   useEffect(() => {
     console.log(`requested ${areaDataReq} for ${country}`);
     fetchAreaData();
   }, [areaDataReq]);
+
+  useEffect(() => {
+    console.log("selected country", country);
+    const filteredData = filtereAreaData();
+    setFilteredAreaData(filteredData);
+    console.log("selected country", country, filteredData);
+  }, [country, areaDataReq, areaData]);
 
   return (
     <div className="App">
@@ -112,6 +120,8 @@ function App() {
                   setCountry,
                   country,
                   areaData,
+                  filteredAreaData,
+                  areaDataReq,
                   setAreaDataReq,
                 }}
               />

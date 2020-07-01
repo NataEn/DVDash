@@ -59,7 +59,6 @@ const ColumnGrid = (props) => {
   useEffect(() => {
     setData([...props.data]);
   }, []);
-  console.log("monthly income", data);
   return (
     <ComposedChart
       width={500}

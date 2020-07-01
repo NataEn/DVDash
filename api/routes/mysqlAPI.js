@@ -29,7 +29,7 @@ router.get("/customers_this_week", async function (req, res, next) {
 router.get("/top10", async function (req, res, next) {
   const top10Items = await top10(req.query);
 
-  console.log("befor sending to client", top10Items);
+  // console.log("befor sending to client", top10Items);
   res.json(top10Items);
 });
 router.get("/area_data", getAreaData);

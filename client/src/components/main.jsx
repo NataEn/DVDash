@@ -135,7 +135,13 @@ export default function Main(props) {
                 options={store.AREA_FILTERS}
                 onSelect={data.setAreaDataReq}
               />
-              <PieChart areaData={data.areaData} />
+              {data.filteredAreaData && (
+                <PieChart
+                  areaData={data.filteredAreaData}
+                  filter={data.areaDataReq}
+                  country={data.country}
+                />
+              )}
             </Col>
           </Row>
         </Col>

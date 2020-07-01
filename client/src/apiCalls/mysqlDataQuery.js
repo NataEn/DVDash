@@ -28,10 +28,14 @@ const getTop10 = (filterChoice) => {
   return data;
 };
 const getAreaData = (filterChoice) => {
-  let fetchUrl = `${process.env.REACT_APP_APISERVER}/mysqlapi/areaData?filter=${filterChoice}`;
+  let fetchUrl = `${process.env.REACT_APP_APISERVER}/mysqlapi/area_data?filter=${filterChoice}`;
+
   const data = fetch(fetchUrl)
-    .then((response) => response.json)
-    .then((data) => data);
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("from server", data);
+      return data;
+    });
   return data;
 };
 

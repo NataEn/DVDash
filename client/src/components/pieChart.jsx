@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ResponsiveContainer,
   PieChart,
@@ -9,12 +9,12 @@ import {
   Legend,
 } from "recharts";
 
-const data = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-];
+// const data = [
+//   { name: "Group A", value: 400 },
+//   { name: "Group B", value: 300 },
+//   { name: "Group C", value: 300 },
+//   { name: "Group D", value: 200 },
+// ];
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
@@ -45,7 +45,21 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default function RentalDistributionPieChart() {
+const RentalDistributionPieChart = (props) => {
+  const [data, setData] = useState([]);
+  const createDataFromObject = () => {
+    const data = [];
+    for (let [key, val] of Object.entries(props.areaData)) {
+      if ((key !== "country") & !key.includes("total")) {
+        data.push({ name: key, value: val });
+      }
+    }
+    return data;
+  };
+  useEffect(() => {
+    const data = createDataFromObject();
+    setData([...data]);
+  }, []);
   return (
     <ResponsiveContainer aspect={1.5}>
       <PieChart width={600} height={300}>
@@ -65,4 +79,5 @@ export default function RentalDistributionPieChart() {
       </PieChart>
     </ResponsiveContainer>
   );
-}
+};
+export default RentalDistributionPieChart;
