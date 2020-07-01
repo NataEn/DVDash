@@ -5,6 +5,7 @@ import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { getPeriodData, getTop10, getTotals } from "./apiCalls/mysqlDataQuery";
+import { getCountries } from "./apiCalls/worldCountries";
 import {
   BrowserRouter as Router,
   Switch,
@@ -51,11 +52,16 @@ function App() {
     setTotalCustomers(totals.total.customers[0]);
     console.log("totals", totals);
   };
+  const fetchCountries = async () => {
+    const countries = await getCountries();
+    setCountries([...countries]);
+  };
 
   useEffect(() => {
     fetchPeriodData();
     fetchTotals();
     fetchTop10();
+    fetchCountries();
   }, []);
 
   return (

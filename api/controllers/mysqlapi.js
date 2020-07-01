@@ -1,4 +1,7 @@
-const getCountries = (req, res, next) => {};
+const getCountries = (req, res, next) => {
+
+    
+};
 
 module.exports{
     getCountries

@@ -1,4 +1,5 @@
 const express = require("express");
+const { getCountries } = require("../controllers/mysqlapi");
 const router = express.Router();
 const {
   totals,
@@ -31,5 +32,6 @@ router.get("/top10", async function (req, res, next) {
   console.log("befor sending to client", top10Items);
   res.json(top10Items);
 });
+router.get("/countries", getCountries);
 
 module.exports = router;
