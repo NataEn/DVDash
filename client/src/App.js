@@ -22,6 +22,7 @@ function App() {
   const [monthRevenue, setMonthRevenue] = useState([]);
   const [monthCustomers, setMonthCustomers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(true);
+  const [countries, setCountries] = useState([]);
 
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({

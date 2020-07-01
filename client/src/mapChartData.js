@@ -7,10 +7,12 @@ export const UsaData = [
   {
     id: "US-AL",
     value: 4447100,
+    customers: 12,
   },
   {
     id: "US-AK",
     value: 626932,
+    customers: 12,
   },
   {
     id: "US-AZ",
@@ -19,22 +21,27 @@ export const UsaData = [
   {
     id: "US-AR",
     value: 2673400,
+    customers: 12,
   },
   {
     id: "US-CA",
     value: 33871648,
+    customers: 12,
   },
   {
     id: "US-CO",
     value: 4301261,
+    customers: 12,
   },
   {
     id: "US-CT",
     value: 3405565,
+    customers: 12,
   },
   {
     id: "US-DE",
     value: 783600,
+    customers: 32,
   },
   {
     id: "US-FL",
@@ -43,42 +50,52 @@ export const UsaData = [
   {
     id: "US-GA",
     value: 8186453,
+    customers: 12,
   },
   {
     id: "US-HI",
     value: 1211537,
+    customers: 12,
   },
   {
     id: "US-ID",
     value: 1293953,
+    customers: 12,
   },
   {
     id: "US-IL",
     value: 12419293,
+    customers: 12,
   },
   {
     id: "US-IN",
     value: 6080485,
+    customers: 2,
   },
   {
     id: "US-IA",
     value: 2926324,
+    customers: 12,
   },
   {
     id: "US-KS",
     value: 2688418,
+    customers: 12,
   },
   {
     id: "US-KY",
     value: 4041769,
+    customers: 12,
   },
   {
     id: "US-LA",
     value: 4468976,
+    customers: 12,
   },
   {
     id: "US-ME",
     value: 1274923,
+    customers: 12,
   },
   {
     id: "US-MD",

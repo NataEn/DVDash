@@ -7,7 +7,7 @@ import SmallBarChart from "./smallBarChart";
 import Icon from "@material-ui/core/Icon";
 import Filter from "./filter";
 import { VerticalChart } from "./verticalBarchart";
-import Map from "./map";
+import Map from "./Map/Map.jsx";
 import ColumnGrid from "./columnGrid";
 import store from "../store/filterOptions";
 
