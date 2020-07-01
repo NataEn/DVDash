@@ -177,3 +177,7 @@ img.logo {
     height: 5em;
   }
 }
+
+#root>div>div.bg-light>div:nth-child(3)>div:nth-child(1)>div>svg>g.recharts-layer.recharts-cartesian-axis.recharts-xAxis.xAxis > g > text > tspan {
+  transform: rotate(45deg);
+}

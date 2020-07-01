@@ -16,9 +16,11 @@ const ColumnGrid = (props) => {
     console.log("month data", props.data);
   }, []);
   console.log("monthly income", data);
+
+  console.log("XAxis", XAxis);
   return (
     <ComposedChart
-      width={500}
+      width={600}
       height={400}
       data={data}
       margin={{
@@ -29,12 +31,11 @@ const ColumnGrid = (props) => {
       }}
     >
       <CartesianGrid stroke="#f5f5f5" />
-      <XAxis dataKey={props.dataXName} />
+      <XAxis dataKey={props.dataXName} tick={{ fontSize: 10 }} />
       <Legend layout="vetical" verticalAlign="middle" align="right" />
       <Bar
         dataKey={props.dataValue}
         dataValue={props.dataValue}
-        dataXName={props.dataXName}
         barSize={20}
         fill="#8884d8"
       />
@@ -42,7 +43,6 @@ const ColumnGrid = (props) => {
         <Bar
           dataKey={props.secondaryData.dataValue}
           dataValue={props.secondaryData.dataValue}
-          dataXName={props.secondaryData.dataXName}
           barSize={20}
           fill="#82ca9d"
         />
