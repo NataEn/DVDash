@@ -54,6 +54,9 @@ const removeNonDataArrays = (resultsArr, dataName) => {
     } else if (dataName === "top10") {
       cleanedArr.push(resultsArr[0]);
       break;
+    } else if (!dataName) {
+      cleanedArr.push(resultsArr[0]);
+      break;
     }
   }
   return cleanedArr;
@@ -159,13 +162,24 @@ async function top10(filterParams) {
     const arrangedResults = arrangeResults("top10", top10Result);
     return arrangedResults;
   } catch (err) {
-    console.log(`top10 error:${err}`);
+    console.error(`top10 error:${err}`);
   }
 }
-
+async function areaData(filter) {
+  const sql = queryBuilder.AREA_DATA();
+  try {
+    const data = await pool.query(sql);
+    const cleanedData = removeNonDataArrays(data)[0];
+    return cleanedData;
+  } catch (err) {
+    console.error(`area data error:${err}`);
+  }
+}
 module.exports = {
   connect,
   periodData,
   totals,
   top10,
+  areaData,
+  removeNonDataArrays,
 };

@@ -28,7 +28,8 @@ const static =
   process.env.STATIC_PATH || path.join(__dirname, "../client/build");
 
 app.use("/", express.static(static));
-app.use("/mysqlapi", users.authenticationToken, mysqlRouter);
+// app.use("/mysqlapi", users.authenticationToken, mysqlRouter);
+app.use("/mysqlapi", mysqlRouter);
 
 app.use("/users", usersRouter);
 

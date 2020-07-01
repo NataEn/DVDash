@@ -104,21 +104,23 @@ export default function Main(props) {
           )}
         </Col>
       </Row>
-      <Row className="justify-content-around p-0">
+      <Row className="justify-content-center p-0">
         <Col sm={12} md={5} className="bg-white">
           <Row>
             <h4>World map</h4>
             {props.data.countries.length && (
-              <Filter options={props.data.countries} />
+              <Filter
+                options={props.data.countries}
+                onSelect={data.setCountry}
+              />
             )}
           </Row>
           <Row>
-            <Col ms={12} lg={6}>
-              <Map />
-            </Col>
-            <Col ms={12} lg={6}>
+            <Map country={data.country} />
+
+            {/* <Col ms={12} lg={6}>
               <VerticalChart />
-            </Col>
+            </Col> */}
           </Row>
         </Col>
         <Col
@@ -129,8 +131,11 @@ export default function Main(props) {
           <Row className=" justify-content-around p-2">
             <Col className="bg-white">
               <h3>Rental Data In selected area</h3>
-              <Filter options={store.AREA_FILTERS} />
-              <PieChart />
+              <Filter
+                options={store.AREA_FILTERS}
+                onSelect={data.setAreaDataReq}
+              />
+              <PieChart areaData={data.areaData} />
             </Col>
           </Row>
         </Col>

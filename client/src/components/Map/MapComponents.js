@@ -4,8 +4,10 @@ import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import am4geodata_usaLow from "@amcharts/amcharts4-geodata/usaLow";
 import { UsaData } from "../../mapChartData";
 import { isoWorldIds } from "../../isoCodes";
+console.log("geodata", am4geodata_usaLow);
 
 const createMap = (chart, selectedCountry) => {
+  console.log("in create map, selected country ", selectedCountry);
   console.log("chart", chart);
   chart.chartContainer.percentHeight = "30";
   // chart.contentHeight = "20rem";

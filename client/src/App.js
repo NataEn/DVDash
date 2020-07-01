@@ -4,7 +4,12 @@ import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import { getPeriodData, getTop10, getTotals } from "./apiCalls/mysqlDataQuery";
+import {
+  getPeriodData,
+  getTop10,
+  getTotals,
+  getAreaData,
+} from "./apiCalls/mysqlDataQuery";
 import { getCountries } from "./apiCalls/worldCountries";
 import {
   BrowserRouter as Router,
@@ -24,6 +29,9 @@ function App() {
   const [monthCustomers, setMonthCustomers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(true);
   const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState("usa");
+  const [areaData, setAreaData] = useState([]);
+  const [areaDataReq, setAreaDataReq] = useState([]);
 
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
@@ -56,6 +64,10 @@ function App() {
     const countries = await getCountries();
     setCountries([...countries]);
   };
+  const fetchAreaData = async () => {
+    const data = await getAreaData(areaDataReq);
+    setAreaData([...data]);
+  };
 
   useEffect(() => {
     fetchPeriodData();
@@ -63,6 +75,13 @@ function App() {
     fetchTop10();
     fetchCountries();
   }, []);
+  useEffect(() => {
+    console.log("selected country", country);
+  }, [country]);
+  useEffect(() => {
+    console.log(`requested ${areaDataReq} for ${country}`);
+    fetchAreaData();
+  }, [areaDataReq]);
 
   return (
     <div className="App">
@@ -90,6 +109,10 @@ function App() {
                   weekRevenue,
                   topTen,
                   countries,
+                  setCountry,
+                  country,
+                  areaData,
+                  setAreaDataReq,
                 }}
               />
             )}

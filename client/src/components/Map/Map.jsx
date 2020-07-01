@@ -11,7 +11,8 @@ const Map = (props) => {
 
   useEffect(() => {
     const chart = am4core.create("chartdiv", am4maps.MapChart);
-    createMap(chart, country);
+    createMap(chart, props.country);
+
     return () => {
       if (chart) {
         chart.dispose();

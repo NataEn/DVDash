@@ -24,9 +24,14 @@ const getTop10 = (filterChoice) => {
   let fetchUrl = `${process.env.REACT_APP_APISERVER}/mysqlapi/top10`;
   const data = fetch(fetchUrl)
     .then((response) => response.json())
-    .then((data) => {
-      return data;
-    });
+    .then((data) => data);
+  return data;
+};
+const getAreaData = (filterChoice) => {
+  let fetchUrl = `${process.env.REACT_APP_APISERVER}/mysqlapi/areaData?filter=${filterChoice}`;
+  const data = fetch(fetchUrl)
+    .then((response) => response.json)
+    .then((data) => data);
   return data;
 };
 
@@ -34,4 +39,5 @@ module.exports = {
   getPeriodData,
   getTop10,
   getTotals,
+  getAreaData,
 };

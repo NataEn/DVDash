@@ -383,7 +383,7 @@ const TOP_10 = (givenYear) => {
     diff = current_year - year;
   }
 
-  let sql = `
+  return `
 SELECT
 c.name AS top_category, SUM(p.amount) AS total_sales
 FROM payment AS p
@@ -419,6 +419,26 @@ GROUP BY title
 ORDER BY total_sales DESC
 LIMIT 10;
 `;
+};
+const AREA_DATA = (givenYear) => {
+  let diff = 2;
+  if (givenYear) {
+    const now = new Date();
+    let current_year = now.getFullYear();
+    diff = current_year - year;
+  }
+
+  const sql = `
+  SELECT co.country, 
+count(case when (cu.gender='M') AND (YEAR(date(create_date))=YEAR(DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))) then 1 end) as male_cnt,
+count(case when (cu.gender='F')AND (YEAR(date(create_date))=YEAR(DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))) then 1 end) as female_cnt,
+count(case when YEAR(date(cu.create_date))=YEAR(DATE_SUB(CURDATE(),INTERVAL 2 YEAR)) then ${diff} end) as total_cnt
+FROM customer cu
+INNER JOIN address a ON a.address_id = cu.address_id
+INNER JOIN city ci ON ci.city_id = a.city_id
+INNER JOIN country co ON co.country_id = ci.country_id
+
+GROUP BY co.country;`;
   return sql;
 };
 
@@ -440,4 +460,5 @@ module.exports = {
   // DAY_ORDERS,
   // DAY_REVENUE,
   // DAY_CUSTOMERS,
+  AREA_DATA,
 };
