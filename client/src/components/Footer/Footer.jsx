@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 const Footer = () => {
   const classes = useStyles();
   return (
-    <div className={classes.footer}>
+    <div className={`${classes.footer} footer`}>
       <Box mt={8}>
         <Typography variant="body2">
           {"Copyright © "}
