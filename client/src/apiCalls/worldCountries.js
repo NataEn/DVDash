@@ -6,7 +6,7 @@ const getCountries = () => {
         return {
           name: item.name,
           code: item.alpha2Code,
-          flagUrl: `https://www.countryflags.io/${item.alpha2Code}/flat/64.png`,
+          flagUrl: `https://www.countryflags.io/${item.alpha2Code}/flat/32.png`,
         };
       });
       return countries;

@@ -6,7 +6,7 @@ import createMap from "./MapComponents";
 
 am4core.useTheme(am4themes_animated);
 
-const Map = () => {
+const Map = (props) => {
   const { country, setCountry } = useState("usa");
 
   useEffect(() => {
@@ -18,6 +18,7 @@ const Map = () => {
       }
     };
   }, []);
+
   const onCountryChange = (e) => {
     setCountry(
       {

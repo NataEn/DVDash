@@ -89,6 +89,7 @@ function App() {
                   weekCustomers,
                   weekRevenue,
                   topTen,
+                  countries,
                 }}
               />
             )}

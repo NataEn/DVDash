@@ -108,7 +108,9 @@ export default function Main(props) {
         <Col sm={12} md={5} className="bg-white">
           <Row>
             <h4>World map</h4>
-            <Filter options={store.COUNTRIES} />
+            {props.data.countries.length && (
+              <Filter options={props.data.countries} />
+            )}
           </Row>
           <Row>
             <Col ms={12} lg={6}>

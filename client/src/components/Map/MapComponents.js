@@ -83,7 +83,6 @@ const createHeatLegend = (chart, polygonSeries) => {
   maxRange.value = heatLegend.maxValue;
   // maxRange.label.text = "A lot!";
   maxRange.label.fontSize = "1rem";
-  debugger;
   console.log(
     " heatLegend.valueAxis.renderer.labels.template",
     heatLegend.valueAxis.renderer.labels.template
