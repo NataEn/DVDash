@@ -5,6 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/app.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node"
+    },
+    {
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome",
@@ -17,6 +24,13 @@
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}\\api\\bin\\www"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch specific Program",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\api\\utils"
     }
   ]
 }
