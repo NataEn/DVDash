@@ -173,10 +173,10 @@ export default function Main(props) {
             <ColumnGrid
               data={data.monthCustomers}
               dataXName={"month_name"}
-              dataValue={"month_customers"}
+              dataValue={"tot_female_customers_1"}
               secondaryData={{
                 dataXName: "month_name",
-                dataValue: "month_customers",
+                dataValue: "tot_female_customers_2",
               }}
             />
           ) : (

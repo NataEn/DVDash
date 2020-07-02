@@ -1,4 +1,5 @@
 const express = require("express");
+const utils = require("../utils");
 const { getAreaData } = require("../controllers/mysqlapi");
 const router = express.Router();
 const {
@@ -11,6 +12,13 @@ const {
 
 router.get("/periodData", async function (req, res, next) {
   const dataTotals = await periodData(req.query);
+  //combined objects for periodData.month.customers
+  const newdataTotals = utils.combine_objects_list(
+    dataTotals.month.customers,
+    "month_name",
+    "store_id"
+  );
+  dataTotals.month.customers = newdataTotals;
   res.json(dataTotals);
 });
 router.get("/totals", async function (req, res, next) {

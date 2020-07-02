@@ -40,6 +40,7 @@ function App() {
       month: ["MONTH_REVENUE", "MONTH_CUSTOMERS_STORE", "MONTH_ORDERS"],
       year: ["YEAR_REVENUE", "YEAR_CUSTOMERS", "YEAR_ORDERS"],
     });
+    console.log("periodData", periodData);
     setWeekRevenue(periodData.week.revenue);
     setWeekCustomers(periodData.week.customers);
     setMonthRevenue(periodData.month.revenue);

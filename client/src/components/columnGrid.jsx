@@ -20,7 +20,7 @@ const ColumnGrid = (props) => {
   console.log("XAxis", XAxis);
   return (
     <ComposedChart
-      width={600}
+      width={500}
       height={400}
       data={data}
       margin={{

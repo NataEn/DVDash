@@ -1,5 +1,3 @@
-
-
 // const combineObjects = (objList, combineKey, diffKey) => {
 //   const combinedList = [];
 //   for (let i = 0; i < objList.length; i++) {
@@ -69,6 +67,6 @@ const combine_objects_list = (list, commonKey, diffKey) => {
 // ];
 
 // combined_objects_list(sampleList, "a", "b");
-module.exports{
-  combine_objects_list
-}
+module.exports = {
+  combine_objects_list,
+};
