@@ -62,6 +62,7 @@ export const VerticalChart = (props) => {
           tickLine={false}
           axisLine={false}
         />
+
         <Bar dataKey="uv" fill="#8884d8" barSize={20}>
           <LabelList
             dataKey="uv"

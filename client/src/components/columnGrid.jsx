@@ -2,11 +2,13 @@ import React, { Component, useState, useEffect } from "react";
 import {
   ComposedChart,
   Line,
+  LabelList,
   Bar,
   XAxis,
   CartesianGrid,
   Tooltip,
   Legend,
+  YAxis,
 } from "recharts";
 
 const ColumnGrid = (props) => {
@@ -31,24 +33,35 @@ const ColumnGrid = (props) => {
       }}
     >
       <CartesianGrid stroke="#f5f5f5" />
-      <XAxis
-        dataKey={props.dataXName}
-        // tick={{ fontSize: 10 }}
-      />
+      <XAxis dataKey={props.dataXName} tick={{ fontSize: 10 }} />
       <Legend layout="vetical" verticalAlign="middle" align="right" />
+
       <Bar
         dataKey={props.dataValue}
         dataValue={props.dataValue}
         barSize={20}
         fill="#8884d8"
-      />
+      >
+        <LabelList
+          dataKey={props.dataValue}
+          position="top"
+          fontSize="0.7rem"
+          fontWeight={"bolder"}
+        />
+      </Bar>
       {props.secondaryData ? (
         <Bar
           dataKey={props.secondaryData.dataValue}
-          dataValue={props.secondaryData.dataValue}
           barSize={20}
           fill="#82ca9d"
-        />
+        >
+          <LabelList
+            dataKey={props.secondaryData.dataValue}
+            position="top"
+            fontSize="0.7rem"
+            fontWeight={"bolder"}
+          />
+        </Bar>
       ) : (
         ""
       )}
