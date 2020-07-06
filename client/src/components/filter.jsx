@@ -30,7 +30,9 @@ export default function Filter(props) {
         className={classes.option}
       >
         <span>{optionObj.name}</span>
-        <img alt={optionObj.name} src={optionObj.flagUrl} />
+        {optionObj.flagUrl && (
+          <img alt={optionObj.name} src={optionObj.flagUrl} />
+        )}
       </MenuItem>
     );
   };

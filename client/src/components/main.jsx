@@ -134,7 +134,11 @@ const Main = (props) => {
         >
           <Row className="justify-content-around p-2">
             <Col className="bg-white">
-              <h3>Rental Data In selected area</h3>
+              <h3>
+                {data.country
+                  ? `Rental Data In ${data.country}`
+                  : "Rental Data In selected area"}
+              </h3>
               <Filter
                 options={store.AREA_FILTERS}
                 onSelect={data.setAreaDataReq}
