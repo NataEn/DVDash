@@ -21,7 +21,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch server_debug",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}\\api\\bin\\www"
     },

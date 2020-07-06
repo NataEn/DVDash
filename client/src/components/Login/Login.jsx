@@ -9,7 +9,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Users from "../../apiCalls/mongoDataQuery";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
+const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
@@ -86,7 +85,7 @@ const SignIn = () => {
             onClick={(event) => {
               event.preventDefault();
               console.log("form", event);
-              Users.signinUser({
+              props.signinUser({
                 password: password,
                 email: email,
               });

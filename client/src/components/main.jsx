@@ -11,7 +11,7 @@ import Map from "./Map/Map.jsx";
 import ColumnGrid from "./columnGrid";
 import store from "../store/filterOptions";
 
-export default function Main(props) {
+const Main = (props) => {
   const data = props.data;
   return (
     <div className="bg-light ">
@@ -104,7 +104,7 @@ export default function Main(props) {
           )}
         </Col>
       </Row>
-      <Row className="justify-content-center p-0">
+      <Row className="justify-content-around p-2">
         <Col sm={12} md={5} className="bg-white">
           <Row>
             <h4>World map</h4>
@@ -118,9 +118,13 @@ export default function Main(props) {
           <Row>
             <Map country={data.country} />
 
-            {/* <Col ms={12} lg={6}>
-              <VerticalChart />
-            </Col> */}
+            <Col
+              ms={12}
+              lg={6}
+              className="bg-white d-flex flex-column justify-content-around align-items=center"
+            >
+              {/* <VerticalChart /> */}
+            </Col>
           </Row>
         </Col>
         <Col
@@ -186,4 +190,5 @@ export default function Main(props) {
       </Row>
     </div>
   );
-}
+};
+export default Main;

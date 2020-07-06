@@ -10,6 +10,8 @@ import {
   getTotals,
   getAreaData,
 } from "./apiCalls/mysqlDataQuery";
+import Users from "./apiCalls/mongoDataQuery";
+
 import { getCountries } from "./apiCalls/worldCountries";
 import {
   BrowserRouter as Router,
@@ -98,10 +100,10 @@ function App() {
         <Header />
         <Switch>
           <Route path="/login">
-            <Login />
+            <Login signinUser={Users.signinUser} />
           </Route>
           <Route path="/register">
-            <Register />
+            <Register registerUser={Users.registerUser} />
           </Route>
           <Route path="/">
             {!loggedIn ? (

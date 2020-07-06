@@ -12,7 +12,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Users from "../../apiCalls/mongoDataQuery";
 import { useHistory } from "react-router-dom";
 
 const postUrl = `${process.env.REACT_APP_APISERVER}/users/register`;
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SignIn = () => {
+const SignIn = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -151,7 +150,7 @@ const SignIn = () => {
             onClick={(event) => {
               event.preventDefault();
               console.log("form", event);
-              Users.registerUser({
+              props.registerUser({
                 firstName: firstName,
                 lastName: lastName,
                 password: password,

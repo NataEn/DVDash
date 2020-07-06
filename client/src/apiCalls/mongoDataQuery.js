@@ -46,7 +46,7 @@ const registerUser = async ({
       console.log(error);
     });
 };
-module.exports = {
+export default {
   registerUser,
   signinUser,
 };
