@@ -112,6 +112,7 @@ const Main = (props) => {
               <Filter
                 options={props.data.countries}
                 onSelect={data.setCountry}
+                helperText={"select country"}
               />
             )}
           </Row>
@@ -142,6 +143,7 @@ const Main = (props) => {
               <Filter
                 options={store.AREA_FILTERS}
                 onSelect={data.setAreaDataReq}
+                helperText={"select area category"}
               />
               {data.filteredAreaData && (
                 <PieChart
@@ -176,7 +178,22 @@ const Main = (props) => {
           md={5}
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
-          <h3>Rents per store</h3>
+          <h3>Customers per store</h3>
+          <Filter
+            options={store.STORE_FILTERS}
+            onSelect={() => {
+              console.log("selected stor or rent filter");
+            }}
+            helperText={"select category"}
+          />
+          <Filter
+            options={store.STORE_CUSTOMERS_FILTERS}
+            onSelect={() => {
+              console.log("selected customers filter");
+            }}
+            helperText={"select sub category"}
+          />
+
           {data.monthCustomers.length ? (
             <ColumnGrid
               data={data.monthCustomers}

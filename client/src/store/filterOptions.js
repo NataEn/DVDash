@@ -18,9 +18,26 @@ const COUNTRIES = [
   { value: "2", name: "country2" },
   { value: "3", name: "country3" },
 ];
+const STORE_CUSTOMERS_FILTERS = [
+  { value: "customers_weman", name: "Total customers- Weman" },
+  { value: "customers_men", name: "Total customers- Men" },
+  { value: "customers", name: "Total customers" },
+];
+const STORE_RENTS_FILTERS = [
+  { value: "customers_weman", name: "Total customers- Weman" },
+  { value: "customers_men", name: "Total customers- Men" },
+  { value: "customers", name: "Total customers" },
+];
+const STORE_FILTERS = [
+  { value: "customers", name: "Total customers" },
+  { value: "rents", name: "Total rents" },
+];
 
 module.exports = {
   AREA_FILTERS,
   TOP_10_FILTERS,
   COUNTRIES,
+  STORE_FILTERS,
+  STORE_RENTS_FILTERS,
+  STORE_CUSTOMERS_FILTERS,
 };

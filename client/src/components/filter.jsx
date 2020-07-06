@@ -62,7 +62,7 @@ export default function Filter(props) {
         <MenuItem aria-label="None" value="" />
         {options.map((option) => createOption(option))}
       </Select>
-      <FormHelperText>Some important helper text</FormHelperText>
+      <FormHelperText>{props.helperText}</FormHelperText>
     </FormControl>
   );
 }
