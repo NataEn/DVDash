@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.css";
 import { makeStyles } from "@material-ui/core/styles";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
-import logo from "../../components/logo_blue.png";
+import logo from "../../logo_blue.png";
 import { Link as RouterLink, BrowserRouter as Router } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";

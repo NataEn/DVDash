@@ -1,4 +1,4 @@
-import utils from "../utils";
+import utils from "../../utils";
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";

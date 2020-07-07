@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Main from "./components/main";
+import Dashboard from "./Pages/Dashboard/Dashboard";
 import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import Header from "./components/Header/Header";
@@ -113,7 +113,7 @@ function App() {
             {!loggedIn ? (
               <Redirect to="/login" />
             ) : (
-              <Main
+              <Dashboard
                 className="App-main"
                 data={{
                   totalRevenue,

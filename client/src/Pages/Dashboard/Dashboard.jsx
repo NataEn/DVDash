@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "reactstrap";
 
-import Top10 from "./top10";
-import PieChart from "./pieChart";
-import SmallBarChart from "./smallBarChart";
+import TopItem from "../../components/TopItem/TopItem";
+import PieChart from "../../components/PieChart/PieChart";
+import SmallBarChart from "../../components/SmallBarChart/SmallBarChart";
 import Icon from "@material-ui/core/Icon";
-import Filter from "./filter";
-import { VerticalChart } from "./verticalBarchart";
-import Map from "./Map/Map.jsx";
-import ColumnGrid from "./columnGrid";
-import store from "../store/filterOptions";
+import Filter from "../../components/Filter/Filter";
+import ColumnGrid from "../../components/ColumnGrid/ColumnGrid";
+import store from "../../store/filterOptions";
 
-const Main = (props) => {
+const Dashboard = (props) => {
   const data = props.data;
   return (
     <div className="bg-light ">
@@ -98,7 +96,7 @@ const Main = (props) => {
           className="bg-white d-flex justify-content-around align-items=center flex-column"
         >
           {data.topTen && data.topTen.actor ? (
-            <Top10 data={data.topTen} />
+            <TopItem data={data.topTen} />
           ) : (
             <div className="loader"></div>
           )}
@@ -204,4 +202,4 @@ const Main = (props) => {
     </div>
   );
 };
-export default Main;
+export default Dashboard;
