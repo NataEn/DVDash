@@ -105,28 +105,21 @@ const Main = (props) => {
         </Col>
       </Row>
       <Row className="justify-content-around p-2">
-        <Col sm={12} md={5} className="bg-white">
-          <Row>
-            <h4>World map</h4>
-            {props.data.countries.length && (
-              <Filter
-                options={props.data.countries}
-                onSelect={data.setCountry}
-                helperText={"select country"}
-              />
-            )}
-          </Row>
-          <Row>
-            <Map country={data.country} />
-
-            <Col
-              ms={12}
-              lg={6}
-              className="bg-white d-flex flex-column justify-content-around align-items=center"
-            >
-              {/* <VerticalChart /> */}
-            </Col>
-          </Row>
+        <Col
+          sm={12}
+          md={5}
+          className="bg-white d-flex flex-column justify-content-around align-items=center"
+        >
+          <h3>Monthly Revenue</h3>
+          {data.monthRevenue.length ? (
+            <ColumnGrid
+              data={data.monthRevenue}
+              dataXName={"month_name"}
+              dataValue={"month_revenue"}
+            />
+          ) : (
+            <div className="loader"></div>
+          )}
         </Col>
         <Col
           sm={12}
@@ -140,6 +133,13 @@ const Main = (props) => {
                   ? `Rental Data In ${data.country}`
                   : "Rental Data In selected area"}
               </h3>
+              {props.data.countries.length && (
+                <Filter
+                  options={props.data.countries}
+                  onSelect={data.setCountry}
+                  helperText={"select country"}
+                />
+              )}
               <Filter
                 options={store.AREA_FILTERS}
                 onSelect={data.setAreaDataReq}
@@ -162,47 +162,43 @@ const Main = (props) => {
           md={5}
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
-          <h3>Monthly Revenue</h3>
-          {data.monthRevenue.length ? (
-            <ColumnGrid
-              data={data.monthRevenue}
-              dataXName={"month_name"}
-              dataValue={"month_revenue"}
-            />
-          ) : (
-            <div className="loader"></div>
-          )}
+          <button>Create New Store</button>
+          <button>Add New Video</button>
         </Col>
         <Col
           sm={12}
           md={5}
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
-          <h3>Customers per store</h3>
-          <Filter
-            options={store.STORE_FILTERS}
-            onSelect={data.setStoreFilter}
-            helperText={"select category"}
-          />
-          <Filter
-            options={`store.STORE_${data.storeFilter}_FILTERS`}
-            onSelect={data.setStoreSubFilter}
-            helperText={"select sub category"}
-          />
+          <Row className="justify-content-around p-2">
+            <Col className="bg-white">
+              <h3>Customers per store</h3>
+              <Filter
+                options={store.STORE_FILTERS}
+                onSelect={data.setStoreFilter}
+                helperText={"select category"}
+              />
+              <Filter
+                options={`store.STORE_${data.storeFilter}_FILTERS`}
+                onSelect={data.setStoreSubFilter}
+                helperText={"select sub category"}
+              />
 
-          {data.storeData.length ? (
-            <ColumnGrid
-              data={data.storeData}
-              dataXName={"month_name"}
-              dataValue={"tot_female_customers_1"}
-              secondaryData={{
-                dataXName: "month_name",
-                dataValue: "tot_female_customers_2",
-              }}
-            />
-          ) : (
-            <div className="loader"></div>
-          )}
+              {data.storeData.length ? (
+                <ColumnGrid
+                  data={data.storeData}
+                  dataXName={"month_name"}
+                  dataValue={"tot_female_customers_1"}
+                  secondaryData={{
+                    dataXName: "month_name",
+                    dataValue: "tot_female_customers_2",
+                  }}
+                />
+              ) : (
+                <div className="loader"></div>
+              )}
+            </Col>
+          </Row>
         </Col>
       </Row>
     </div>
