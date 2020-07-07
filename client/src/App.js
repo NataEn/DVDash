@@ -22,7 +22,7 @@ import {
 import "./App.css";
 
 function App() {
-  const [totalRevenue, setTootalRevenue] = useState({});
+  const [totalRevenue, setTotalRevenue] = useState({});
   const [totalCustomers, setTotalCustomers] = useState({});
   const [weekRevenue, setWeekRevenue] = useState([]);
   const [weekCustomers, setWeekCustomers] = useState([]);
@@ -35,6 +35,9 @@ function App() {
   const [areaData, setAreaData] = useState([]);
   const [areaDataReq, setAreaDataReq] = useState("gender");
   const [filteredAreaData, setFilteredAreaData] = useState({});
+  const [storeFilter, setStoreFilter] = useState("customers");
+  const [storeSubFilter, setStoreSubFilter] = useState();
+  const [storeData, setStoreData] = useState([]);
 
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
@@ -47,6 +50,7 @@ function App() {
     setWeekCustomers(periodData.week.customers);
     setMonthRevenue(periodData.month.revenue);
     setMonthCustomers(periodData.month.customers);
+    setStoreData(periodData.month.customers);
   };
   const fetchTop10 = async () => {
     const top10 = await getTop10();
@@ -58,7 +62,7 @@ function App() {
       "TOTAL_CUSTOMERS",
       "TOTAL_ORDERS",
     ]);
-    setTootalRevenue(totals.total.revenue[0]);
+    setTotalRevenue(totals.total.revenue[0]);
     setTotalCustomers(totals.total.customers[0]);
   };
   const fetchCountries = async () => {
@@ -126,6 +130,11 @@ function App() {
                   filteredAreaData,
                   areaDataReq,
                   setAreaDataReq,
+                  storeFilter,
+                  setStoreFilter,
+                  storeSubFilter,
+                  setStoreSubFilter,
+                  storeData,
                 }}
               />
             )}

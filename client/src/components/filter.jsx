@@ -44,6 +44,7 @@ export default function Filter(props) {
       name: event.target.name,
     });
     if (props.onSelect) {
+      console.log("selected", event.target.value);
       props.onSelect(event.target.value);
     }
   };

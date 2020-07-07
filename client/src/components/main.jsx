@@ -181,22 +181,18 @@ const Main = (props) => {
           <h3>Customers per store</h3>
           <Filter
             options={store.STORE_FILTERS}
-            onSelect={() => {
-              console.log("selected stor or rent filter");
-            }}
+            onSelect={data.setStoreFilter}
             helperText={"select category"}
           />
           <Filter
-            options={store.STORE_CUSTOMERS_FILTERS}
-            onSelect={() => {
-              console.log("selected customers filter");
-            }}
+            options={`store.STORE_${data.storeFilter}_FILTERS`}
+            onSelect={data.setStoreSubFilter}
             helperText={"select sub category"}
           />
 
-          {data.monthCustomers.length ? (
+          {data.storeData.length ? (
             <ColumnGrid
-              data={data.monthCustomers}
+              data={data.storeData}
               dataXName={"month_name"}
               dataValue={"tot_female_customers_1"}
               secondaryData={{

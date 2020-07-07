@@ -19,12 +19,12 @@ const mongoOptions = {
 // `mongodb://127.0.0.1:27017/${DVDash_MONGO.dbName}`,
 // const mongoUri = `${process.env.MONGODB_URL}/${DVDash_MONGO.dbName}`;
 const mongoUri = ` mongodb://localhost:27017/DVDash`;
-console.log(
-  "local test variable: ",
-  process.env.TEST_VAR,
-  "app's variable",
-  process.env.DVDASH_TEST_VAR
-);
+// console.log(
+//   "local test variable: ",
+//   process.env.TEST_VAR,
+//   "app's variable",
+//   process.env.DVDASH_TEST_VAR
+// );
 
 //connect to local mongoDB
 const mongoConnect = async () => {

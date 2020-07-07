@@ -144,11 +144,15 @@ async function periodData(params) {
         sql += queryBuilder[type]();
       }
       const dataTypePromis = pool.query(sql);
+      if (!dataTypePromis) {
+        console.error("datatype promise is null", key);
+      }
       promises.push(dataTypePromis);
     }
   }
   try {
     const periodDataResults = await Promise.all(promises);
+    console.log(periodDataResults);
     const arrangedResults = arrangeResults("periodData", periodDataResults);
     return arrangedResults;
   } catch (err) {

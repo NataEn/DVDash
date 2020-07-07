@@ -29,8 +29,8 @@ const STORE_RENTS_FILTERS = [
   { value: "customers", name: "Total customers" },
 ];
 const STORE_FILTERS = [
-  { value: "customers", name: "Total customers" },
-  { value: "rents", name: "Total rents" },
+  { value: "CUSTOMERS", name: "Total customers" },
+  { value: "RENTS", name: "Total rents" },
 ];
 
 module.exports = {
