@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "reactstrap";
 
-import TopItem from "../../components/TopItem/TopItem";
+import TopItems from "../../components/TopItems/TopItems";
+import TopItemsPanel from "../../components/TopItemsPanel/TopItemsPanel";
 import PieChart from "../../components/PieChart/PieChart";
 import SmallBarChart from "../../components/SmallBarChart/SmallBarChart";
 import Icon from "@material-ui/core/Icon";
 import Filter from "../../components/Filter/Filter";
 import ColumnGrid from "../../components/ColumnGrid/ColumnGrid";
 import store from "../../store/filterOptions";
+import { week_data, titleCase } from "../../utils";
 
 const Dashboard = (props) => {
   const data = props.data;
@@ -95,8 +97,15 @@ const Dashboard = (props) => {
           md={5}
           className="bg-white d-flex justify-content-around align-items=center flex-column"
         >
-          {data.topTen && data.topTen.actor ? (
-            <TopItem data={data.topTen} />
+          <Row className="d-flex justify-content-between p-0">
+            <TopItemsPanel setTopData={data.setTopData} />
+          </Row>
+          {Object.entries(data.topTen).length && data.topTenFilter ? (
+            <TopItems
+              rows={data.topTen[data.topTenFilter].slice(0, 2)}
+              title={titleCase(data.topTenFilter)}
+              filter={data.topTenFilter}
+            />
           ) : (
             <div className="loader"></div>
           )}

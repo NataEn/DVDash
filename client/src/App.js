@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Dashboard from "./Pages/Dashboard/Dashboard";
-import Register from "./components/Register/Register";
-import Login from "./components/Login/Login";
+import Register from "./Pages/Register/Register";
+import Login from "./Pages/Login/Login";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import {
@@ -27,6 +27,7 @@ function App() {
   const [weekRevenue, setWeekRevenue] = useState([]);
   const [weekCustomers, setWeekCustomers] = useState([]);
   const [topTen, setTopTen] = useState([]);
+  const [topTenFilter, setTopTenFilter] = useState("actor");
   const [monthRevenue, setMonthRevenue] = useState([]);
   const [monthCustomers, setMonthCustomers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(true);
@@ -123,6 +124,8 @@ function App() {
                   weekCustomers,
                   weekRevenue,
                   topTen,
+                  topTenFilter,
+                  setTopTenFilter,
                   countries,
                   setCountry,
                   country,

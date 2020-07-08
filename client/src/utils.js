@@ -1,5 +1,6 @@
-const moment = require("moment");
-const week_data = (data) => {
+import moment from "moment";
+debugger;
+export const week_data = (data) => {
   const days_of_week = moment.weekdays();
   const dataObj = data.reduce((obj, item) => {
     obj[item["day_name"]] = item;
@@ -20,16 +21,15 @@ const week_data = (data) => {
   return list;
 };
 
-const titleCase = (string) => {
-  const severalWords = string.split(" ");
-  let titleString = "";
-  for (let word of severalWords) {
-    titleString += `${word[0].toUpperCase()}${word.slice(1).toLowerCase()} `;
+export const titleCase = (string) => {
+  console.log("got for title case", string);
+  if (!!string) {
+    const severalWords = string.split(" ");
+    let titleString = "";
+    for (let word of severalWords) {
+      titleString += `${word[0].toUpperCase()}${word.slice(1).toLowerCase()} `;
+    }
+
+    return titleString;
   }
-  return titleString;
 };
-const utils = {
-  week_data,
-  titleCase,
-};
-export default utils;
