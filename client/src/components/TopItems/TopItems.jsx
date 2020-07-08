@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./TopItems.css";
+import noImage from "../../noImage.png";
 import { titleCase } from "../../utils";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -20,6 +21,7 @@ export default function TopItems(props) {
   const classes = useStyles();
   const filter = props.filter;
   const title = props.title;
+  const urls = props.itemsImages;
 
   const [rows, setRows] = useState([]);
   useEffect(() => {
@@ -40,6 +42,7 @@ export default function TopItems(props) {
             <TableRow>
               <TableCell>{title}</TableCell>
               <TableCell>Sales</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -48,11 +51,21 @@ export default function TopItems(props) {
               return (
                 <TableRow hover key={index}>
                   <TableCell key={`${index}_${filter}`} align={"left"}>
+                    {/* {urls ? ( */}
+                    <img
+                      src={urls ? urls[row[`top_${filter}`]] : noImage}
+                      alt={`${row[`top_${filter}`]} image`}
+                      width="20%"
+                    />
+                    {/* ) : (
+                       <div className="loader"></div>
+                     ) */}
                     {titleCase(row[`top_${filter}`])}
                   </TableCell>
                   <TableCell key={`${index}_${row[filter]}`} align={"left"}>
                     {row["total_sales"]} $
                   </TableCell>
+                  <TableCell>Promote</TableCell>
                 </TableRow>
               );
             })}
