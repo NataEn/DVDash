@@ -32,7 +32,12 @@ export default function TopItems(props) {
   const classes = useStyles();
   const filter = props.filter;
   const title = props.title;
-  const urls = props.itemsImages;
+  const urls = {
+    top_actor: "https://image.tmdb.org/t/p/w92/bvYjhsbxOBwpm8xLE5BhdA3a8CZ.jpg",
+    top_title: "https://image.tmdb.org/t/p/w92/bvYjhsbxOBwpm8xLE5BhdA3a8CZ.jpg",
+    top_category:
+      "https://image.tmdb.org/t/p/w92/bvYjhsbxOBwpm8xLE5BhdA3a8CZ.jpg",
+  };
 
   const [rows, setRows] = useState([]);
   useEffect(() => {
@@ -68,9 +73,9 @@ export default function TopItems(props) {
                   >
                     {/* {urls ? ( */}
                     <img
-                      src={urls ? urls[row[`top_${filter}`]] : noImage}
+                      src={urls ? urls[`top_${filter}`] : noImage}
                       alt={`${row[`top_${filter}`]} image`}
-                      width="50%"
+                      width="30%"
                     />
                     {/* ) : (
                        <div className="loader"></div>
