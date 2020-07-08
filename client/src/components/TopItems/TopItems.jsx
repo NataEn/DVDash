@@ -1,39 +1,41 @@
 import React, { useState, useEffect } from "react";
+import "./TopItems.css";
 import { titleCase } from "../../utils";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles({
-  root: {
-    maxWidth: "80%",
-    maxHeight: "90%",
-  },
+  root: {},
   container: {
-    maxHeight: 200,
+    boxShadow: "none",
   },
 });
 export default function TopItems(props) {
   const classes = useStyles();
-  const title = props.title;
   const filter = props.filter;
+  const title = props.title;
+
   const [rows, setRows] = useState([]);
   useEffect(() => {
     setRows([...props.rows]);
     console.log("rows", props.rows);
-  }, []);
-  console.log("rows", props.rows);
-  debugger;
+  }, [filter]);
 
+  console.log("rows", props.rows);
   return (
-    <Paper className={classes.root}>
-      <TableContainer className={classes.container}>
-        <Table stickyHeader small padding={"none"} aria-label="sticky table">
+    <Paper>
+      <TableContainer className={classes.root}>
+        <Table
+          stickyHeader
+          aria-label="simple table"
+          className={classes.container}
+        >
           <TableHead>
             <TableRow>
               <TableCell>{title}</TableCell>
@@ -43,7 +45,6 @@ export default function TopItems(props) {
           <TableBody>
             {rows.map((row, index) => {
               debugger;
-              console.log("top row", row);
               return (
                 <TableRow hover key={index}>
                   <TableCell key={`${index}_${filter}`} align={"left"}>

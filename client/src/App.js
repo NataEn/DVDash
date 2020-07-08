@@ -26,8 +26,9 @@ function App() {
   const [totalCustomers, setTotalCustomers] = useState({});
   const [weekRevenue, setWeekRevenue] = useState([]);
   const [weekCustomers, setWeekCustomers] = useState([]);
-  const [topTen, setTopTen] = useState([]);
-  const [topTenFilter, setTopTenFilter] = useState("actor");
+  const [topItems, setTopItems] = useState([]);
+  const [topItemsFilter, setTopItemsFilter] = useState("actor");
+  const [topItemsTitle, setTopItemsTitle] = useState("Actors");
   const [monthRevenue, setMonthRevenue] = useState([]);
   const [monthCustomers, setMonthCustomers] = useState([]);
   const [loggedIn, setLoggedIn] = useState(true);
@@ -55,7 +56,7 @@ function App() {
   };
   const fetchTop10 = async () => {
     const top10 = await getTop10();
-    setTopTen(top10.top);
+    setTopItems(top10.top);
   };
   const fetchTotals = async () => {
     const totals = await getTotals([
@@ -80,11 +81,20 @@ function App() {
     return filteredData;
   };
   useEffect(() => {
+    let title = "";
+    if (topItemsFilter === "title") title = "Movies";
+    else if (topItemsFilter === "category") title = "Janres";
+    else title = "Actors";
+    setTopItemsTitle(title);
+  }, [topItemsFilter]);
+
+  useEffect(() => {
     fetchPeriodData();
     fetchTotals();
     fetchTop10();
     fetchCountries();
     fetchAreaData();
+    setTopItemsFilter("actor");
   }, []);
 
   useEffect(() => {
@@ -123,9 +133,10 @@ function App() {
                   monthRevenue,
                   weekCustomers,
                   weekRevenue,
-                  topTen,
-                  topTenFilter,
-                  setTopTenFilter,
+                  topItems,
+                  topItemsFilter,
+                  setTopItemsFilter,
+                  topItemsTitle,
                   countries,
                   setCountry,
                   country,

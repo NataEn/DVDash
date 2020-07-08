@@ -2,38 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup } from "@material-ui/core";
 
 const TopItemsPanel = (props) => {
-  const [filter, setFilter] = useState("");
-  const [title, setTitle] = useState("");
-
+  const filter = props.filter;
+  const title = props.title;
+  const setFilter = props.setTopItemsFilter;
   useEffect(() => {
-    setFilter("top_actor");
-    setTitle("Actors");
+    setFilter("actor");
   }, []);
 
-  const handelFilterButton = (optionArr) => {
-    setFilter(`top_${optionArr[1]}`);
-    setTitle(optionArr[0]);
-    props.setTopData(props.data[optionArr[1]]);
+  const handelFilterButton = (option) => {
+    setFilter(option);
   };
 
   return (
     <>
-      <h4 className="text-center d-inline">Top 10 {title}</h4>
+      <h4 className="text-center d-inline">Top {title}</h4>
       <ButtonGroup
         color="primary"
         aria-label="button group"
         size="small"
         className="d-inline"
       >
-        <Button onClick={() => handelFilterButton(["Movies", "title"])}>
-          Movies
-        </Button>
-        <Button onClick={() => handelFilterButton(["Actors", "actor"])}>
-          Actors
-        </Button>
-        <Button onClick={() => handelFilterButton(["Janres", "category"])}>
-          Janres
-        </Button>
+        <Button onClick={() => handelFilterButton("title")}>Movies</Button>
+        <Button onClick={() => handelFilterButton("actor")}>Actors</Button>
+        <Button onClick={() => handelFilterButton("category")}>Janres</Button>
       </ButtonGroup>
     </>
   );

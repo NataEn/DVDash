@@ -9,7 +9,6 @@ import Icon from "@material-ui/core/Icon";
 import Filter from "../../components/Filter/Filter";
 import ColumnGrid from "../../components/ColumnGrid/ColumnGrid";
 import store from "../../store/filterOptions";
-import { week_data, titleCase } from "../../utils";
 
 const Dashboard = (props) => {
   const data = props.data;
@@ -98,13 +97,17 @@ const Dashboard = (props) => {
           className="bg-white d-flex justify-content-around align-items=center flex-column"
         >
           <Row className="d-flex justify-content-between p-0">
-            <TopItemsPanel setTopData={data.setTopData} />
+            <TopItemsPanel
+              filter={data.topItemsFilter}
+              title={data.topItemsTitle}
+              setTopItemsFilter={data.setTopItemsFilter}
+            />
           </Row>
-          {Object.entries(data.topTen).length && data.topTenFilter ? (
+          {Object.entries(data.topItems).length && data.topItemsFilter ? (
             <TopItems
-              rows={data.topTen[data.topTenFilter].slice(0, 2)}
-              title={titleCase(data.topTenFilter)}
-              filter={data.topTenFilter}
+              rows={data.topItems[data.topItemsFilter].slice(0, 2)}
+              filter={data.topItemsFilter}
+              title={data.topItemsTitle}
             />
           ) : (
             <div className="loader"></div>
