@@ -1,8 +1,9 @@
 import * as firebase from "firebase";
 import app from "firebase/app";
 import "firebase/auth";
+import "firebase/firebase-firestore";
 
-export const firebaseConfig = {
+export const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
@@ -12,19 +13,35 @@ export const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASURMENT_ID,
 };
+console.log("key", process.env.REACT_APP_FIREBASE_API_KEY, process.env);
 class Firebase {
   constructor() {
-    app.initializeApp();
+    app.initializeApp(config);
     this.auth = app.auth();
+    this.db = app.firestore();
     this.googleProvider = new firebase.auth.GoogleAuthProvider();
   }
-  doCreateUserWithEmailAndPassword = (email, password) => {
-    this.auth.createUserWithEmailAndPassword(email, password);
+
+  //this returns a promise:
+  createUser = async (name, email, password) => {
+    await this.auth.createUserWithEmailAndPassword(name, email, password);
+    console.log("create user", this.auth.currentUser);
+    return this.auth.currentUser.updateProfile({
+      displayName: name,
+    });
   };
-  doSignInWithEmailAndPassword = (email, password) => {
-    this.auth.signInWithEmailAndPassword(email, password);
+
+  login = async (email, password) => {
+    await this.auth.signInWithEmailAndPassword(email, password);
+    console.log("login", this.auth.currentUser);
+    return this.auth.currentUser;
   };
-  doSignOut = () => this.auth.signOut();
+
+  logOut = async () => {
+    await this.auth.signOut();
+    console.log("logout", this.auth.currentUser);
+    return this.auth.currentUser;
+  };
   doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email);
   doPasswordUpdate = (password) =>
     this.auth.currentUser.updatePassword(password);
@@ -39,11 +56,15 @@ class Firebase {
   //     })
   //     .catch((error) => console.error(error));
   // };
-  doSignInWithGoogle = () =>
-    this.auth.signInWithPopup(this.googleProvider).catch((error) => {
+  logInWithGoogle = async () => {
+    await this.auth.signInWithPopup(this.googleProvider).catch((error) => {
       console.log({ errorMessage: error.message });
     });
+    console.log("api key", process.env.REACT_APP_FIREBASE_API_KEY);
+    console.log("google create user", this.auth.currentUser);
+    return this.auth.currentUser;
+  };
 }
-// const GlobalFirebase = new Firebase();
+const GlobalFirebase = new Firebase();
 
-// export default GlobalFirebase;
+export default GlobalFirebase;

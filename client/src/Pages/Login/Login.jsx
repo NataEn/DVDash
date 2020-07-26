@@ -12,6 +12,7 @@ import Container from "@material-ui/core/Container";
 import AuthButtonGroup from "../../components/AuthButtonGroup/AuthButtonGroup";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../Contexts/Auth";
+import GlobalFirebase from "../../Firebase/FirebaseConfig";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,12 +37,22 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loggedIn, setLoggedIn } = useContext(AuthContext);
+  const { loggedIn, toggleLoggedIn } = useContext(AuthContext);
   const classes = useStyles();
 
-  let history = useHistory();
-  const googleSignIn = (event) => {
+  const history = useHistory();
+  const googleSignIn = async (event) => {
     event.preventDefault();
+    console.log("pressed google log in");
+    toggleLoggedIn();
+    console.log(loggedIn);
+    try {
+      await GlobalFirebase.logInWithGoogle();
+      props.history.replace("/dashboard");
+    } catch (err) {
+      console.error(err);
+    }
+    // history.push("/");
     // Firebase.doSignInWithGoogle();
     // const googleProvider = new firebase.auth.GoogleAuthProvider();
     // Auth.setLoggedIn(true);

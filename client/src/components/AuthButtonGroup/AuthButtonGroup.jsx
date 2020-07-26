@@ -37,6 +37,7 @@ const AuthButtonGroup = () => {
           type={buttonType.type}
           imgUrl={buttonType.imgUrl}
           text={buttonType.text}
+          key={buttonType.type}
         />
       ))}
     </ul>

@@ -14,16 +14,11 @@ import {
 import Users from "./apiCalls/mongoDataQuery";
 
 import { getCountries } from "./apiCalls/worldCountries";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 
 function App() {
-  const { loggedIn, setLoggedIn } = useContext(AuthContext);
+  const { loggedIn } = useContext(AuthContext);
   const [totalRevenue, setTotalRevenue] = useState({});
   const [totalCustomers, setTotalCustomers] = useState({});
   const [weekRevenue, setWeekRevenue] = useState([]);
@@ -41,6 +36,8 @@ function App() {
   const [storeFilter, setStoreFilter] = useState("customers");
   const [storeSubFilter, setStoreSubFilter] = useState();
   const [storeData, setStoreData] = useState([]);
+
+  console.log("firebase", process.env.REACT_APP_FIREBASE_API_KEY);
 
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
@@ -97,10 +94,7 @@ function App() {
     fetchCountries();
     fetchAreaData();
     setTopItemsFilter("actor");
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   user ? setLoggedIn(true) : setLoggedIn(false);
-    // });
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
     console.log(`requested ${areaDataReq} for ${country}`);
@@ -116,51 +110,50 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/login">
-            <Login signinUser={Users.signinUser} />
-          </Route>
-          <Route path="/register">
-            <Register registerUser={Users.registerUser} />
-          </Route>
-          <Route path="/">
-            {!loggedIn ? (
-              <Redirect to="/login" />
-            ) : (
-              <Dashboard
-                className="App-main"
-                data={{
-                  totalRevenue,
-                  totalCustomers,
-                  monthCustomers,
-                  monthRevenue,
-                  weekCustomers,
-                  weekRevenue,
-                  topItems,
-                  topItemsFilter,
-                  setTopItemsFilter,
-                  topItemsTitle,
-                  countries,
-                  setCountry,
-                  country,
-                  areaData,
-                  filteredAreaData,
-                  areaDataReq,
-                  setAreaDataReq,
-                  storeFilter,
-                  setStoreFilter,
-                  storeSubFilter,
-                  setStoreSubFilter,
-                  storeData,
-                }}
-              />
-            )}
-          </Route>
-        </Switch>
-        <Footer />
-      </Router>
+      <Header />
+      <div> {loggedIn ? "logged in" : "logged out"}</div>
+      <Switch>
+        <Route path="/login">
+          <Login signinUser={Users.signinUser} />
+        </Route>
+        <Route path="/register">
+          <Register registerUser={Users.registerUser} />
+        </Route>
+        <Route path="/dashboard">
+          {!loggedIn ? (
+            <Redirect to="/login" />
+          ) : (
+            <Dashboard
+              className="App-main"
+              data={{
+                totalRevenue,
+                totalCustomers,
+                monthCustomers,
+                monthRevenue,
+                weekCustomers,
+                weekRevenue,
+                topItems,
+                topItemsFilter,
+                setTopItemsFilter,
+                topItemsTitle,
+                countries,
+                setCountry,
+                country,
+                areaData,
+                filteredAreaData,
+                areaDataReq,
+                setAreaDataReq,
+                storeFilter,
+                setStoreFilter,
+                storeSubFilter,
+                setStoreSubFilter,
+                storeData,
+              }}
+            />
+          )}
+        </Route>
+      </Switch>
+      <Footer />
     </div>
   );
 }
