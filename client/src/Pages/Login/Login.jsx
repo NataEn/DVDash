@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../Contexts/Auth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,8 +35,27 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { loggedIn, setLoggedIn } = useContext(AuthContext);
   const classes = useStyles();
+
   let history = useHistory();
+  const googleSignIn = (event) => {
+    event.preventDefault();
+    // Firebase.doSignInWithGoogle();
+    // const googleProvider = new firebase.auth.GoogleAuthProvider();
+    // Auth.setLoggedIn(true);
+
+    // firebase.auth.signInWithPopup(googleProvider).catch((error) => {
+    //   console.log({ errorMessage: error.message });
+    // });
+  };
+
+  // const handleLogin = () => {
+  //   firebase
+  //     .auth()
+  //     .signInWithEmailAndPassword(email, password)
+  //     .catch((error) => this.setState({ errorMessage: error.message }));
+  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -76,6 +96,14 @@ const SignIn = (props) => {
               setPassword(event.target.value);
             }}
           />
+          <Button type="button" onClick={(event) => googleSignIn(event)}>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+              alt="logo"
+              width={"10%"}
+            />
+            <span> Join With Google</span>
+          </Button>
           <Button
             type="submit"
             fullWidth

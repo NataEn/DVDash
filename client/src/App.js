@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { AuthContext } from "./Contexts/Auth";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
@@ -22,6 +23,7 @@ import {
 import "./App.css";
 
 function App() {
+  const { loggedIn, setLoggedIn } = useContext(AuthContext);
   const [totalRevenue, setTotalRevenue] = useState({});
   const [totalCustomers, setTotalCustomers] = useState({});
   const [weekRevenue, setWeekRevenue] = useState([]);
@@ -31,7 +33,6 @@ function App() {
   const [topItemsTitle, setTopItemsTitle] = useState("Actors");
   const [monthRevenue, setMonthRevenue] = useState([]);
   const [monthCustomers, setMonthCustomers] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(true);
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("United States");
   const [areaData, setAreaData] = useState([]);
@@ -54,6 +55,7 @@ function App() {
     setMonthCustomers(periodData.month.customers);
     setStoreData(periodData.month.customers);
   };
+
   const fetchTop10 = async () => {
     const top10 = await getTop10();
     setTopItems(top10.top);
@@ -95,6 +97,9 @@ function App() {
     fetchCountries();
     fetchAreaData();
     setTopItemsFilter("actor");
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   user ? setLoggedIn(true) : setLoggedIn(false);
+    // });
   }, []);
 
   useEffect(() => {
