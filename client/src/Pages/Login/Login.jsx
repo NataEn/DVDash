@@ -9,6 +9,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import AuthButtonGroup from "../../components/AuthButtonGroup/AuthButtonGroup";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../Contexts/Auth";
 
@@ -96,6 +97,7 @@ const SignIn = (props) => {
               setPassword(event.target.value);
             }}
           />
+          <AuthButtonGroup />
           <Button type="button" onClick={(event) => googleSignIn(event)}>
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
