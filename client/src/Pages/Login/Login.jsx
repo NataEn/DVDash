@@ -13,6 +13,7 @@ import AuthButtonGroup from "../../components/AuthButtonGroup/AuthButtonGroup";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../Contexts/Auth";
 import GlobalFirebase from "../../Firebase/FirebaseConfig";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,35 +40,6 @@ const SignIn = (props) => {
   const [password, setPassword] = useState("");
   const { loggedIn, toggleLoggedIn } = useContext(AuthContext);
   const classes = useStyles();
-
-  const history = useHistory();
-  const googleSignIn = async (event) => {
-    event.preventDefault();
-    console.log("pressed google log in");
-    toggleLoggedIn();
-    console.log(loggedIn);
-    try {
-      await GlobalFirebase.logInWithGoogle();
-      props.history.replace("/dashboard");
-    } catch (err) {
-      console.error(err);
-    }
-    // history.push("/");
-    // Firebase.doSignInWithGoogle();
-    // const googleProvider = new firebase.auth.GoogleAuthProvider();
-    // Auth.setLoggedIn(true);
-
-    // firebase.auth.signInWithPopup(googleProvider).catch((error) => {
-    //   console.log({ errorMessage: error.message });
-    // });
-  };
-
-  // const handleLogin = () => {
-  //   firebase
-  //     .auth()
-  //     .signInWithEmailAndPassword(email, password)
-  //     .catch((error) => this.setState({ errorMessage: error.message }));
-  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -108,15 +80,7 @@ const SignIn = (props) => {
               setPassword(event.target.value);
             }}
           />
-          <AuthButtonGroup />
-          <Button type="button" onClick={(event) => googleSignIn(event)}>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-              alt="logo"
-              width={"10%"}
-            />
-            <span> Join With Google</span>
-          </Button>
+
           <Button
             type="submit"
             fullWidth
@@ -130,11 +94,13 @@ const SignIn = (props) => {
                 password: password,
                 email: email,
               });
-              history.push("/");
+              props.history.push("/dashboard");
             }}
           >
             Sign In
           </Button>
+          <p>or sign in with</p>
+          <AuthButtonGroup />
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -152,4 +118,4 @@ const SignIn = (props) => {
     </Container>
   );
 };
-export default SignIn;
+export default withRouter(SignIn);

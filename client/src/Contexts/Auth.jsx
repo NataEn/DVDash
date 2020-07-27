@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from "react";
-import { withRouter, useHistory } from "react-router-dom";
 
 export const AuthContext = createContext(null);
 
@@ -8,13 +7,13 @@ const AuthContextProvider = (props) => {
   const toggleLoggedIn = () => {
     setLoggedIn(!loggedIn);
   };
-  const history = useHistory();
-  useEffect(() => {
-    if (loggedIn & history) {
-      console.log(history);
-      history.push("/dashboard");
-    }
-  }, [loggedIn]);
+  // const history = useHistory();
+  // useEffect(() => {
+  //   if (loggedIn & history) {
+  //     console.log(history);
+  //     history.push("/dashboard");
+  //   }
+  // }, [loggedIn]);
   return (
     <AuthContext.Provider value={{ loggedIn, toggleLoggedIn }}>
       {props.children}
@@ -22,4 +21,4 @@ const AuthContextProvider = (props) => {
   );
 };
 
-export default withRouter(AuthContextProvider);
+export default AuthContextProvider;

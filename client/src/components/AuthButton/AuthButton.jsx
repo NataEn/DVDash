@@ -1,15 +1,30 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import { AuthContext } from "../../Contexts/Auth";
 import "./AuthButton.css";
 const AuthButton = ({ onClickAuth, imgUrl, text }) => {
+  const history = useHistory();
+  const { toggleLoggedIn } = useContext(AuthContext);
   return (
     <Button
       type="button"
       onClick={(event) => {
-        console.log(event);
-        //onClickAuth();
+        event.preventDefault();
+        onClickAuth()
+          .then((res) => {
+            if (res.user) {
+              //create portfolio
+              toggleLoggedIn();
+              console.log("in if user", res.user);
+            }
+            console.log("pushing to history");
+            history.push("/dashboard");
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       }}
-      //   onClick={onClickAuth}
     >
       <img src={imgUrl} alt="button logo" width={"10%"} />
       &nbsp; &nbsp;
