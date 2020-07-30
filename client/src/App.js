@@ -114,6 +114,9 @@ function App() {
       <Header loggedIn={loggedIn} />
       <div> {loggedIn ? "logged in" : "logged out"}</div>
       <Switch>
+        <Route exact path="/">
+          <Redirect to="/store" />
+        </Route>
         <Route exact path="/store">
           <Store />
         </Route>
