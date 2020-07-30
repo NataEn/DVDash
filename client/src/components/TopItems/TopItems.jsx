@@ -63,7 +63,6 @@ export default function TopItems(props) {
           </TableHead>
           <TableBody>
             {rows.map((row, index) => {
-              debugger;
               return (
                 <TableRow hover key={index}>
                   <TableCell

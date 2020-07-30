@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Switch, Route, Redirect, Router } from "react-router-dom";
 import { AuthContext } from "./Contexts/Auth";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Store from "./Pages/Store/Store";
 import {
   getPeriodData,
   getTop10,
@@ -14,7 +16,7 @@ import {
 import Users from "./apiCalls/mongoDataQuery";
 
 import { getCountries } from "./apiCalls/worldCountries";
-import { Switch, Route, Redirect } from "react-router-dom";
+
 import "./App.css";
 
 function App() {
@@ -45,7 +47,6 @@ function App() {
       month: ["MONTH_REVENUE", "MONTH_CUSTOMERS_STORE", "MONTH_ORDERS"],
       year: ["YEAR_REVENUE", "YEAR_CUSTOMERS", "YEAR_ORDERS"],
     });
-    console.log("periodData", periodData);
     setWeekRevenue(periodData.week.revenue);
     setWeekCustomers(periodData.week.customers);
     setMonthRevenue(periodData.month.revenue);
@@ -110,9 +111,12 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
+      <Header loggedIn={loggedIn} />
       <div> {loggedIn ? "logged in" : "logged out"}</div>
       <Switch>
+        <Route exact path="/store">
+          <Store />
+        </Route>
         <Route path="/login">
           <Login signinUser={Users.signinUser} />
         </Route>

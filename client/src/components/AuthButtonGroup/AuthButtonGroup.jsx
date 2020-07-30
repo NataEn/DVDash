@@ -19,20 +19,20 @@ const AuthButtonGroup = () => {
     //   text: "facebook",
     //   authFunction: GlobalFirebase.logInWithFacebook,
     // },
-    {
-      type: "twitter",
-      imgUrl:
-        "https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg",
-      text: "twitter",
-      authFunction: GlobalFirebase.logInWithTwitter,
-    },
-    {
-      type: "github",
-      imgUrl:
-        "https://upload.wikimedia.org/wikipedia/commons/9/95/Font_Awesome_5_brands_github.svg",
-      text: "github",
-      authFunction: GlobalFirebase.logInWithGitHub,
-    },
+    // {
+    //   type: "twitter",
+    //   imgUrl:
+    //     "https://upload.wikimedia.org/wikipedia/en/9/9f/Twitter_bird_logo_2012.svg",
+    //   text: "twitter",
+    //   authFunction: GlobalFirebase.logInWithTwitter,
+    // },
+    // {
+    //   type: "github",
+    //   imgUrl:
+    //     "https://upload.wikimedia.org/wikipedia/commons/9/95/Font_Awesome_5_brands_github.svg",
+    //   text: "github",
+    //   authFunction: GlobalFirebase.logInWithGitHub,
+    // },
   ];
 
   return (

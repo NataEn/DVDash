@@ -10,9 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import AuthButtonGroup from "../../components/AuthButtonGroup/AuthButtonGroup";
-import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../Contexts/Auth";
-import GlobalFirebase from "../../Firebase/FirebaseConfig";
 import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loggedIn, toggleLoggedIn } = useContext(AuthContext);
   const classes = useStyles();
 
   return (

@@ -13,20 +13,23 @@ const AuthButton = ({ onClickAuth, imgUrl, text }) => {
         event.preventDefault();
         onClickAuth()
           .then((res) => {
+            console.log("from firebase button", res);
             if (res.user) {
               //create portfolio
               toggleLoggedIn();
-              console.log("in if user", res.user);
+              history.push("/store");
+            } else {
+              console.log("logging out ...", res);
+              toggleLoggedIn();
+              history.push("/");
             }
-            console.log("pushing to history");
-            history.push("/dashboard");
           })
           .catch((err) => {
             console.error(err);
           });
       }}
     >
-      <img src={imgUrl} alt="button logo" width={"10%"} />
+      {imgUrl && <img src={imgUrl} alt="button logo" width={"10%"} />}
       &nbsp; &nbsp;
       <span> {text}</span>
     </Button>

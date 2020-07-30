@@ -46,14 +46,6 @@ class Firebase {
     this.auth.currentUser.updatePassword(password);
   logInWithGoogle = () => {
     return this.auth.signInWithPopup(this.googleProvider);
-    //       const token = result.credential.accessToken;
-    // const email = this.auth.currentUser.email;
-    // const displayName = this.auth.currentUser.displayName;
-    // const phoneNumber = this.auth.currentUser.phoneNumber;
-    // const refreshToken = this.auth.currentUser.refreshToken;
-    // const photoURL = this.auth.currentUser.photoURL;
-    // console.log("got google user");
-    // return this.auth.currentUser;
   };
   logInWithGitHub = async () => {
     return this.auth.signInWithPopup(this.gitHubProvider);
