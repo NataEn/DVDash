@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Header.css";
 import { fade, makeStyles } from "@material-ui/core/styles";
+import ProfileMenu from "../ProfileMenu/ProfileMenu";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import logo from "../../logo_blue.png";
 import { Link as RouterLink, BrowserRouter as Router } from "react-router-dom";
@@ -13,14 +14,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
@@ -92,40 +90,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-// const Header = ({ loggedIn }) => {
-//   const classes = useStyles();
-
-//   return (
-//     <>
-//       <header className="App-header d-flex justify-content-between pl-2 pr-2">
-//         <img src={logo} alt="logo" className="p-2 logo" />
-//         <h4 className="d-inline-block">DVDash</h4>
-//         <Typography className={classes.margin}>
-//           <Link to="/store" component={RouterLink}>
-//             Store{" "}
-//           </Link>
-//           <Link to="/dashboard" component={RouterLink}>
-//             Dashboard
-//           </Link>
-//           {!loggedIn ? (
-//             <Link
-//               to="/login"
-//               component={RouterLink}
-//               color="secondary"
-//               size="medium"
-//               className={`${classes.margin} text-right`}
-//             >
-//               <OpenInBrowserIcon className="sign-in-icon" /> Sign-in
-//             </Link>
-//           ) : (
-//             <AuthButton onClickAuth={GlobalFirebase.logOut} text={"Logout"} />
-//           )}
-//         </Typography>
-//       </header>
-//       <PrimarySearchAppBar loggedIn={loggedIn} />
-//     </>
-//   );
-// };
 
 const Header = ({ loggedIn }) => {
   const classes = useStyles();
@@ -149,20 +113,6 @@ const Header = ({ loggedIn }) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const renderMenu = (
-    <Menu
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id="primary-search-account-menu"
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isProfileMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const renderMobileMenu = (
     <Menu
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -172,22 +122,6 @@ const Header = ({ loggedIn }) => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -252,16 +186,6 @@ const Header = ({ loggedIn }) => {
             <AuthButton onClickAuth={GlobalFirebase.logOut} text={"Logout"} />
           )}
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -287,7 +211,10 @@ const Header = ({ loggedIn }) => {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+      <ProfileMenu
+        isProfileMenuOpen={isProfileMenuOpen}
+        handleMenuClose={handleMenuClose}
+      />
     </div>
   );
 };
