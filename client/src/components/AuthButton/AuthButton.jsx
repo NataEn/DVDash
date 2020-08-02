@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import { AuthContext } from "../../Contexts/Auth";
 import "./AuthButton.css";
-const AuthButton = ({ onClickAuth, imgUrl, text }) => {
+const AuthButton = ({ onClickAuth, imgUrl, icon, text }) => {
   const history = useHistory();
   const { toggleLoggedIn } = useContext(AuthContext);
   return (
@@ -29,8 +30,10 @@ const AuthButton = ({ onClickAuth, imgUrl, text }) => {
           });
       }}
     >
-      {imgUrl && <img src={imgUrl} alt="button logo" width={"10%"} />}
-      &nbsp; &nbsp;
+      <IconButton aria-label={`${text}`} color="inherit">
+        {imgUrl && <img src={imgUrl} alt="button logo" width={"10%"} />}
+        {icon && <i className={icon}></i>}
+      </IconButton>
       <span> {text}</span>
     </Button>
   );

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
+import AuthButton from "../AuthButton/AuthButton";
+import GlobalFirebase from "../../Firebase/FirebaseConfig";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import Badge from "@material-ui/core/Badge";
-const ProfileMenu = ({ isProfileMenuOpen, handleMenuClose }) => {
+const ProfileMenu = ({ isProfileMenuOpen, handleMenuClose, loggedIn }) => {
   const [item, setItem] = useState(1);
   useEffect(() => {
     setItem(2);
@@ -22,17 +25,26 @@ const ProfileMenu = ({ isProfileMenuOpen, handleMenuClose }) => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <AccountCircle />
+        <IconButton aria-label="show 2 items in cart" color="inherit">
+          <AccountCircle />
+        </IconButton>
         Profile
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <IconButton aria-label="show 2 items in cart" color="inherit">
+          <Badge badgeContent={2} color="secondary">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+        Cart
+      </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={4} color="secondary">
             <MailIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        Messages
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -40,7 +52,14 @@ const ProfileMenu = ({ isProfileMenuOpen, handleMenuClose }) => {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        Notifications
+      </MenuItem>
+      <MenuItem>
+        <AuthButton
+          onClickAuth={GlobalFirebase.logOut}
+          text={"Logout"}
+          icon={"fas fa-sign-out-alt"}
+        />
       </MenuItem>
     </Menu>
   );

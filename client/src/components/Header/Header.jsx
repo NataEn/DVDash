@@ -3,6 +3,7 @@ import "./Header.css";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
+import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import logo from "../../logo_blue.png";
 import { Link as RouterLink, BrowserRouter as Router } from "react-router-dom";
 import Link from "@material-ui/core/Link";
@@ -180,23 +181,22 @@ const Header = ({ loggedIn }) => {
               size="medium"
               className={`${classes.margin} text-right`}
             >
-              <OpenInBrowserIcon className="sign-in-icon" /> Sign-in
+              <i className="fas fa-sign-in-alt fa-lg"></i> Sign-in
             </Link>
           ) : (
-            <AuthButton onClickAuth={GlobalFirebase.logOut} text={"Logout"} />
+            <div className={classes.sectionDesktop}>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </div>
           )}
-          <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls="primary-search-account-menu"
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
