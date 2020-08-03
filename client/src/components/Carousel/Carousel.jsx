@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     display: "inline-block",
-    width: "20%",
+    width: "300px",
     height: "80%",
     backgroundColor: "orange",
     margin: "0.5rem",
@@ -69,24 +69,28 @@ const items = [
   { name: "3" },
   { name: "4" },
   { name: "5" },
+  { name: "6" },
+  { name: "7" },
 ];
 
 const useResize = (myRef) => {
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [width, setWidth] = useState(
+    myRef.current ? myRef.current.offsetWidth : 0
+  );
+  const [height, setHeight] = useState(
+    myRef.current ? myRef.current.offsetWidth : 0
+  );
 
   useEffect(() => {
     const handleResize = () => {
       setWidth(myRef.current.offsetWidth);
       setHeight(myRef.current.offsetHeight);
     };
-
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [myRef]);
+  }, [myRef.current]);
 
   return { width, height };
 };
@@ -95,8 +99,23 @@ export default function SimpleSlide() {
   const classes = useStyles();
   const carouselRef = useRef(null);
   const { width, height } = useResize(carouselRef);
-
   const [direction, setDirection] = useState("");
+  const [startSlide, setStartslide] = useState(0);
+  const numberOfItems = width !== 0 ? Math.round(width / 300) : 4;
+  const currentSlides = items.slice(startSlide, startSlide + numberOfItems);
+  const getNextSlide = () => {
+    if (
+      (startSlide + 1 <= items.length) &
+      (items.length - (startSlide + 1) >= numberOfItems)
+    ) {
+      setStartslide(startSlide + 1);
+    }
+  };
+  const getPrevSlide = () => {
+    if (startSlide - 1 >= 0) {
+      setStartslide(startSlide - 1);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -104,16 +123,17 @@ export default function SimpleSlide() {
         <IconButton
           onClick={() => {
             setDirection("right");
+            getPrevSlide();
           }}
         >
           <NavigateBeforeIcon />
         </IconButton>
       </span>
       <div className={classes.wrapper} ref={carouselRef}>
-        {items.map((item) => (
+        {currentSlides.map((item) => (
           <Fade in={true}>
             <p className={classes.item}>
-              {item.name} width: {width}px
+              {item.name} width: {width}px number of items{numberOfItems}
             </p>
           </Fade>
         ))}
@@ -122,6 +142,7 @@ export default function SimpleSlide() {
         <IconButton
           onClick={() => {
             setDirection("left");
+            getNextSlide();
           }}
         >
           <NavigateNextIcon />
