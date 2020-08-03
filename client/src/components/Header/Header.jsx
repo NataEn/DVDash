@@ -1,19 +1,16 @@
 import React from "react";
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
+import HeaderMenu from "../HeaderMenu/HeaderMenu";
 import logo from "../../logo_blue.png";
-import { Link as RouterLink } from "react-router-dom";
-import Link from "@material-ui/core/Link";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -109,51 +106,6 @@ export default function PrimarySearchAppBar({ loggedIn }) {
     handleMobileMenuClose();
   };
 
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={"primary-search-account-menu-mobile"}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={Boolean(mobileMoreAnchorEl)}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <Link
-          to="/store"
-          component={RouterLink}
-          className={(classes.margin, classes.block)}
-          aria-label="link to DVDash store"
-        >
-          Store{" "}
-        </Link>
-      </MenuItem>
-      <MenuItem>
-        <Link
-          to="/dashboard"
-          component={RouterLink}
-          className={(classes.margin, classes.block)}
-          aria-label="link to DVDash dashboard"
-        >
-          Dashboard
-        </Link>
-      </MenuItem>
-
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls={"primary-search-account-menu"}
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appBar}>
@@ -184,48 +136,7 @@ export default function PrimarySearchAppBar({ loggedIn }) {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <MenuItem>
-              <Link
-                to="/store"
-                component={RouterLink}
-                className={classes.margin}
-              >
-                Store
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              <Link
-                to="/dashboard"
-                component={RouterLink}
-                className={classes.margin}
-              >
-                Dashboard
-              </Link>
-            </MenuItem>
-            <MenuItem>
-              {!loggedIn ? (
-                <Link
-                  to="/login"
-                  component={RouterLink}
-                  color="secondary"
-                  size="medium"
-                  className={`${classes.margin} text-right`}
-                >
-                  <i className="fas fa-sign-in-alt fa-lg"></i> Sign-in
-                </Link>
-              ) : (
-                <IconButton
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={"primary-search-account-menu"}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
-              )}
-            </MenuItem>
+            <HeaderMenu handleProfileMenuOpen={handleProfileMenuOpen} />
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -240,7 +151,17 @@ export default function PrimarySearchAppBar({ loggedIn }) {
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        id={"primary-search-account-menu-mobile"}
+        keepMounted
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={Boolean(mobileMoreAnchorEl)}
+        onClose={handleMobileMenuClose}
+      >
+        <HeaderMenu handleProfileMenuOpen={handleProfileMenuOpen} />
+      </Menu>
       <ProfileMenu
         isProfileMenuOpen={Boolean(anchorEl)}
         handleMenuClose={handleMenuClose}
