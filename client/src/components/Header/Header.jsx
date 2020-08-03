@@ -1,39 +1,35 @@
-import React, { useState } from "react";
-import "./Header.css";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
-import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
-import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import logo from "../../logo_blue.png";
-import { Link as RouterLink, BrowserRouter as Router } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
-import AuthButton from "../AuthButton/AuthButton";
-import GlobalFirebase from "../../Firebase/FirebaseConfig";
-//for another header
+import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MoreIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
-  bgColor: {
+  appBar: {
     backgroundColor: "#282c34",
-  },
-  margin: {
-    margin: theme.spacing(1),
   },
   grow: {
     flexGrow: 1,
   },
+  margin: {
+    margin: theme.spacing(1),
+  },
   menuButton: {
     marginRight: theme.spacing(2),
+  },
+  block: {
+    display: "block",
   },
   title: {
     display: "none",
@@ -92,15 +88,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ loggedIn }) => {
+export default function PrimarySearchAppBar({ loggedIn }) {
   const classes = useStyles();
-  const [isProfileMenuOpen, setAnchorEl] = useState(false);
-  const [isMobileMenuOpen, setMobileMoreAnchorEl] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -110,23 +109,41 @@ const Header = ({ loggedIn }) => {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
   const renderMobileMenu = (
     <Menu
+      anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={"primary-search-account-menu-mobile"}
       keepMounted
       transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
+      open={Boolean(mobileMoreAnchorEl)}
       onClose={handleMobileMenuClose}
     >
+      <MenuItem>
+        <Link
+          to="/store"
+          component={RouterLink}
+          className={(classes.margin, classes.block)}
+          aria-label="link to DVDash store"
+        >
+          Store{" "}
+        </Link>
+      </MenuItem>
+      <MenuItem>
+        <Link
+          to="/dashboard"
+          component={RouterLink}
+          className={(classes.margin, classes.block)}
+          aria-label="link to DVDash dashboard"
+        >
+          Dashboard
+        </Link>
+      </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
+          aria-controls={"primary-search-account-menu"}
           aria-haspopup="true"
           color="inherit"
         >
@@ -138,21 +155,20 @@ const Header = ({ loggedIn }) => {
   );
 
   return (
-    <div className={`${classes.grow} header`}>
-      <AppBar position="inharit" className={classes.bgColor}>
+    <div className={classes.grow}>
+      <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <img src={logo} alt="logo" className="p-2 logo" />
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
-            <MenuIcon />
+            <img src={logo} alt="logo" className="p-2 logo" />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          {/* <Typography className={classes.title} variant="h6" noWrap>
             DVDash
-          </Typography>
+          </Typography> */}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -167,36 +183,50 @@ const Header = ({ loggedIn }) => {
             />
           </div>
           <div className={classes.grow} />
-          <Link to="/store" component={RouterLink}>
-            Store{" "}
-          </Link>
-          <Link to="/dashboard" component={RouterLink}>
-            Dashboard
-          </Link>
-          {!loggedIn ? (
-            <Link
-              to="/login"
-              component={RouterLink}
-              color="secondary"
-              size="medium"
-              className={`${classes.margin} text-right`}
-            >
-              <i className="fas fa-sign-in-alt fa-lg"></i> Sign-in
-            </Link>
-          ) : (
-            <div className={classes.sectionDesktop}>
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls="primary-search-account-menu"
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
+          <div className={classes.sectionDesktop}>
+            <MenuItem>
+              <Link
+                to="/store"
+                component={RouterLink}
+                className={classes.margin}
               >
-                <AccountCircle />
-              </IconButton>
-            </div>
-          )}
+                Store
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              <Link
+                to="/dashboard"
+                component={RouterLink}
+                className={classes.margin}
+              >
+                Dashboard
+              </Link>
+            </MenuItem>
+            <MenuItem>
+              {!loggedIn ? (
+                <Link
+                  to="/login"
+                  component={RouterLink}
+                  color="secondary"
+                  size="medium"
+                  className={`${classes.margin} text-right`}
+                >
+                  <i className="fas fa-sign-in-alt fa-lg"></i> Sign-in
+                </Link>
+              ) : (
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={"primary-search-account-menu"}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+              )}
+            </MenuItem>
+          </div>
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
@@ -205,17 +235,16 @@ const Header = ({ loggedIn }) => {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MenuIcon />
             </IconButton>
           </div>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       <ProfileMenu
-        isProfileMenuOpen={isProfileMenuOpen}
+        isProfileMenuOpen={Boolean(anchorEl)}
         handleMenuClose={handleMenuClose}
       />
     </div>
   );
-};
-export default Header;
+}
