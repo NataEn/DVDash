@@ -1,0 +1,16 @@
+.Carousel_arrow:hover {
+  background-color: #3f51b6;
+  opacity: 0.5;
+}
+.Carousel_arrow.button.MuiButtonBase-root {
+  background-color: #d2d6d8;
+  opacity: 0.5;
+}
+.Carousel_arrow:hover {
+  color: #d2d6d8;
+}
+
+.Carousel_h3 {
+  text-align: left;
+  margin: 1% 2%;
+}
