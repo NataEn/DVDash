@@ -17,6 +17,7 @@ const MovieCard = ({ title, imgUrl, vote }) => {
   }, []);
   return (
     <div className={"MovieCard_wrapper"} style={style}>
+      <div className={"MovieCard_dark_background"}></div>
       <section className={"MovieCard_section"}>
         <h6 className={"MovieCard_h6"}>{title}</h6>
 
