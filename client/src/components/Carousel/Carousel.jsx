@@ -7,8 +7,36 @@ import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import IconButton from "@material-ui/core/IconButton";
 const Carousel = ({ title, movies }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
-  console.log("carousel, movies", movies);
+  const [windowWidthHeight, setWindowWidthHeight] = useState([]);
+  const [cards, setCards] = useState(7);
 
+  const updateWindowDimensios = () => {
+    setWindowWidthHeight([window.innerWidth, window.innerHeight]);
+  };
+  useEffect(() => {
+    updateWindowDimensios();
+    window.addEventListener("resize", updateWindowDimensios);
+    return () => window.removeEventListener("resize", updateWindowDimensios);
+  }, []);
+
+  useEffect(() => {
+    console.log("window width, height", windowWidthHeight);
+    if (windowWidthHeight[0] <= 360) {
+      setCards(1);
+    } else if (windowWidthHeight[0] <= 550) {
+      setCards(2);
+    } else if (windowWidthHeight[0] <= 700) {
+      setCards(3);
+    } else if (windowWidthHeight[0] <= 850) {
+      setCards(4);
+    } else if (windowWidthHeight[0] <= 1050) {
+      setCards(5);
+    } else if (windowWidthHeight[0] <= 1250) {
+      setCards(6);
+    } else if (windowWidthHeight[0] >= 1250) {
+      setCards(7);
+    }
+  }, [windowWidthHeight]);
   const changeActiveItem = (activeItemIndex) => {
     setActiveItemIndex(activeItemIndex);
   };
@@ -28,7 +56,7 @@ const Carousel = ({ title, movies }) => {
           chevronWidth={20}
           disableSwipe={false}
           alwaysShowChevrons={false}
-          numberOfCards={6}
+          numberOfCards={cards}
           slidesToScroll={1}
           outsideChevron={false}
           showSlither={true}
