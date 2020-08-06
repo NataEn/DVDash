@@ -8,7 +8,16 @@ let tmdbfetchUrl = (getParams, type) => {
 
 export const getTrendingMovies = () => {
   // const tmdbGetParams = "trending/all/week";
-  const tmdbGetParams = `sort_by=popularity.desc&include_adult=false`;
+  const tmdbGetParams = `sort_by=vote_average.desc&include_adult=false`;
+  const data = fetch(tmdbfetchUrl(tmdbGetParams, "discover"))
+    .then((response) => response.json())
+    .then((data) => {
+      return data.results;
+    });
+  return data;
+};
+export const getTrendingByGenres = (genre) => {
+  const tmdbGetParams = `sort_by=vote_average.desc&include_adult=false&with_genres=${genre}`;
   const data = fetch(tmdbfetchUrl(tmdbGetParams, "discover"))
     .then((response) => response.json())
     .then((data) => {
@@ -23,6 +32,15 @@ export const getNewMovies = () => {
     .then((response) => response.json())
     .then((data) => {
       return data.results;
+    });
+  return data;
+};
+export const getGenresList = () => {
+  const tmdbGetParams = "genre/movie/list";
+  const data = fetch(tmdbfetchUrl(tmdbGetParams, "regular"))
+    .then((response) => response.json())
+    .then((data) => {
+      return data.genres;
     });
   return data;
 };

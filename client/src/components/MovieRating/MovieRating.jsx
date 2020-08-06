@@ -6,7 +6,6 @@ import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Box from "@material-ui/core/Box";
 
 const MovieRating = ({ rating }) => {
-  console.log("rating", rating);
   return (
     <div>
       <Box

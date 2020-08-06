@@ -8,7 +8,6 @@ const MovieCard = ({ title, imgUrl, vote }) => {
   const [item, setItem] = useState(1);
   useEffect(() => {
     setItem(2);
-    console.log("title, imgUrl, vote", title, imgUrl, vote);
   }, []);
   return (
     <div className={"MovieCard_wrapper"} style={style}>

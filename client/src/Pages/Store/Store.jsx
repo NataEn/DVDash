@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Carousel from "../../components/Carousel/Carousel";
-const Store = ({ trendingMovies, newMovies }) => {
+import Filter from "../../components/Filter/Filter";
+const Store = ({
+  trendingMovies,
+  newMovies,
+  trendingByGenres,
+  selectGenre,
+  genres,
+  genre,
+}) => {
   console.log("store trending Movies ", trendingMovies.length);
   return (
     <div>
@@ -11,7 +19,22 @@ const Store = ({ trendingMovies, newMovies }) => {
       {newMovies.length && (
         <Carousel title={"New on the Shelf"} movies={newMovies} />
       )}
-      <Carousel title={"Most Popular"} movies={[1, 2, 3]} />
+      {trendingByGenres && (
+        <Carousel
+          title={`Most Popular ${genre} Movies`}
+          movies={trendingByGenres}
+          filter={
+            genres.length && (
+              <Filter
+                options={genres}
+                helperText={"Select genre"}
+                onSelect={selectGenre}
+                type="genre"
+              />
+            )
+          }
+        />
+      )}
     </div>
   );
 };

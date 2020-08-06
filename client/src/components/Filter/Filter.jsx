@@ -17,15 +17,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Filter(props) {
+const Filter = ({ options, helperText, onSelect, type }) => {
   const classes = useStyles();
   const [selectProps, setSelectProps] = useState({ value: "", name: "select" });
-  const [options, setOptions] = useState([...props.options]);
+  const [filterOptions, setFilterOptions] = useState([...options]);
   const createOption = (optionObj) => {
     return (
       <MenuItem
         key={optionObj.name}
-        value={optionObj.value || optionObj.name}
+        value={
+          type === "genre" ? optionObj.id : optionObj.value || optionObj.name
+        }
         name={optionObj.name}
         className={classes.option}
       >
@@ -43,9 +45,20 @@ export default function Filter(props) {
       value: event.target.value,
       name: event.target.name,
     });
-    if (props.onSelect) {
+    if (onSelect) {
       console.log("selected", event.target.value);
-      props.onSelect(event.target.value);
+      if (type === "genre") {
+        const selectedValue = options.find(
+          (option) => option.id === event.target.value
+        ).name;
+        console.log("value selected", selectedValue);
+        onSelect({
+          id: event.target.value,
+          value: selectedValue,
+        });
+      } else {
+        onSelect(event.target.value);
+      }
     }
   };
 
@@ -61,9 +74,10 @@ export default function Filter(props) {
         labelId="filter-chart-data"
       >
         <MenuItem aria-label="None" value="" />
-        {options.map((option) => createOption(option))}
+        {filterOptions.map((option) => createOption(option))}
       </Select>
-      <FormHelperText>{props.helperText}</FormHelperText>
+      <FormHelperText>{helperText}</FormHelperText>
     </FormControl>
   );
-}
+};
+export default Filter;

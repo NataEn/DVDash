@@ -7,7 +7,12 @@ import Login from "./Pages/Login/Login";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Store from "./Pages/Store/Store";
-import { getTrendingMovies, getNewMovies } from "./apiCalls/movies";
+import {
+  getTrendingMovies,
+  getTrendingByGenres,
+  getNewMovies,
+  getGenresList,
+} from "./apiCalls/movies";
 import {
   getPeriodData,
   getTop10,
@@ -41,6 +46,9 @@ function App() {
   const [storeData, setStoreData] = useState([]);
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [newMovies, setNewMovies] = useState([]);
+  const [moviesSelectedByGenre, setMoviesSelectedByGenre] = useState([]);
+  const [genreList, setGenreList] = useState([]);
+  const [genre, setGenre] = useState({ value: "Adventure", id: 12 });
 
   console.log("firebase", process.env.REACT_APP_FIREBASE_API_KEY);
   const fetchTrendingMovies = async () => {
@@ -52,6 +60,15 @@ function App() {
     const movies = await getNewMovies();
     console.log("new movies", movies);
     setNewMovies(movies);
+  };
+  const fetchGenreList = async () => {
+    const genres = await getGenresList();
+    setGenreList(genres);
+  };
+  const fetchMoviesByGenre = async () => {
+    const movies = await getTrendingByGenres(genre.id);
+    console.log("genre movies", movies);
+    setMoviesSelectedByGenre(movies);
   };
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
@@ -93,8 +110,14 @@ function App() {
     return filteredData;
   };
   useEffect(() => {
+    fetchMoviesByGenre();
+  }, [genre]);
+
+  useEffect(() => {
     fetchTrendingMovies();
     fetchNewMovies();
+    fetchGenreList();
+    fetchMoviesByGenre();
   }, []);
   useEffect(() => {
     let title = "";
@@ -134,7 +157,14 @@ function App() {
           <Redirect to="/store" />
         </Route>
         <Route exact path="/store">
-          <Store trendingMovies={trendingMovies} newMovies={newMovies} />
+          <Store
+            trendingMovies={trendingMovies}
+            newMovies={newMovies}
+            trendingByGenres={moviesSelectedByGenre}
+            selectGenre={setGenre}
+            genres={genreList}
+            genre={genre.value}
+          />
         </Route>
         <Route path="/login">
           <Login signinUser={Users.signinUser} />

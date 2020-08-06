@@ -9,10 +9,21 @@
 .Carousel_arrow:hover {
   color: #d2d6d8;
 }
-
+.Carousel_title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
 .Carousel_h3 {
+  display: inline-block;
   text-align: left;
-  margin: 1% 2%;
+  width: max-content;
+  margin: 1% 1% 8px 1%;
+}
+.Carousel_filter {
+  display: inline-block;
 }
 .Carousel_container {
   padding: 0;

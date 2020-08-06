@@ -5,7 +5,7 @@ import MovieCard from "../MovieCard/MovieCard";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import IconButton from "@material-ui/core/IconButton";
-const Carousel = ({ title, movies }) => {
+const Carousel = ({ title, movies, filter }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [windowWidthHeight, setWindowWidthHeight] = useState([]);
   const [cards, setCards] = useState(7);
@@ -47,7 +47,11 @@ const Carousel = ({ title, movies }) => {
   }, []);
   return (
     <div className="Carousel_wrapper">
-      <h3 className="Carousel_h3">{title}</h3>
+      <div className="Carousel_title">
+        <h3 className="Carousel_h3">{title}</h3>{" "}
+        <div className="Carousel_filter">{filter}</div>
+      </div>
+
       <div className="Carousel_container">
         <ItemsCarousel
           infiniteLoop={false}
