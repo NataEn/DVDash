@@ -7,6 +7,7 @@ import Login from "./Pages/Login/Login";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Store from "./Pages/Store/Store";
+import { getTrendingMovies } from "./apiCalls/movies";
 import {
   getPeriodData,
   getTop10,
@@ -38,9 +39,14 @@ function App() {
   const [storeFilter, setStoreFilter] = useState("customers");
   const [storeSubFilter, setStoreSubFilter] = useState();
   const [storeData, setStoreData] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState({});
 
   console.log("firebase", process.env.REACT_APP_FIREBASE_API_KEY);
-
+  const fetchTrendingMovies = async () => {
+    const movies = await getTrendingMovies();
+    console.log("trending movies", movies);
+    setTrendingMovies(movies);
+  };
   const fetchPeriodData = async () => {
     const periodData = await getPeriodData({
       week: ["WEEK_REVENUE", "WEEK_CUSTOMERS", "WEEK_ORDERS"],
@@ -81,6 +87,9 @@ function App() {
     return filteredData;
   };
   useEffect(() => {
+    fetchTrendingMovies();
+  }, []);
+  useEffect(() => {
     let title = "";
     if (topItemsFilter === "title") title = "Movies";
     else if (topItemsFilter === "category") title = "Janres";
@@ -118,7 +127,7 @@ function App() {
           <Redirect to="/store" />
         </Route>
         <Route exact path="/store">
-          <Store />
+          <Store trending={trendingMovies} />
         </Route>
         <Route path="/login">
           <Login signinUser={Users.signinUser} />

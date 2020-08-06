@@ -14,3 +14,23 @@
   text-align: left;
   margin: 1% 2%;
 }
+.Carousel_container {
+  padding: 0;
+  width: 90%;
+  /* height: 12rem; */
+  max-height: max-content;
+  margin: 0 auto;
+  overflow-y: visible !important;
+}
+.Carousel_wrapper {
+  overflow-y: visible !important;
+}
+.Carousel_container:hover {
+  overflow-y: visible !important;
+}
+.sc-htpNat.grBOFc,
+.sc-bwzfXH.gwZiig,
+.sc-bdVaJa.imYUvI,
+.sc-bxivhb.kHuOUT {
+  overflow-y: visible !important;
+}
