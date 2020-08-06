@@ -34,6 +34,6 @@
 .sc-bxivhb.kHuOUT {
   overflow-y: visible !important;
 }
-.Carousel_container > button > span.MuiIconButton-label > svg {
+.Carousel_container button > span.MuiIconButton-label > svg {
   font-size: 3.5rem;
 }
