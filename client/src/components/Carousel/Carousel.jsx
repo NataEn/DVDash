@@ -81,7 +81,7 @@ const Carousel = ({ title, movies }) => {
           {movies.map((movie, i) => (
             <MovieCard
               key={i}
-              imgUrl={`https://image.tmdb.org/t/p/w92/${movie.poster_path}`}
+              imgUrl={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
               title={movie.title}
               vote={movie.vote_average}
               style={{ height: 300 }}
