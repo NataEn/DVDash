@@ -34,3 +34,6 @@
 .sc-bxivhb.kHuOUT {
   overflow-y: visible !important;
 }
+button > span.MuiIconButton-label > svg {
+  font-size: 3.5rem;
+}

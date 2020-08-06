@@ -12,6 +12,9 @@
   position: absolute;
   display: block;
 }
+.MovieCard_wrapper:hover .MovieCard_section {
+  display: block;
+}
 .MovieCard_dark_background {
   display: none;
 }
@@ -28,13 +31,17 @@
   background-size: 100%;
   transition: all 0.2s ease-in-out;
   overflow: visible;
-  border-radius: 15px;
+  border-radius: 10px;
   border: solid 0.5px rgb(192, 186, 186);
   overflow: hidden;
 }
 .MovieCard_section {
+  position: absolute;
   display: none;
+  z-index: 10;
   align-self: flex-end;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #f3f6f6;
+  padding: 0.5rem;
+  text-align: left;
   width: 100%;
 }

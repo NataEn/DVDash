@@ -41,7 +41,11 @@ const Carousel = ({ title, movies }) => {
             </IconButton>
           }
           leftChevron={
-            <IconButton color="primary" className="Carousel_arrow">
+            <IconButton
+              color="primary"
+              className="Carousel_arrow"
+              size="medium"
+            >
               <NavigateBeforeIcon />
             </IconButton>
           }
