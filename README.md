@@ -9,8 +9,7 @@ Movie Rental Dashboard implementing different mysql queries
 4. REST API
 
 ## Databases
-1. MySQL
-Mysql db is based on Oracle's Sakila sample database with suitable changes
+1. MySQL - based on Oracle's Sakila sample database with suitable changes
 (https://dev.mysql.com/doc/sakila/en/sakila-preface.html)
 2. MongoDB
 
