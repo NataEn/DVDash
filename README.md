@@ -17,4 +17,14 @@ Movie Rental Dashboard implementing different mysql queries
 1. TMDB- https://www.themoviedb.org/
 2. Country flags- https://www.countryflags.io/ 
 
+## How to Run the app?
+1. make sure you have git, nodejs, mongodb and mysql installed.
+2. clone the app via git clone
+3. cd main folder 
+4. run npm i inside both client and api folders 
+5. run npm start inside both client and api
+6. client runs on port 3000
+7. api runs on port 8080
+
+
 
