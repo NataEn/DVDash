@@ -1,6 +1,6 @@
 # DVDash
 
-Movie Rental Dashboard implementing different mysql queries
+Movie Rental Dashboard created with React and implementing both MySql and MongoDb queries
 
 ## Technologies
 1. React
