@@ -8,7 +8,8 @@ const TOTAL_REVENUE = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
 
@@ -46,7 +47,8 @@ const TOTAL_ORDERS = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
 
@@ -85,7 +87,8 @@ const TOTAL_CUSTOMERS = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
 
@@ -216,7 +219,8 @@ const WEEK_REVENUE = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
 
@@ -233,7 +237,8 @@ const WEEK_CUSTOMERS = (givenYear) => {
 
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
 
@@ -252,7 +257,8 @@ const WEEK_ORDERS = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
   return `
@@ -267,7 +273,8 @@ const MONTH_REVENUE = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
   return `
@@ -282,7 +289,8 @@ const MONTH_CUSTOMERS = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - givenYear;
   }
   let sql = `
@@ -300,7 +308,8 @@ const MONTH_CUSTOMERS_STORE = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - givenYear;
   }
   return `SELECT MONTH(create_date) AS month_name, store_id,
@@ -315,7 +324,8 @@ const MONTH_ORDERS = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - givenYear;
   }
   return `
@@ -330,11 +340,11 @@ const YEAR_REVENUE = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - givenYear;
   }
-  return `
-SELECT YEAR(payment_date) AS year_num,
+  return `SELECT YEAR(payment_date) AS year_num,
 SUM(amount) as year_revenue
 FROM payment
 where YEAR(payment_date)=year( DATE_SUB(CURDATE(),INTERVAL ${diff} YEAR))
@@ -345,7 +355,8 @@ const YEAR_CUSTOMERS = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - givenYear;
   }
   return `
@@ -362,7 +373,8 @@ const YEAR_ORDERS = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - givenYear;
   }
   return `
@@ -379,7 +391,8 @@ const TOP_10 = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
 
@@ -424,7 +437,8 @@ const AREA_DATA = (givenYear) => {
   let diff = 2;
   if (givenYear) {
     const now = new Date();
-    let current_year = now.getFullYear();
+    // let current_year = now.getFullYear();
+    let current_year = 2019;
     diff = current_year - year;
   }
 

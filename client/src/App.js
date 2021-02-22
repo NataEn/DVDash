@@ -42,17 +42,18 @@ function App() {
   const [storeData, setStoreData] = useState([]);
 
   const fetchPeriodData = async () => {
+    debugger;
     const periodData = await getPeriodData({
       week: ["WEEK_REVENUE", "WEEK_CUSTOMERS", "WEEK_ORDERS"],
       month: ["MONTH_REVENUE", "MONTH_CUSTOMERS_STORE", "MONTH_ORDERS"],
       year: ["YEAR_REVENUE", "YEAR_CUSTOMERS", "YEAR_ORDERS"],
     });
     console.log("periodData", periodData);
-    setWeekRevenue(periodData.week.revenue);
-    setWeekCustomers(periodData.week.customers);
-    setMonthRevenue(periodData.month.revenue);
-    setMonthCustomers(periodData.month.customers);
-    setStoreData(periodData.month.customers);
+    setWeekRevenue(periodData.week && periodData.week.revenue);
+    setWeekCustomers(periodData.week && periodData.week.customers);
+    setMonthRevenue(periodData.month && periodData.month.revenue);
+    setMonthCustomers(periodData.month && periodData.month.customers);
+    setStoreData(periodData.month && periodData.month.customers);
   };
   const fetchTop10 = async () => {
     const top10 = await getTop10();

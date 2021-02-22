@@ -55,7 +55,7 @@ const Dashboard = (props) => {
                 </Col>
               </Col>
               <Col>
-                {data.weekRevenue.length ? (
+                {data.weekRevenue && data.weekRevenue.length ? (
                   <SmallBarChart
                     data={data.weekRevenue}
                     valueKey={"week_revenue"}
@@ -78,7 +78,7 @@ const Dashboard = (props) => {
                 </Col>
               </Col>
               <Col>
-                {data.weekCustomers.length ? (
+                {data.weekCustomers && data.weekCustomers.length ? (
                   <SmallBarChart
                     data={data.weekCustomers}
                     valueKey={"week_customers"}
@@ -121,7 +121,7 @@ const Dashboard = (props) => {
           className="bg-white d-flex flex-column justify-content-around align-items=center"
         >
           <h3>Monthly Revenue</h3>
-          {data.monthRevenue.length ? (
+          {data.monthRevenue && data.monthRevenue.length ? (
             <ColumnGrid
               data={data.monthRevenue}
               dataXName={"month_name"}
@@ -194,7 +194,7 @@ const Dashboard = (props) => {
                 helperText={"select sub category"}
               />
 
-              {data.storeData.length ? (
+              {data.storeData && data.storeData.length ? (
                 <ColumnGrid
                   data={data.storeData}
                   dataXName={"month_name"}

@@ -28,7 +28,7 @@ const getSql = (dataType) => {
 //for single connection
 async function connect() {
   const connection = await mysql.createConnection(dbCredentials);
-  const [row, fields] = await connection.query("select 123");
+  const [row, fields] = await connection.query("select * from actor");
   return row;
 }
 
@@ -103,6 +103,7 @@ const arrangeResults = (resultsName, resultsArr) => {
         noBuffersResults[i][0].constructor.name === "TextRow"
           ? noBuffersResults[i][0]
           : noBuffersResults[i][j][0];
+      if (!item) continue;
       let keys = Object.keys(item);
       resultSubject = getOptionFromResultKeys(subjects, keys);
       resultObj[timePeriod][resultSubject] =

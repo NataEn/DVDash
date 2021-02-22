@@ -1,5 +1,6 @@
 const localUrl = window.location.href;
 const getPeriodData = (options) => {
+  debugger;
   let fetchUrl =
     process.env.REACT_APP_APISERVER +
     `/mysqlapi/periodData?year=${options.year}&month=${options.month}&week=${options.week}`;

@@ -1,5 +1,5 @@
 import moment from "moment";
-debugger;
+
 export const week_data = (data) => {
   const days_of_week = moment.weekdays();
   const dataObj = data.reduce((obj, item) => {

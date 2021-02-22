@@ -8,7 +8,7 @@ const mongoService = require("./databases/mongodb/mongoServices").mongoConnect()
 const usersRouter = require("./routes/usersAPI");
 const users = require("./controllers/users");
 
-// const testAPIRouter = require("./routes/testAPI");
+const testAPIRouter = require("./routes/testAPI");
 const mysqlRouter = require("./routes/mysqlAPI");
 const app = express();
 app.set("views", path.join(__dirname, "views"));
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// app.use("/testAPI", testAPIRouter);
+//app.use("/testAPI", testAPIRouter);
 // if (process.env.NODE_ENV === "production") {
 //   app.use("/", express.static(path.join(__dirname, "../client/build")));
 // }
