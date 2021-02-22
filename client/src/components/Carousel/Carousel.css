@@ -1,0 +1,50 @@
+.Carousel_arrow:hover {
+  background-color: #3f51b6;
+  opacity: 0.5;
+}
+.Carousel_arrow.button.MuiButtonBase-root {
+  background-color: #d2d6d8;
+  opacity: 0.5;
+}
+.Carousel_arrow:hover {
+  color: #d2d6d8;
+}
+.Carousel_title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.Carousel_h3 {
+  display: inline-block;
+  text-align: left;
+  width: max-content;
+  margin: 1% 1% 8px 1%;
+}
+.Carousel_filter {
+  display: inline-block;
+}
+.Carousel_container {
+  padding: 0;
+  width: 95%;
+  /* height: 12rem; */
+  max-height: max-content;
+  margin: 0 auto;
+  overflow-y: visible !important;
+}
+.Carousel_wrapper {
+  overflow-y: visible !important;
+}
+.Carousel_container:hover {
+  overflow-y: visible !important;
+}
+.sc-htpNat.grBOFc,
+.sc-bwzfXH.gwZiig,
+.sc-bdVaJa.imYUvI,
+.sc-bxivhb.kHuOUT {
+  overflow-y: visible !important;
+}
+.Carousel_container button > span.MuiIconButton-label > svg {
+  font-size: 3.5rem;
+}

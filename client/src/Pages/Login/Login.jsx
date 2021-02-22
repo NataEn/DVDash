@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,7 +9,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { useHistory } from "react-router-dom";
+import AuthButtonGroup from "../../components/AuthButtonGroup/AuthButtonGroup";
+import { AuthContext } from "../../Contexts/Auth";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,7 +37,6 @@ const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
-  let history = useHistory();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -76,6 +77,7 @@ const SignIn = (props) => {
               setPassword(event.target.value);
             }}
           />
+
           <Button
             type="submit"
             fullWidth
@@ -89,11 +91,13 @@ const SignIn = (props) => {
                 password: password,
                 email: email,
               });
-              history.push("/");
+              props.history.push("/dashboard");
             }}
           >
             Sign In
           </Button>
+          <p>or sign in with</p>
+          <AuthButtonGroup />
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -111,4 +115,4 @@ const SignIn = (props) => {
     </Container>
   );
 };
-export default SignIn;
+export default withRouter(SignIn);

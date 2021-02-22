@@ -1,40 +1,171 @@
 import React from "react";
-import "./Header.css";
-import { makeStyles } from "@material-ui/core/styles";
-import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
+import ProfileMenu from "../ProfileMenu/ProfileMenu";
+import HeaderMenu from "../HeaderMenu/HeaderMenu";
 import logo from "../../logo_blue.png";
-import { Link as RouterLink, BrowserRouter as Router } from "react-router-dom";
-import Link from "@material-ui/core/Link";
+import { fade, makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import Menu from "@material-ui/core/Menu";
+import MenuIcon from "@material-ui/icons/Menu";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
+  appBar: {
+    backgroundColor: "#282c34",
+  },
+  grow: {
+    flexGrow: 1,
+  },
   margin: {
     margin: theme.spacing(1),
   },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  block: {
+    display: "block",
+  },
+  title: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
+  },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(3),
+      width: "auto",
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputRoot: {
+    color: "inherit",
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
 }));
-const Header = () => {
+
+export default function PrimarySearchAppBar({ loggedIn }) {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
 
   return (
-    <header className="App-header d-flex justify-content-between pl-2 pr-2">
-      <img src={logo} alt="logo" className="p-2 logo" />
-      <h4 className="d-inline-block">DVDash</h4>
-      <Typography className={classes.margin}>
-        <Link to="/" component={RouterLink}>
-          Dashboard
-        </Link>
-        <Link
-          to="/login"
-          component={RouterLink}
-          color="secondary"
-          size="medium"
-          className={`${classes.margin} text-right`}
-        >
-          <OpenInBrowserIcon className="sign-in-icon" /> Sign-in
-        </Link>
-      </Typography>
-    </header>
+    <div className={classes.grow}>
+      <AppBar position="static" className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open drawer"
+          >
+            <img src={logo} alt="logo" className="p-2 logo" />
+          </IconButton>
+          {/* <Typography className={classes.title} variant="h6" noWrap>
+            DVDash
+          </Typography> */}
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ "aria-label": "search" }}
+            />
+          </div>
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            <HeaderMenu handleProfileMenuOpen={handleProfileMenuOpen} />
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              aria-label="show more"
+              aria-controls={"primary-search-account-menu-mobile"}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <Menu
+        anchorEl={mobileMoreAnchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        id={"primary-search-account-menu-mobile"}
+        keepMounted
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={Boolean(mobileMoreAnchorEl)}
+        onClose={handleMobileMenuClose}
+      >
+        <HeaderMenu handleProfileMenuOpen={handleProfileMenuOpen} />
+      </Menu>
+      <ProfileMenu
+        isProfileMenuOpen={Boolean(anchorEl)}
+        handleMenuClose={handleMenuClose}
+      />
+    </div>
   );
-};
-
-export default Header;
+}

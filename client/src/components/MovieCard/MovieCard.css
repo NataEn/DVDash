@@ -1,0 +1,47 @@
+.MovieCard_wrapper:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 5%;
+  box-shadow: 1px 8px 10px 5px #605d5dc4;
+}
+.MovieCard_wrapper:hover .MovieCard_dark_background {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: block;
+}
+.MovieCard_wrapper:hover .MovieCard_section {
+  display: block;
+}
+.MovieCard_dark_background {
+  display: none;
+}
+
+.MovieCard_wrapper {
+  position: relative;
+  margin: 10%;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  width: 10rem;
+  height: 13rem;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  transition: all 0.2s ease-in-out;
+  overflow: visible;
+  border-radius: 10px;
+  border: solid 0.5px rgb(192, 186, 186);
+  overflow: hidden;
+}
+.MovieCard_section {
+  position: absolute;
+  display: none;
+  z-index: 10;
+  align-self: flex-end;
+  background-color: #f3f6f6;
+  padding: 0.5rem;
+  text-align: left;
+  width: 100%;
+}

@@ -1,0 +1,16 @@
+.MovieRating_box span {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.MovieRating_box .MuiRating-root {
+  width: max-content;
+  padding: 0;
+}
+.Rating_span {
+  display: inline-block;
+  padding: 0;
+  margin: auto 0.5rem;
+  width: max-content;
+}

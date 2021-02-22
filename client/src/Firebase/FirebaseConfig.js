@@ -1,7 +1,9 @@
+import * as firebase from "firebase";
 import app from "firebase/app";
 import "firebase/auth";
+import "firebase/firebase-firestore";
 
-export const firebaseConfig = {
+export const config = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
@@ -13,29 +15,73 @@ export const firebaseConfig = {
 };
 class Firebase {
   constructor() {
-    app.initializeApp();
+    app.initializeApp(config);
     this.auth = app.auth();
+    this.db = app.firestore();
+    this.googleProvider = new firebase.auth.GoogleAuthProvider();
+    this.twitterProvider = new firebase.auth.TwitterAuthProvider();
+    this.gitHubProvider = new firebase.auth.GithubAuthProvider();
+    this.facebookProvider = new firebase.auth.FacebookAuthProvider();
   }
-  doCreateUserWithEmailAndPassword = (email, password) => {
-    this.auth.createUserWithEmailAndPassword(email, password);
+
+  //this returns a promise:
+  createUser = async (name, email, password) => {
+    await this.auth.createUserWithEmailAndPassword(name, email, password);
+    console.log("create user", this.auth.currentUser);
+    return this.auth.currentUser.updateProfile({
+      displayName: name,
+    });
   };
-  doSignInWithEmailAndPassword = (email, password) => {
-    this.auth.signInWithEmailAndPassword(email, password);
+
+  login = async (email, password) => {
+    await this.auth.signInWithEmailAndPassword(email, password);
+    console.log("login", this.auth.currentUser);
+    return this.auth.currentUser;
   };
-  doSignOut = () => this.auth.signOut();
+
+  logOut = async () => this.auth.signOut();
+
   doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email);
   doPasswordUpdate = (password) =>
     this.auth.currentUser.updatePassword(password);
-  doGoogleSignIn = () => {
-    const provider = this.auth.GoogleAuthProvider();
-    this.auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        const token = result.credential.accessToken;
-        const user = result.user;
-      })
-      .catch((error) => console.error(error));
+  logInWithGoogle = () => {
+    return this.auth.signInWithPopup(this.googleProvider);
+  };
+  logInWithGitHub = async () => {
+    return this.auth.signInWithPopup(this.gitHubProvider);
+
+    //       const token = result.credential.accessToken;
+    // const email = this.auth.currentUser.email;
+    // const displayName = this.auth.currentUser.displayName;
+    // const phoneNumber = this.auth.currentUser.phoneNumber;
+    // const refreshToken = this.auth.currentUser.refreshToken;
+    // const photoURL = this.auth.currentUser.photoURL;
+    // console.log("got google user");
+    // return this.auth.currentUser;
+  };
+  logInWithFacebook = async () => {
+    return this.auth.signInWithPopup(this.facebookProvider);
+    //       const token = result.credential.accessToken;
+    // const email = this.auth.currentUser.email;
+    // const displayName = this.auth.currentUser.displayName;
+    // const phoneNumber = this.auth.currentUser.phoneNumber;
+    // const refreshToken = this.auth.currentUser.refreshToken;
+    // const photoURL = this.auth.currentUser.photoURL;
+    // console.log("got google user");
+    // return this.auth.currentUser;
+  };
+  logInWithTwitter = async () => {
+    return this.auth.signInWithPopup(this.twitterProvider);
+    //       const token = result.credential.accessToken;
+    //   const email = this.auth.currentUser.email;
+    //   const displayName = this.auth.currentUser.displayName;
+    //   const phoneNumber = this.auth.currentUser.phoneNumber;
+    //   const refreshToken = this.auth.currentUser.refreshToken;
+    //   const photoURL = this.auth.currentUser.photoURL;
+    //   console.log("got google user");
+    //   return this.auth.currentUser;
   };
 }
+const GlobalFirebase = new Firebase();
 
-export default Firebase;
+export default GlobalFirebase;
